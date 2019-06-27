@@ -2,8 +2,6 @@ package com.tfar.metalbarrels;
 
 import com.tfar.metalbarrels.block.*;
 import com.tfar.metalbarrels.container.*;
-import com.tfar.metalbarrels.proxy.ClientProxy;
-import com.tfar.metalbarrels.proxy.Proxy;
 import com.tfar.metalbarrels.screen.*;
 import com.tfar.metalbarrels.tile.*;
 import net.minecraft.block.Block;
@@ -18,7 +16,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -38,9 +35,6 @@ public class MetalBarrels
   private static final Logger LOGGER = LogManager.getLogger();
 
   public static final String MODID = "metalbarrels";
-
-  public static Proxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new Proxy());
-
 
   public MetalBarrels() {
     // Register the doClientStuff method for modloading
@@ -97,12 +91,11 @@ public class MetalBarrels
     @SubscribeEvent
     public static void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
 
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new CopperBarrelContainer(windowId, proxy.getClientWorld(), data.readBlockPos(), inv, proxy.getClientPlayer())).setRegistryName("copper_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new IronBarrelContainer(windowId, proxy.getClientWorld(), data.readBlockPos(), inv, proxy.getClientPlayer())).setRegistryName("iron_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new SilverBarrelContainer(windowId, proxy.getClientWorld(), data.readBlockPos(), inv, proxy.getClientPlayer())).setRegistryName("silver_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new GoldBarrelContainer(windowId, proxy.getClientWorld(), data.readBlockPos(), inv, proxy.getClientPlayer())).setRegistryName("gold_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new DiamondBarrelContainer(windowId, proxy.getClientWorld(), data.readBlockPos(), inv, proxy.getClientPlayer())).setRegistryName("diamond_container"));
-
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new CopperBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("copper_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new IronBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("iron_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new SilverBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("silver_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new GoldBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("gold_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new DiamondBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("diamond_container"));
 
     }
 
@@ -115,8 +108,7 @@ public class MetalBarrels
       event.getRegistry().register(TileEntityType.Builder.create(IronBarrelTile::new, ObjectHolders.IRON_BARREL).build(null).setRegistryName("iron_tile"));
       event.getRegistry().register(TileEntityType.Builder.create(SilverBarrelTile::new, ObjectHolders.SILVER_BARREL).build(null).setRegistryName("silver_tile"));
       event.getRegistry().register(TileEntityType.Builder.create(GoldBarrelTile::new, ObjectHolders.GOLD_BARREL).build(null).setRegistryName("gold_tile"));
-      event.getRegistry().register(TileEntityType.Builder.create(DiamondBarrelTile::new, ObjectHolders.GOLD_BARREL).build(null).setRegistryName("diamond_tile"));
-
+      event.getRegistry().register(TileEntityType.Builder.create(DiamondBarrelTile::new, ObjectHolders.DIAMOND_BARREL,ObjectHolders.OBSIDIAN_BARREL).build(null).setRegistryName("diamond_tile"));
 
     }
   }
