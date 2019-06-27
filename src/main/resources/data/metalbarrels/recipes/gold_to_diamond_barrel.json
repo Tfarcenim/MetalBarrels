@@ -1,0 +1,11 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern":[
+        "dbd"
+    ],
+    "key":{
+        "d":{"tag":"forge:gems/diamond"},
+        "b":{"item":"metalbarrels:gold_barrel"}
+    },
+    "result":{"item":"metalbarrels:diamond_barrel"}
+}

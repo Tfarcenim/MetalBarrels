@@ -1,0 +1,11 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern":[
+        "sbs"
+    ],
+    "key":{
+        "s":{"tag":"forge:ingots/silver"},
+        "b":{"item":"metalbarrels:iron_barrel"}
+    },
+    "result":{"item":"metalbarrels:silver_barrel"}
+}

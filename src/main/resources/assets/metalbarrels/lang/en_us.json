@@ -1,0 +1,15 @@
+{
+  "block.metalbarrels.copper_barrel": "Copper Barrel",
+  "block.metalbarrels.iron_barrel": "Iron Barrel",
+  "block.metalbarrels.gold_barrel": "Gold Barrel",
+  "block.metalbarrels.diamond_barrel": "Diamond Barrel",
+  "block.metalbarrels.obsidian_barrel": "Obsidian Barrel",
+  "block.metalbarrels.silver_barrel": "Silver Barrel",
+
+  "metalbarrels.copper_barrel": "Copper Barrel",
+  "metalbarrels.iron_barrel": "Iron Barrel",
+  "metalbarrels.gold_barrel": "Gold Barrel",
+  "metalbarrels.silver_barrel": "Silver Barrel",
+  "metalbarrels.diamond_barrel": "Diamond Barrel",
+  "metalbarrels.obsidian_barrel": "Obsidian Barrel"
+}

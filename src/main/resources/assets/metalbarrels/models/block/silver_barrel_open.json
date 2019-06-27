@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "top": "metalbarrels:block/silver_barrel_top_open",
+    "side": "metalbarrels:block/silver_barrel_side",
+    "bottom": "metalbarrels:block/silver_barrel_bottom"
+  }
+}
