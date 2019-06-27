@@ -66,8 +66,8 @@ public class MetalBarrels
 
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-      Block.Properties metal = Block.Properties.create(Material.IRON).hardnessAndResistance(2,30);
-      Block.Properties obsidian = Block.Properties.create(Material.ROCK).hardnessAndResistance(10,6000);
+      Block.Properties metal = Block.Properties.create(Material.IRON).hardnessAndResistance(2.5f,6);
+      Block.Properties obsidian = Block.Properties.create(Material.ROCK).hardnessAndResistance(20,6000);
       registerBlock(new CopperBarrelBlock(metal),"copper_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new IronBarrelBlock(metal),"iron_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new SilverBarrelBlock(metal),"silver_barrel",blockRegistryEvent.getRegistry());
