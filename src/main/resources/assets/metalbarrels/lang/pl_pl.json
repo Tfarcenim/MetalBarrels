@@ -1,0 +1,16 @@
+
+{
+  "block.metalbarrels.copper_barrel": "Miedziowa beczka",
+  "block.metalbarrels.iron_barrel": "Żelazna beczka",
+  "block.metalbarrels.gold_barrel": "Złota beczka",
+  "block.metalbarrels.diamond_barrel": "Diamentowa beczka",
+  "block.metalbarrels.obsidian_barrel": "Obsydianowa beczka",
+  "block.metalbarrels.silver_barrel": "Srebna beczka",
+
+  "metalbarrels.copper_barrel": "Miedziowa beczka",
+  "metalbarrels.iron_barrel": "Żelazna beczka",
+  "metalbarrels.gold_barrel": "Złota beczka",
+  "metalbarrels.silver_barrel": "Srebna beczka",
+  "metalbarrels.diamond_barrel": "Diamentowa beczka",
+  "metalbarrels.obsidian_barrel": "Obsydianowa beczka"
+}
