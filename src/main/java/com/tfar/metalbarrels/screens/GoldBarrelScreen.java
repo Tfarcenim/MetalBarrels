@@ -1,4 +1,4 @@
-package com.tfar.metalbarrels.screen;
+package com.tfar.metalbarrels.screens;
 
 import com.tfar.metalbarrels.MetalBarrels;
 import com.tfar.metalbarrels.container.GoldBarrelContainer;

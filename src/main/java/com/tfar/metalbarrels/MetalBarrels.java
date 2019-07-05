@@ -2,8 +2,8 @@ package com.tfar.metalbarrels;
 
 import com.tfar.metalbarrels.block.*;
 import com.tfar.metalbarrels.container.*;
-import com.tfar.metalbarrels.screen.*;
-import com.tfar.metalbarrels.tile.*;
+import com.tfar.metalbarrels.screens.*;
+import com.tfar.metalbarrels.tiles.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.ScreenManager;

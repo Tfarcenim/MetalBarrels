@@ -1,4 +1,4 @@
-package com.tfar.metalbarrels.tile;
+package com.tfar.metalbarrels.tiles;
 
 import com.tfar.metalbarrels.MetalBarrels;
 import com.tfar.metalbarrels.container.DiamondBarrelContainer;

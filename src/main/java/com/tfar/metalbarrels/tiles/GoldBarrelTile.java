@@ -1,7 +1,7 @@
-package com.tfar.metalbarrels.tile;
+package com.tfar.metalbarrels.tiles;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.container.IronBarrelContainer;
+import com.tfar.metalbarrels.container.GoldBarrelContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -10,20 +10,20 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
 
-public class IronBarrelTile extends AbstractBarrelTile {
-  public IronBarrelTile() {
-    super(MetalBarrels.ObjectHolders.IRON_TILE,9,6);
+public class GoldBarrelTile extends AbstractBarrelTile {
+  public GoldBarrelTile() {
+    super(MetalBarrels.ObjectHolders.GOLD_TILE,9,9);
   }
 
   @Override
   public ITextComponent getDisplayName() {
-    return new TranslationTextComponent("metalbarrels.iron_barrel");
+    return new TranslationTextComponent("metalbarrels.gold_barrel");
   }
 
   @Nullable
   @Override
   public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-    return new IronBarrelContainer(id, world, pos, playerInventory, player);
+    return new GoldBarrelContainer(id, world, pos, playerInventory, player);
   }
 }
 

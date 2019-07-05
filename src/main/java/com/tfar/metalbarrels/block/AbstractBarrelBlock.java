@@ -1,7 +1,7 @@
 package com.tfar.metalbarrels.block;
 
-import com.tfar.metalbarrels.tile.AbstractBarrelTile;
-import com.tfar.metalbarrels.util.InventoryHelper;
+import com.tfar.metalbarrels.tiles.AbstractBarrelTile;
+import com.tfar.metalbarrels.utils.InventoryHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;

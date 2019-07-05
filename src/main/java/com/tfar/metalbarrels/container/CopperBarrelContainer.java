@@ -13,7 +13,7 @@ public class CopperBarrelContainer extends AbstractBarrelContainer {
 
 public CopperBarrelContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player){
   super(MetalBarrels.ObjectHolders.COPPER_CONTAINER,id,world,pos,playerInventory,player,
-          9,5,8,-1,8,103);
+          9,5,8,-1, 103);
 }
 
   @Override

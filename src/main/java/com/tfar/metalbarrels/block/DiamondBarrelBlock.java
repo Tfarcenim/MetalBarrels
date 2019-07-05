@@ -1,7 +1,7 @@
 package com.tfar.metalbarrels.block;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.tile.DiamondBarrelTile;
+import com.tfar.metalbarrels.tiles.DiamondBarrelTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;

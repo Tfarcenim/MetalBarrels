@@ -1,4 +1,4 @@
-package com.tfar.metalbarrels.screen;
+package com.tfar.metalbarrels.screens;
 
 import com.tfar.metalbarrels.container.AbstractBarrelContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;

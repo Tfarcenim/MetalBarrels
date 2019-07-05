@@ -1,6 +1,6 @@
-package com.tfar.metalbarrels.tile;
+package com.tfar.metalbarrels.tiles;
 
-import com.tfar.metalbarrels.util.BarrelHandler;
+import com.tfar.metalbarrels.utils.BarrelHandler;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
