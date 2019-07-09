@@ -1,0 +1,13 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern":[
+        " i ",
+        "ibi",
+        " i "
+    ],
+    "key":{
+        "i":{"tag":"forge:ingots/iron"},
+        "b":{"tag":"minecraft:planks"}
+    },
+    "result":{"item":"metalbarrels:wood_to_iron"}
+}

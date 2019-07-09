@@ -1,0 +1,13 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern":[
+        " g ",
+        "gbg",
+        " g "
+    ],
+    "key":{
+        "g":{"tag":"forge:ingots/gold"},
+        "b":{"item":"metalbarrels:wood_to_iron"}
+    },
+    "result":{"item":"metalbarrels:wood_to_gold"}
+}

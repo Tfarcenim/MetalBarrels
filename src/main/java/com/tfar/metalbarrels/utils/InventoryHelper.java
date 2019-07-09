@@ -60,7 +60,7 @@ public class InventoryHelper {
    * Like the version that takes an inventory. If the given TileEntity is not an Inventory, 0 is returned instead.
    */
   public static int calcRedstone(@Nullable TileEntity te) {
-    return te == null ? 0 : calcRedstoneFromInventory(((AbstractBarrelTile)te).handler);
+    return te instanceof AbstractBarrelTile ? calcRedstoneFromInventory(((AbstractBarrelTile) te).handler) : 0;
   }
 
   public static int calcRedstoneFromInventory(@Nullable ItemStackHandler inv) {

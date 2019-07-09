@@ -2,8 +2,11 @@ package com.tfar.metalbarrels;
 
 import com.tfar.metalbarrels.block.*;
 import com.tfar.metalbarrels.container.*;
+import com.tfar.metalbarrels.item.BarrelUpgradeItem;
+import com.tfar.metalbarrels.item.UpgradeInfo;
 import com.tfar.metalbarrels.screens.*;
 import com.tfar.metalbarrels.tiles.*;
+import com.tfar.metalbarrels.utils.Tags;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.ScreenManager;
@@ -11,6 +14,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -36,11 +40,16 @@ public class MetalBarrels
 
   public static final String MODID = "metalbarrels";
 
+  public static final ItemGroup tab = new ItemGroup(MODID) {
+    @Override
+    public ItemStack createIcon() {
+      return new ItemStack(ObjectHolders.DIAMOND_BARREL);
+    }
+  };
+
   public MetalBarrels() {
     // Register the doClientStuff method for modloading
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-    // Register ourselves for server and other game events we are interested in
-    MinecraftForge.EVENT_BUS.register(this);
   }
 
   private void doClientStuff(final FMLClientSetupEvent event) {
@@ -61,7 +70,7 @@ public class MetalBarrels
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
       Block.Properties metal = Block.Properties.create(Material.IRON).hardnessAndResistance(2.5f,6);
-      Block.Properties obsidian = Block.Properties.create(Material.ROCK).hardnessAndResistance(20,6000);
+      Block.Properties obsidian = Block.Properties.create(Material.ROCK).hardnessAndResistance(15,6000);
       registerBlock(new CopperBarrelBlock(metal),"copper_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new IronBarrelBlock(metal),"iron_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new SilverBarrelBlock(metal),"silver_barrel",blockRegistryEvent.getRegistry());
@@ -78,10 +87,84 @@ public class MetalBarrels
     public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
 
       IForgeRegistry<Item> registry = itemRegistryEvent.getRegistry();
-      Item.Properties properties1 = new Item.Properties().group(ItemGroup.DECORATIONS);
+      Item.Properties properties = new Item.Properties().group(tab);
       for (Block block : MOD_BLOCKS) {
-        registerItem(new BlockItem(block, properties1), block.getRegistryName().toString(), registry);
+        registerItem(new BlockItem(block, properties), block.getRegistryName().toString(), registry);
       }
+
+      //wood to x
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
+              ObjectHolders.COPPER_BARREL,new CopperBarrelTile())),"wood_to_copper",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
+              ObjectHolders.IRON_BARREL,new IronBarrelTile())),"wood_to_iron",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
+              ObjectHolders.SILVER_BARREL,new SilverBarrelTile())),"wood_to_silver",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
+              ObjectHolders.GOLD_BARREL,new GoldBarrelTile())),"wood_to_gold",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
+              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"wood_to_diamond",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
+              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"wood_to_obsidian",registry);
+
+      //copper to x
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
+              ObjectHolders.IRON_BARREL,new IronBarrelTile())),"copper_to_iron",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
+              ObjectHolders.SILVER_BARREL,new SilverBarrelTile())),"copper_to_silver",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
+              ObjectHolders.GOLD_BARREL,new GoldBarrelTile())),"copper_to_gold",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
+              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"copper_to_diamond",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
+              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"copper_to_obsidian",registry);
+
+      //iron to x
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
+              ObjectHolders.SILVER_BARREL,new SilverBarrelTile())),"iron_to_silver",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
+              ObjectHolders.GOLD_BARREL,new GoldBarrelTile())),"iron_to_gold",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
+              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"iron_to_diamond",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
+              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"iron_to_obsidian",registry);
+
+      //silver to x
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.SILVER_BARRELS,
+              ObjectHolders.GOLD_BARREL,new GoldBarrelTile())),"silver_to_gold",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.SILVER_BARRELS,
+              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"silver_to_diamond",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.SILVER_BARRELS,
+              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"silver_to_obsidian",registry);
+
+      //gold to x
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.GOLD_BARRELS,
+              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"gold_to_diamond",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.GOLD_BARRELS,
+              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"gold_to_obsidian",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.DIAMOND_BARRELS,
+              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"diamond_to_obsidian",registry);
+
     }
 
     private static void registerItem(Item item, String name, IForgeRegistry<Item> registry) {

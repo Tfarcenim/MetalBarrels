@@ -8,6 +8,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class DiamondBarrelTile extends AbstractBarrelTile {
@@ -24,7 +25,7 @@ public class DiamondBarrelTile extends AbstractBarrelTile {
 
   @Nullable
   @Override
-  public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
+  public Container createMenu(int id, @Nonnull PlayerInventory playerInventory,@Nonnull PlayerEntity player) {
     return new DiamondBarrelContainer(id, world, pos, playerInventory, player);
   }
 }

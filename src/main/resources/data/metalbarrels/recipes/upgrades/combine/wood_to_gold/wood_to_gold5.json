@@ -1,0 +1,15 @@
+{
+    "type":"minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "metalbarrels:wood_to_copper"
+        },
+        {
+            "item": "metalbarrels:copper_to_silver"
+        },
+        {
+            "item": "metalbarrels:silver_to_gold"
+        }
+    ],
+    "result":{"item":"metalbarrels:wood_to_gold"}
+}

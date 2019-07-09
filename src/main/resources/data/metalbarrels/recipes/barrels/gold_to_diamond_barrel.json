@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "metalbarrels",
+  "ingredients": [
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:barrels/gold"
+    }
+  ],
+  "key": {
+  },
+  "result": {
+    "item": "metalbarrels:diamond_barrel"
+  }
+}

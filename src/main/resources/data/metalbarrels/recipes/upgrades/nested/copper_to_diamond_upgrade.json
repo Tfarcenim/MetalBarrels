@@ -5,7 +5,7 @@
     ],
     "key":{
         "d":{"tag":"forge:gems/diamond"},
-        "b":{"item":"metalbarrels:gold_barrel"}
+        "b":{"item":"metalbarrels:copper_to_silver"}
     },
-    "result":{"item":"metalbarrels:diamond_barrel"}
+    "result":{"item":"metalbarrels:copper_to_diamond"}
 }

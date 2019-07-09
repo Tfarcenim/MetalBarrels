@@ -7,7 +7,7 @@
     ],
     "key":{
         "i":{"tag":"forge:ingots/iron"},
-        "b":{"item":"minecraft:barrel"}
+        "b":{"tag":"forge:barrels"}
     },
     "result":{"item":"metalbarrels:iron_barrel"}
 }

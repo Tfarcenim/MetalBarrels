@@ -1,0 +1,13 @@
+{
+    "type":"minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "tag": "forge:gems/diamond"
+        },
+        {
+            "tag": "forge:ingots/gold"
+        }
+    ],
+
+    "result":{"item":"metalbarrels:gold_to_diamond"}
+}

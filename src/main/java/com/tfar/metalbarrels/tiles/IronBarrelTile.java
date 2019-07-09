@@ -8,6 +8,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class IronBarrelTile extends AbstractBarrelTile {
@@ -15,6 +16,7 @@ public class IronBarrelTile extends AbstractBarrelTile {
     super(MetalBarrels.ObjectHolders.IRON_TILE,9,6);
   }
 
+  @Nonnull
   @Override
   public ITextComponent getDisplayName() {
     return new TranslationTextComponent("metalbarrels.iron_barrel");

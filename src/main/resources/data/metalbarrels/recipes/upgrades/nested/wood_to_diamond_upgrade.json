@@ -1,0 +1,12 @@
+{
+    "type":"minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "metalbarrels:wood_to_gold"
+        },
+        {
+            "tag": "forge:gems/diamond"
+        }
+    ],
+    "result":{"item":"metalbarrels:wood_to_diamond"}
+}

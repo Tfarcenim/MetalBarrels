@@ -2,12 +2,12 @@
     "type":"minecraft:crafting_shaped",
     "pattern":[
         " g ",
-        "gbg",
+        "gig",
         " g "
     ],
     "key":{
         "g":{"tag":"forge:ingots/gold"},
-        "b":{"item":"metalbarrels:iron_barrel"}
+        "i":{"tag":"forge:ingots/iron"}
     },
-    "result":{"item":"metalbarrels:gold_barrel"}
+    "result":{"item":"metalbarrels:iron_to_gold"}
 }

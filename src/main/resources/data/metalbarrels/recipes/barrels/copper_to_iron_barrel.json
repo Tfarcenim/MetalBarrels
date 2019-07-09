@@ -1,0 +1,11 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern":[
+        "ibi"
+    ],
+    "key":{
+        "i":{"tag":"forge:ingots/iron"},
+        "b":{"tag":"forge:barrels/copper"}
+    },
+    "result":{"item":"metalbarrels:iron_barrel"}
+}

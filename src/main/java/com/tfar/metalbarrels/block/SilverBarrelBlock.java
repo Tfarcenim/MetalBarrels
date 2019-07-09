@@ -19,4 +19,8 @@ public class SilverBarrelBlock extends AbstractBarrelBlock {
     return new SilverBarrelTile();
   }
 
+  @Override
+  public int getHarvestLevel(BlockState state) {
+    return 2;
+  }
 }

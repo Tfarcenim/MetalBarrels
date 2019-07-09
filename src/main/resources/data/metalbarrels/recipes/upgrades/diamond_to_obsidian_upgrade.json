@@ -2,12 +2,13 @@
     "type":"minecraft:crafting_shaped",
     "pattern":[
         " o ",
-        "obo",
+        "odo",
         " o "
     ],
     "key":{
         "o":{"item":"minecraft:obsidian"},
-        "b":{"item":"metalbarrels:diamond_barrel"}
+        "d":{"tag":"forge:gems/diamond"}
     },
-    "result":{"item":"metalbarrels:obsidian_barrel"}
+
+    "result":{"item":"metalbarrels:diamond_to_obsidian"}
 }

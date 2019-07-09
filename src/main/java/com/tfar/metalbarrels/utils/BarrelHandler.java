@@ -1,7 +1,11 @@
 package com.tfar.metalbarrels.utils;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.List;
 
 public class BarrelHandler extends ItemStackHandler {
 
@@ -16,4 +20,17 @@ public class BarrelHandler extends ItemStackHandler {
   {
     this.tileEntity.markDirty();
   }
-}
+
+  public NonNullList<ItemStack> getContents(){
+    return this.stacks;
+  }
+
+  public void setContents(List<ItemStack> oldContents, int newSize){
+      this.stacks = NonNullList.withSize(newSize, ItemStack.EMPTY);
+
+      for (int i = 0; i < oldContents.size(); i++) {
+        this.getContents().set(i, oldContents.get(i));
+      }
+    }
+  }
+

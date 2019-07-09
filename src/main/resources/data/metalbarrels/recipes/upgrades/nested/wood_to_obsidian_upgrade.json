@@ -1,0 +1,13 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern":[
+        " o ",
+        "oio",
+        " o "
+    ],
+    "key":{
+        "o":{"item":"minecraft:obsidian"},
+        "i":{"item":"metalbarrels:wood_to_diamond"}
+    },
+    "result":{"item":"metalbarrels:wood_to_obsidian"}
+}
