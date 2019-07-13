@@ -12,5 +12,36 @@
   "metalbarrels.gold_barrel": "Złota beczka",
   "metalbarrels.silver_barrel": "Srebna beczka",
   "metalbarrels.diamond_barrel": "Diamentowa beczka",
-  "metalbarrels.obsidian_barrel": "Obsydianowa beczka"
+  "metalbarrels.obsidian_barrel": "Obsydianowa beczka",
+  
+  "item.metalbarrels.wood_to_copper": "Ulepszenie drewnianej beczki na miedzianą",
+  "item.metalbarrels.wood_to_iron": "Ulepszenie drewnianej beczki na żelazną",
+  "item.metalbarrels.wood_to_silver": "Ulepszenie drewnianej beczki na srebrną",
+  "item.metalbarrels.wood_to_gold": "Ulepszenie drewnianej beczki na złotą",
+  "item.metalbarrels.wood_to_diamond": "Ulepszenie drewnianej beczki na diamentową",
+  "item.metalbarrels.wood_to_obsidian": "Ulepszenie drewnianej beczki na obsydianową",
+
+  "item.metalbarrels.copper_to_iron": "Ulepszenie miedzianej beczki na żelazną",
+  "item.metalbarrels.copper_to_silver": "Ulepszenie miedzianej beczki na srebrną",
+  "item.metalbarrels.copper_to_gold": "Ulepszenie miedzianej beczki na złotą",
+  "item.metalbarrels.copper_to_diamond": "Ulepszenie miedzianej beczki na diamentową",
+  "item.metalbarrels.copper_to_obsidian": "Ulepszenie miedzianej beczki na obsydianową",
+
+  "item.metalbarrels.iron_to_silver": "Ulepszenie żelaznej beczki na srebrną",
+  "item.metalbarrels.iron_to_gold": "Ulepszenie żelaznej beczki na złotą",
+  "item.metalbarrels.iron_to_diamond": "Ulepszenie żelaznej beczki na diamentową",
+  "item.metalbarrels.iron_to_obsidian": "Ulepszenie żelaznej beczki na obsydianową",
+
+  "item.metalbarrels.silver_to_gold": "Ulepszenie srebrnej beczki na złotą",
+  "item.metalbarrels.silver_to_diamond": "Ulepszenie srebrnej beczki na diamentową",
+  "item.metalbarrels.silver_to_obsidian": "Ulepszenie srebrnej beczki na obsydianową",
+
+  "item.metalbarrels.gold_to_diamond": "Ulepszenie złotej beczki na diamentową",
+  "item.metalbarrels.gold_to_obsidian": "Ulepszenie złotej beczki na obsydianową",
+
+  "item.metalbarrels.diamond_to_obsidian": "Ulepszenie diamentowej beczki na obsydianową",
+
+  "itemGroup.metalbarrels": "Metalowe beczki",
+
+  "metalbarrels.upgrade_successful": "Ulepszono pomyślnie"
 }
