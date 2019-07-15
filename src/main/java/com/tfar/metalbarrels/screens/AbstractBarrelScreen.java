@@ -8,8 +8,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public abstract class AbstractBarrelScreen<T extends AbstractBarrelContainer> extends ContainerScreen<T> {
 
-  private final ResourceLocation texture; //= new ResourceLocation(ExampleMod.MODID,"textures/gui/container/copper.png");
-  protected int xSize, ySize;// 176 + 28
+  private final ResourceLocation texture;
 
   public AbstractBarrelScreen(T barrelContainer, PlayerInventory playerInventory, ITextComponent component,
                               ResourceLocation texture, int width, int height) {

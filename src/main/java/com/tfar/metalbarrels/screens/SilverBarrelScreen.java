@@ -17,8 +17,8 @@ public class SilverBarrelScreen extends AbstractBarrelScreen<SilverBarrelContain
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8, this.ySize - 148, 0x404040);
-    this.font.drawString(this.title.getFormattedText(), 8, -42, 0x404040);
+    this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8, this.ySize - 100, 0x404040);
+    this.font.drawString(this.title.getFormattedText(), 8, 6, 0x404040);
   }
 
   /**

@@ -30,7 +30,6 @@ public abstract class AbstractBarrelTile extends TileEntity implements INamedCon
 
   public BarrelHandler handler;
 
-  protected int field_213967_b;
 
   @Nonnull
   @Override

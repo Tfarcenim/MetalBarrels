@@ -17,8 +17,8 @@ public class GoldBarrelScreen extends AbstractBarrelScreen<GoldBarrelContainer> 
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8, this.ySize - 149, 0x404040);
-    this.font.drawString(this.title.getFormattedText(), 8, -48, 0x404040);
+    this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8, this.ySize - 94, 0x404040);
+    this.font.drawString(this.title.getFormattedText(), 8, 6, 0x404040);
   }
 
   /**

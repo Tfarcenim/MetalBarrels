@@ -18,8 +18,8 @@ public class IronBarrelScreen extends AbstractBarrelScreen<IronBarrelContainer> 
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8, this.ySize - 121, 0x404040);
-    this.font.drawString(this.title.getFormattedText(), 8, -21, 0x404040);
+    this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8, this.ySize - 93, 0x404040);
+    this.font.drawString(this.title.getFormattedText(), 8, 6, 0x404040);
   }
 
   /**

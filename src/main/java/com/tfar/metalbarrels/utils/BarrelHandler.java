@@ -21,13 +21,12 @@ public class BarrelHandler extends ItemStackHandler {
     this.tileEntity.markDirty();
   }
 
-  public NonNullList<ItemStack> getContents(){
+  public List<ItemStack> getContents(){
     return this.stacks;
   }
 
   public void setContents(List<ItemStack> oldContents, int newSize){
-      this.stacks = NonNullList.withSize(newSize, ItemStack.EMPTY);
-
+      this.setSize(newSize);
       for (int i = 0; i < oldContents.size(); i++) {
         this.getContents().set(i, oldContents.get(i));
       }

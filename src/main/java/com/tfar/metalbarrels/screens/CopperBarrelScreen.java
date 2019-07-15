@@ -17,8 +17,8 @@ public class CopperBarrelScreen extends AbstractBarrelScreen<CopperBarrelContain
 
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-    this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8, this.ySize - 113, 0x404040);
-    this.font.drawString(this.title.getFormattedText(), 8, -13, 0x404040);
+    this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8, this.ySize - 93, 0x404040);
+    this.font.drawString(this.title.getFormattedText(), 8, 6, 0x404040);
   }
 
   /**
