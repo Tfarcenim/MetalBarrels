@@ -105,6 +105,7 @@ public abstract class AbstractBarrelContainer extends Container {
    */
   public void onContainerClosed(PlayerEntity playerIn) {
     playerCount--;
+    if (tileEntity == null)return;
     func_213965_a(tileEntity.getWorld(), tileEntity.getPos(), tileEntity.getBlockState(), SoundEvents.BLOCK_BARREL_CLOSE);
     tileEntity.getWorld().setBlockState(this.tileEntity.getPos(), tileEntity.getBlockState().with(AbstractBarrelBlock.OPEN, false), 3);
   }

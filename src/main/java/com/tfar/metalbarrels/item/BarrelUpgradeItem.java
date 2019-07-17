@@ -15,9 +15,13 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BarrelUpgradeItem extends Item {
 
@@ -44,45 +48,39 @@ public class BarrelUpgradeItem extends Item {
     if (world.isRemote || !player.isSneaking())
       return ActionResultType.PASS;
 
-
     TileEntity tileEntity = world.getTileEntity(pos);
-
+    if (tileEntity == null) return ActionResultType.PASS;
     AbstractBarrelTile newBarrel = upgradeInfo.tile;
 
-    List<ItemStack> barrelContents = new ArrayList<>();
+    final List<ItemStack> barrelContents = new ArrayList<>();
 
-
-    if (tileEntity == null)return ActionResultType.PASS;
-
-    if (tileEntity instanceof BarrelTileEntity) {
-      BarrelTileEntity barrelEntity = (BarrelTileEntity) tileEntity;
-      for (int i = 0; i < barrelEntity.getSizeInventory(); i++) {
-        barrelContents.add(((BarrelTileEntity) tileEntity).getStackInSlot(i));
-      }
-    } else if (tileEntity instanceof AbstractBarrelTile) {
-      AbstractBarrelTile barrelEntity = (AbstractBarrelTile) tileEntity;
-          barrelContents = barrelEntity.handler.getContents();
-      }
-      tileEntity.updateContainingBlockInfo();
+    if (!(tileEntity instanceof AbstractBarrelTile))
+      tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+              .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
+                      .mapToObj(itemHandler::getStackInSlot).forEach(barrelContents::add));
+    else {
+      barrelContents.addAll(((AbstractBarrelTile) tileEntity).handler.getContents());
+    }
+    tileEntity.updateContainingBlockInfo();
 
 //    world.destroyBlock(blockPos,false);
-      world.removeTileEntity(pos);
+    world.removeTileEntity(pos);
 
-      BlockState newState = upgradeInfo.end_block.getDefaultState().with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING));
+    BlockState newState = upgradeInfo.end_block.getDefaultState().with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING));
 
-      world.setTileEntity(pos, newBarrel);
-      world.setBlockState(pos, newState, 3);
-      world.notifyBlockUpdate(pos, newState, newState, 3);
+    world.setTileEntity(pos, newBarrel);
+    world.setBlockState(pos, newState, 3);
+    world.notifyBlockUpdate(pos, newState, newState, 3);
 
-      TileEntity tileEntity2 = world.getTileEntity(pos);
+    TileEntity tileEntity2 = world.getTileEntity(pos);
 
-    ((AbstractBarrelTile)tileEntity2).handler.setContents(barrelContents,((AbstractBarrelTile)tileEntity2).handler.getSlots());
+    ((AbstractBarrelTile) tileEntity2).handler.setContents(barrelContents, ((AbstractBarrelTile) tileEntity2).handler.getSlots());
 
     if (!player.abilities.isCreativeMode)
-    heldStack.shrink(1);
+      heldStack.shrink(1);
 
     player.sendStatusMessage(new TranslationTextComponent("metalbarrels.upgrade_successful")
-            .setStyle(new Style().setColor(TextFormatting.GREEN)),true);
+            .setStyle(new Style().setColor(TextFormatting.GREEN)), true);
     return ActionResultType.SUCCESS;
   }
 }
