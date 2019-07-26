@@ -9,7 +9,7 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
-public final class PacketHandler {
+public class PacketHandler {
   private static final String PROTOCOL_VERSION = "1.0";
 
   private static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MetalBarrels.MODID, "main_channel"))

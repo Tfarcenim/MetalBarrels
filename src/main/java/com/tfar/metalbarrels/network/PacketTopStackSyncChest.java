@@ -11,6 +11,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -60,7 +62,7 @@ public class PacketTopStackSyncChest {
     public static void handle(final PacketTopStackSyncChest message, Supplier<NetworkEvent.Context> ctx) {
       ctx.get().enqueueWork(() -> {
 
-        World world = Minecraft.getInstance().world;
+      World world = DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().world);
 
         if (world != null) {
           TileEntity tile = world.getTileEntity(message.pos);
