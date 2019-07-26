@@ -1,4 +1,4 @@
-package com.tfar.metalbarrels.tiles;
+package com.tfar.metalbarrels.tile;
 
 import com.tfar.metalbarrels.MetalBarrels;
 import com.tfar.metalbarrels.container.SilverBarrelContainer;
@@ -16,7 +16,7 @@ public class SilverBarrelTile extends AbstractBarrelTile {
   }
 
   @Override
-  public ITextComponent getDisplayName() {
+  protected ITextComponent getDefaultName() {
     return new TranslationTextComponent("metalbarrels.silver_barrel");
   }
 

@@ -19,6 +19,7 @@ public DiamondBarrelContainer(int id, World world, BlockPos pos, PlayerInventory
   @Override
   public boolean canInteractWith(@Nonnull PlayerEntity playerIn) {
     return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, MetalBarrels.ObjectHolders.DIAMOND_BARREL)
-            || isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, MetalBarrels.ObjectHolders.OBSIDIAN_BARREL);
+            || isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, MetalBarrels.ObjectHolders.OBSIDIAN_BARREL)
+            || isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, MetalBarrels.ObjectHolders.CRYSTAL_BARREL);
   }
 }

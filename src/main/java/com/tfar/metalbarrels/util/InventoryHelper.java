@@ -1,8 +1,8 @@
-package com.tfar.metalbarrels.utils;
+package com.tfar.metalbarrels.util;
 
 import java.util.Random;
 
-import com.tfar.metalbarrels.tiles.AbstractBarrelTile;
+import com.tfar.metalbarrels.tile.AbstractBarrelTile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;

@@ -4,9 +4,11 @@ import com.tfar.metalbarrels.block.*;
 import com.tfar.metalbarrels.container.*;
 import com.tfar.metalbarrels.item.BarrelUpgradeItem;
 import com.tfar.metalbarrels.item.UpgradeInfo;
+import com.tfar.metalbarrels.network.PacketHandler;
+import com.tfar.metalbarrels.render.CrystalBarrelTileSpecialRenderer;
 import com.tfar.metalbarrels.screens.*;
-import com.tfar.metalbarrels.tiles.*;
-import com.tfar.metalbarrels.utils.Tags;
+import com.tfar.metalbarrels.tile.*;
+import com.tfar.metalbarrels.util.Tags;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.ScreenManager;
@@ -16,12 +18,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
@@ -33,10 +38,7 @@ import java.util.Set;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(MetalBarrels.MODID)
-public class MetalBarrels
-{
-  // Directly reference a log4j logger.
-  private static final Logger LOGGER = LogManager.getLogger();
+public class MetalBarrels {
 
   public static final String MODID = "metalbarrels";
 
@@ -48,8 +50,14 @@ public class MetalBarrels
   };
 
   public MetalBarrels() {
-    // Register the doClientStuff method for modloading
+    // Register doClientStuff method for modloading
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+    // Register commonSetup method for modloading
+    FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+  }
+
+  private void commonSetup(final FMLCommonSetupEvent event){
+    PacketHandler.register();
   }
 
   private void doClientStuff(final FMLClientSetupEvent event) {
@@ -77,6 +85,7 @@ public class MetalBarrels
       registerBlock(new GoldBarrelBlock(metal),"gold_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new DiamondBarrelBlock(metal),"diamond_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new DiamondBarrelBlock(obsidian),"obsidian_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new CrystalBarrelBlock(metal),"crystal_barrel",blockRegistryEvent.getRegistry());
     }
     private static void registerBlock(Block block, String name, IForgeRegistry<Block> registry) {
       registry.register(block.setRegistryName(name));
@@ -165,6 +174,26 @@ public class MetalBarrels
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.DIAMOND_BARRELS,
               ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"diamond_to_obsidian",registry);
 
+      //crystal
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
+              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"wood_to_crystal",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
+              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"copper_to_crystal",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
+              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"iron_to_crystal",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.SILVER_BARRELS,
+              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"silver_to_crystal",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.GOLD_BARRELS,
+              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"gold_to_crystal",registry);
+
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.DIAMOND_BARRELS,
+              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"diamond_to_crystal",registry);
+
     }
 
     private static void registerItem(Item item, String name, IForgeRegistry<Item> registry) {
@@ -192,6 +221,7 @@ public class MetalBarrels
       event.getRegistry().register(TileEntityType.Builder.create(SilverBarrelTile::new, ObjectHolders.SILVER_BARREL).build(null).setRegistryName("silver_tile"));
       event.getRegistry().register(TileEntityType.Builder.create(GoldBarrelTile::new, ObjectHolders.GOLD_BARREL).build(null).setRegistryName("gold_tile"));
       event.getRegistry().register(TileEntityType.Builder.create(DiamondBarrelTile::new, ObjectHolders.DIAMOND_BARREL,ObjectHolders.OBSIDIAN_BARREL).build(null).setRegistryName("diamond_tile"));
+      event.getRegistry().register(TileEntityType.Builder.create(CrystalBarrelTile::new, ObjectHolders.CRYSTAL_BARREL).build(null).setRegistryName("crystal_tile"));
 
     }
   }
@@ -220,5 +250,8 @@ public class MetalBarrels
     public static final Block SILVER_BARREL = null;
     public static final ContainerType<SilverBarrelContainer> SILVER_CONTAINER = null;
     public static final TileEntityType<SilverBarrelTile> SILVER_TILE = null;
+
+    public static final Block CRYSTAL_BARREL = null;
+    public static final TileEntityType<CrystalBarrelTile> CRYSTAL_TILE = null;
   }
 }

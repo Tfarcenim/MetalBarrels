@@ -1,6 +1,6 @@
 package com.tfar.metalbarrels.item;
 
-import com.tfar.metalbarrels.tiles.AbstractBarrelTile;
+import com.tfar.metalbarrels.tile.AbstractBarrelTile;
 import net.minecraft.block.Block;
 import net.minecraft.tags.Tag;
 

@@ -1,8 +1,7 @@
-package com.tfar.metalbarrels.utils;
+package com.tfar.metalbarrels.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.List;

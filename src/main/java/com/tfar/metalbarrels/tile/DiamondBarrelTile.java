@@ -1,4 +1,4 @@
-package com.tfar.metalbarrels.tiles;
+package com.tfar.metalbarrels.tile;
 
 import com.tfar.metalbarrels.MetalBarrels;
 import com.tfar.metalbarrels.container.DiamondBarrelContainer;
@@ -17,10 +17,8 @@ public class DiamondBarrelTile extends AbstractBarrelTile {
   }
 
   @Override
-  public ITextComponent getDisplayName() {
-    if (this.getBlockState().getBlock() == MetalBarrels.ObjectHolders.OBSIDIAN_BARREL)
-      return new TranslationTextComponent("metalbarrels.obsidian_barrel");
-    return new TranslationTextComponent("metalbarrels.diamond_barrel");
+  public ITextComponent getDefaultName() {
+    return this.getBlockState().getBlock() == MetalBarrels.ObjectHolders.OBSIDIAN_BARREL ? new TranslationTextComponent("metalbarrels.obsidian_barrel") : new TranslationTextComponent("metalbarrels.diamond_barrel");
   }
 
   @Nullable

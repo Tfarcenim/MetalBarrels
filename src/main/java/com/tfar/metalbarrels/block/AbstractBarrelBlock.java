@@ -1,7 +1,7 @@
 package com.tfar.metalbarrels.block;
 
-import com.tfar.metalbarrels.tiles.AbstractBarrelTile;
-import com.tfar.metalbarrels.utils.InventoryHelper;
+import com.tfar.metalbarrels.tile.AbstractBarrelTile;
+import com.tfar.metalbarrels.util.InventoryHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +22,6 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -89,12 +88,6 @@ public abstract class AbstractBarrelBlock extends Block {
     return true;
   }
 
-  @Nullable
-  @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return null;
-  }
-
   @Override
   public BlockState getStateForPlacement(BlockItemUseContext context) {
     return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
@@ -123,7 +116,7 @@ public abstract class AbstractBarrelBlock extends Block {
     if (stack.hasDisplayName()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
       if (tileentity instanceof AbstractBarrelTile) {
-       // ((AbstractBarrelTile)tileentity).setCustomName(stack.getDisplayName());
+        ((AbstractBarrelTile)tileentity).setCustomName(stack.getDisplayName());
       }
     }
   }

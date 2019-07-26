@@ -1,0 +1,13 @@
+{
+    "type":"minecraft:crafting_shaped",
+    "pattern":[
+        " o ",
+        "obo",
+        " o "
+    ],
+    "key":{
+        "o":{"item":"minecraft:glass"},
+        "b":{"item":"metalbarrels:copper_to_diamond"}
+    },
+    "result":{"item":"metalbarrels:copper_to_crystal"}
+}

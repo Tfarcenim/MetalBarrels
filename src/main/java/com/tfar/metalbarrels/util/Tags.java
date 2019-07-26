@@ -1,9 +1,7 @@
-package com.tfar.metalbarrels.utils;
+package com.tfar.metalbarrels.util;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 

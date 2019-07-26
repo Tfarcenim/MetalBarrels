@@ -1,8 +1,7 @@
 package com.tfar.metalbarrels.container;
 
 import com.tfar.metalbarrels.block.AbstractBarrelBlock;
-import com.tfar.metalbarrels.tiles.AbstractBarrelTile;
-import net.minecraft.block.BarrelBlock;
+import com.tfar.metalbarrels.tile.AbstractBarrelTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

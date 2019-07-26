@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=down,open=false": { "model": "metalbarrels:block/crystal_barrel", "x": 180 },
+    "facing=up,open=false": { "model": "metalbarrels:block/crystal_barrel" },
+    "facing=north,open=false": { "model": "metalbarrels:block/crystal_barrel", "x": 90 },
+    "facing=south,open=false": { "model": "metalbarrels:block/crystal_barrel", "x": 90, "y": 180 },
+    "facing=west,open=false": { "model": "metalbarrels:block/crystal_barrel", "x": 90, "y": 270 },
+    "facing=east,open=false": { "model": "metalbarrels:block/crystal_barrel", "x": 90, "y": 90 },
+    "facing=down,open=true": { "model": "metalbarrels:block/crystal_barrel_open", "x": 180 },
+    "facing=up,open=true": { "model": "metalbarrels:block/crystal_barrel_open" },
+    "facing=north,open=true": { "model": "metalbarrels:block/crystal_barrel_open", "x": 90 },
+    "facing=south,open=true": { "model": "metalbarrels:block/crystal_barrel_open", "x": 90, "y": 180 },
+    "facing=west,open=true": { "model": "metalbarrels:block/crystal_barrel_open", "x": 90, "y": 270 },
+    "facing=east,open=true": { "model": "metalbarrels:block/crystal_barrel_open", "x": 90, "y": 90 }
+  }
+}

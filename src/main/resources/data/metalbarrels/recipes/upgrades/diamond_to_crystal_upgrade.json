@@ -6,9 +6,9 @@
         " o "
     ],
     "key":{
-        "o":{"item":"minecraft:obsidian"},
+        "o":{"item":"minecraft:glass"},
         "g":{"item": "minecraft:glass_pane"}
     },
 
-    "result":{"item":"metalbarrels:diamond_to_obsidian"}
+    "result":{"item":"metalbarrels:diamond_to_crystal"}
 }

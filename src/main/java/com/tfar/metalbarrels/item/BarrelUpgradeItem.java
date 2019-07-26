@@ -1,13 +1,12 @@
 package com.tfar.metalbarrels.item;
 
-import com.tfar.metalbarrels.tiles.AbstractBarrelTile;
+import com.tfar.metalbarrels.tile.AbstractBarrelTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.BarrelTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
@@ -15,10 +14,9 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -32,16 +30,16 @@ public class BarrelUpgradeItem extends Item {
     this.upgradeInfo = info;
   }
 
+  @Nonnull
   @Override
-  public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+  public ActionResultType onItemUse(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
     BlockPos pos = context.getPos();
     World world = context.getWorld();
     ItemStack heldStack = context.getItem();
     BlockState state = world.getBlockState(pos);
 
-    if (!upgradeInfo.canUpgrade(world.getBlockState(pos).getBlock())) {
-      System.out.println(upgradeInfo.start_block.getAllElements());
+    if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos).getBlock())) {
       return ActionResultType.FAIL;
 
     }

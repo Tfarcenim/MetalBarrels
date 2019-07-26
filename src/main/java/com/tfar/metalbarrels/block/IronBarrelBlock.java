@@ -1,6 +1,6 @@
 package com.tfar.metalbarrels.block;
 
-import com.tfar.metalbarrels.tiles.IronBarrelTile;
+import com.tfar.metalbarrels.tile.IronBarrelTile;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
