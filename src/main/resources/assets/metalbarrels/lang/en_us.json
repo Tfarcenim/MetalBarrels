@@ -58,5 +58,6 @@
 
   "itemGroup.metalbarrels": "Metal Barrels",
 
-  "metalbarrels.upgrade_successful": "Upgrade Successful"
+  "metalbarrels.upgrade_successful": "Upgrade Successful",
+  "metalbarrels.in_use": "Barrel is in Use"
 }

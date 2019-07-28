@@ -41,38 +41,37 @@ public class BarrelUpgradeItem extends Item {
 
     if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos).getBlock())) {
       return ActionResultType.FAIL;
-
     }
     if (world.isRemote || !player.isSneaking())
       return ActionResultType.PASS;
 
-    TileEntity tileEntity = world.getTileEntity(pos);
-    if (tileEntity == null) return ActionResultType.PASS;
-    AbstractBarrelTile newBarrel = upgradeInfo.tile;
+    if (state.get(BlockStateProperties.OPEN)){
+      player.sendStatusMessage(new TranslationTextComponent("metalbarrels.in_use")
+              .setStyle(new Style().setColor(TextFormatting.RED)), true);
+      return ActionResultType.PASS;
+    }
+
+      TileEntity oldBarrel = world.getTileEntity(pos);
+
 
     final List<ItemStack> barrelContents = new ArrayList<>();
 
-    if (!(tileEntity instanceof AbstractBarrelTile))
-      tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-              .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
-                      .mapToObj(itemHandler::getStackInSlot).forEach(barrelContents::add));
-    else {
-      barrelContents.addAll(((AbstractBarrelTile) tileEntity).handler.getContents());
-    }
-    tileEntity.updateContainingBlockInfo();
-
-//    world.destroyBlock(blockPos,false);
-    world.removeTileEntity(pos);
+    if (oldBarrel instanceof AbstractBarrelTile)
+      barrelContents.addAll(((AbstractBarrelTile) oldBarrel).handler.getContents());
+    else oldBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
+                    .mapToObj(itemHandler::getStackInSlot).forEach(barrelContents::add));
+    oldBarrel.updateContainingBlockInfo();
+    oldBarrel.remove();
 
     BlockState newState = upgradeInfo.end_block.getDefaultState().with(BlockStateProperties.FACING, state.get(BlockStateProperties.FACING));
 
-    world.setTileEntity(pos, newBarrel);
     world.setBlockState(pos, newState, 3);
     world.notifyBlockUpdate(pos, newState, newState, 3);
 
-    TileEntity tileEntity2 = world.getTileEntity(pos);
+    TileEntity newBarrel = world.getTileEntity(pos);
 
-    ((AbstractBarrelTile) tileEntity2).handler.setContents(barrelContents, ((AbstractBarrelTile) tileEntity2).handler.getSlots());
+    ((AbstractBarrelTile) newBarrel).handler.setContents(barrelContents, ((AbstractBarrelTile) newBarrel).handler.getSlots());
 
     if (!player.abilities.isCreativeMode)
       heldStack.shrink(1);
@@ -82,7 +81,3 @@ public class BarrelUpgradeItem extends Item {
     return ActionResultType.SUCCESS;
   }
 }
-
-
-
-

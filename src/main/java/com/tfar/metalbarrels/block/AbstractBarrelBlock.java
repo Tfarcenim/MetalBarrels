@@ -1,43 +1,38 @@
 package com.tfar.metalbarrels.block;
 
 import com.tfar.metalbarrels.tile.AbstractBarrelTile;
-import com.tfar.metalbarrels.util.InventoryHelper;
-import net.minecraft.block.Block;
+import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("deprecation")
-public abstract class AbstractBarrelBlock extends Block {
+public abstract class AbstractBarrelBlock extends BarrelBlock {
 
-  public static final DirectionProperty FACING = BlockStateProperties.FACING;
-  public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
+  private static final Random RANDOM = new Random();
 
   public AbstractBarrelBlock(Properties properties) {
     super(properties);
-    this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(OPEN, false));
+   // this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(OPEN, false));
   }
 
   @Override
@@ -53,13 +48,22 @@ public abstract class AbstractBarrelBlock extends Block {
   }
 
   public static void dropItems(AbstractBarrelTile barrel, World world, BlockPos pos) {
+    IntStream.range(0, barrel.handler.getSlots()).mapToObj(i -> barrel.handler.getStackInSlot(i)).filter(stack -> !stack.isEmpty()).forEach(stack -> spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+  }
 
-      for (int i = 0; i < barrel.handler.getSlots(); ++i) {
-        ItemStack stack = barrel.handler.getStackInSlot(i);
+  public static void spawnItemStack(World worldIn, double x, double y, double z, ItemStack stack) {
+    double d0 = EntityType.ITEM.getWidth();
+    double d1 = 1 - d0;
+    double d2 = d0 / 2;
+    double d3 = Math.floor(x) + RANDOM.nextDouble() * d1 + d2;
+    double d4 = Math.floor(y) + RANDOM.nextDouble() * d1;
+    double d5 = Math.floor(z) + RANDOM.nextDouble() * d1 + d2;
 
-        if (!stack.isEmpty()) {
-          InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-      }
+    while(!stack.isEmpty()) {
+      ItemEntity itementity = new ItemEntity(worldIn, d3, d4, d5, stack.split(RANDOM.nextInt(21) + 10));
+      float f = 0.05F;
+      itementity.setMotion(RANDOM.nextGaussian() * f, RANDOM.nextGaussian() * f + 0.2, RANDOM.nextGaussian() * f);
+      worldIn.addEntity(itementity);
     }
   }
 
@@ -70,27 +74,14 @@ public abstract class AbstractBarrelBlock extends Block {
       if (tileEntity instanceof INamedContainerProvider) {
         NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
         player.addStat(Stats.OPEN_BARREL);
-      } else {
-        throw new IllegalStateException("Our named container provider is missing!");
-      }
+      } else throw new IllegalStateException("Our named container provider is missing!");
     }
     return true;
   }
 
   @Override
-  public INamedContainerProvider getContainer(BlockState state, World world, BlockPos pos) {
-    TileEntity te = world.getTileEntity(pos);
-    return te instanceof AbstractBarrelTile ? (INamedContainerProvider) te : null;
-  }
-
-  @Override
   public boolean hasTileEntity(BlockState state) {
     return true;
-  }
-
-  @Override
-  public BlockState getStateForPlacement(BlockItemUseContext context) {
-    return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
   }
 
   /**
@@ -107,8 +98,9 @@ public abstract class AbstractBarrelBlock extends Block {
    * Implementing/overriding is fine.
    */
   @Override
-  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-    return InventoryHelper.calcRedstone(worldIn.getTileEntity(pos));
+  public int getComparatorInputOverride(BlockState blockState, World world, BlockPos pos) {
+    TileEntity barrel = world.getTileEntity(pos);
+    return barrel instanceof AbstractBarrelTile ? ItemHandlerHelper.calcRedstoneFromInventory(((AbstractBarrelTile) barrel).handler) : 0;
   }
 
   @Override
@@ -119,34 +111,6 @@ public abstract class AbstractBarrelBlock extends Block {
         ((AbstractBarrelTile)tileentity).setCustomName(stack.getDisplayName());
       }
     }
-  }
-
-  /**
-   * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
-   * blockstate.
-   * @deprecated call via {@link BlockState#rotate(Rotation)} whenever possible. Implementing/overriding is
-   * fine.
-   */
-  @Nonnull
-  @Override
-  public BlockState rotate(BlockState state, Rotation rot) {
-    return state.with(FACING, rot.rotate(state.get(FACING)));
-  }
-
-  /**
-   * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
-   * blockstate.
-   * @deprecated call via {@link BlockState#mirror(Mirror)} whenever possible. Implementing/overriding is fine.
-   */
-  @Nonnull
-  @Override
-  public BlockState mirror(BlockState state, Mirror mirrorIn) {
-    return state.rotate(mirrorIn.toRotation(state.get(FACING)));
-  }
-
-  @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(FACING, OPEN);
   }
 
   @Override

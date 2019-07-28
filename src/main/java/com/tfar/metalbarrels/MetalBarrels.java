@@ -104,95 +104,95 @@ public class MetalBarrels {
       //wood to x
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
-              ObjectHolders.COPPER_BARREL,new CopperBarrelTile())),"wood_to_copper",registry);
+              ObjectHolders.COPPER_BARREL)),"wood_to_copper",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
-              ObjectHolders.IRON_BARREL,new IronBarrelTile())),"wood_to_iron",registry);
+              ObjectHolders.IRON_BARREL)),"wood_to_iron",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
-              ObjectHolders.SILVER_BARREL,new SilverBarrelTile())),"wood_to_silver",registry);
+              ObjectHolders.SILVER_BARREL)),"wood_to_silver",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
-              ObjectHolders.GOLD_BARREL,new GoldBarrelTile())),"wood_to_gold",registry);
+              ObjectHolders.GOLD_BARREL)),"wood_to_gold",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
-              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"wood_to_diamond",registry);
+              ObjectHolders.DIAMOND_BARREL)),"wood_to_diamond",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
-              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"wood_to_obsidian",registry);
+              ObjectHolders.OBSIDIAN_BARREL)),"wood_to_obsidian",registry);
 
       //copper to x
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
-              ObjectHolders.IRON_BARREL,new IronBarrelTile())),"copper_to_iron",registry);
+              ObjectHolders.IRON_BARREL)),"copper_to_iron",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
-              ObjectHolders.SILVER_BARREL,new SilverBarrelTile())),"copper_to_silver",registry);
+              ObjectHolders.SILVER_BARREL)),"copper_to_silver",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
-              ObjectHolders.GOLD_BARREL,new GoldBarrelTile())),"copper_to_gold",registry);
+              ObjectHolders.GOLD_BARREL)),"copper_to_gold",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
-              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"copper_to_diamond",registry);
+              ObjectHolders.DIAMOND_BARREL)),"copper_to_diamond",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
-              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"copper_to_obsidian",registry);
+              ObjectHolders.OBSIDIAN_BARREL)),"copper_to_obsidian",registry);
 
       //iron to x
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
-              ObjectHolders.SILVER_BARREL,new SilverBarrelTile())),"iron_to_silver",registry);
+              ObjectHolders.SILVER_BARREL)),"iron_to_silver",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
-              ObjectHolders.GOLD_BARREL,new GoldBarrelTile())),"iron_to_gold",registry);
+              ObjectHolders.GOLD_BARREL)),"iron_to_gold",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
-              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"iron_to_diamond",registry);
+              ObjectHolders.DIAMOND_BARREL)),"iron_to_diamond",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
-              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"iron_to_obsidian",registry);
+              ObjectHolders.OBSIDIAN_BARREL)),"iron_to_obsidian",registry);
 
       //silver to x
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.SILVER_BARRELS,
-              ObjectHolders.GOLD_BARREL,new GoldBarrelTile())),"silver_to_gold",registry);
+              ObjectHolders.GOLD_BARREL)),"silver_to_gold",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.SILVER_BARRELS,
-              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"silver_to_diamond",registry);
+              ObjectHolders.DIAMOND_BARREL)),"silver_to_diamond",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.SILVER_BARRELS,
-              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"silver_to_obsidian",registry);
+              ObjectHolders.OBSIDIAN_BARREL)),"silver_to_obsidian",registry);
 
       //gold to x
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.GOLD_BARRELS,
-              ObjectHolders.DIAMOND_BARREL,new DiamondBarrelTile())),"gold_to_diamond",registry);
+              ObjectHolders.DIAMOND_BARREL)),"gold_to_diamond",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.GOLD_BARRELS,
-              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"gold_to_obsidian",registry);
+              ObjectHolders.OBSIDIAN_BARREL)),"gold_to_obsidian",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.DIAMOND_BARRELS,
-              ObjectHolders.OBSIDIAN_BARREL,new DiamondBarrelTile())),"diamond_to_obsidian",registry);
+              ObjectHolders.OBSIDIAN_BARREL)),"diamond_to_obsidian",registry);
 
       //crystal
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.WOOD_BARRELS,
-              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"wood_to_crystal",registry);
+              ObjectHolders.CRYSTAL_BARREL)),"wood_to_crystal",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.COPPER_BARRELS,
-              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"copper_to_crystal",registry);
+              ObjectHolders.CRYSTAL_BARREL)),"copper_to_crystal",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.IRON_BARRELS,
-              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"iron_to_crystal",registry);
+              ObjectHolders.CRYSTAL_BARREL)),"iron_to_crystal",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.SILVER_BARRELS,
-              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"silver_to_crystal",registry);
+              ObjectHolders.CRYSTAL_BARREL)),"silver_to_crystal",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.GOLD_BARRELS,
-              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"gold_to_crystal",registry);
+              ObjectHolders.CRYSTAL_BARREL)),"gold_to_crystal",registry);
 
       registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(Tags.Blocks.DIAMOND_BARRELS,
-              ObjectHolders.CRYSTAL_BARREL,new DiamondBarrelTile())),"diamond_to_crystal",registry);
+              ObjectHolders.CRYSTAL_BARREL)),"diamond_to_crystal",registry);
 
     }
 
@@ -227,7 +227,7 @@ public class MetalBarrels {
   }
 
   @ObjectHolder(MetalBarrels.MODID)
-  public static class ObjectHolders{
+  public static class ObjectHolders {
 
     public static final Block COPPER_BARREL = null;
     public static final ContainerType<CopperBarrelContainer> COPPER_CONTAINER = null;

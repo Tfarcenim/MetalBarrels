@@ -1,7 +1,7 @@
 package com.tfar.metalbarrels.container;
 
-import com.tfar.metalbarrels.block.AbstractBarrelBlock;
 import com.tfar.metalbarrels.tile.AbstractBarrelTile;
+import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -44,7 +44,7 @@ public abstract class AbstractBarrelContainer extends Container {
     this.width = width;
     this.height = height;
     tileEntity = world.getTileEntity(pos);
-    world.setBlockState(pos, tileEntity.getBlockState().with(AbstractBarrelBlock.OPEN, true), 3);
+    world.setBlockState(pos, tileEntity.getBlockState().with(BarrelBlock.PROPERTY_OPEN, true), 3);
     if (playerCount == 0) func_213965_a(world, pos, tileEntity.getBlockState(), SoundEvents.BLOCK_BARREL_OPEN);
     playerCount++;
     this.playerEntity = player;
@@ -92,7 +92,7 @@ public abstract class AbstractBarrelContainer extends Container {
   }
 
   private void func_213965_a(World w, BlockPos pos, BlockState p_213965_1_, SoundEvent p_213965_2_) {
-    Vec3i vec3i = p_213965_1_.get(AbstractBarrelBlock.FACING).getDirectionVec();
+    Vec3i vec3i = p_213965_1_.get(BarrelBlock.PROPERTY_FACING).getDirectionVec();
     double d0 = pos.getX() + 0.5 + vec3i.getX() / 2d;
     double d1 = pos.getY() + 0.5 + vec3i.getY() / 2d;
     double d2 = pos.getZ() + 0.5 + vec3i.getZ() / 2d;
@@ -106,7 +106,7 @@ public abstract class AbstractBarrelContainer extends Container {
     playerCount--;
     if (tileEntity == null)return;
     func_213965_a(tileEntity.getWorld(), tileEntity.getPos(), tileEntity.getBlockState(), SoundEvents.BLOCK_BARREL_CLOSE);
-    tileEntity.getWorld().setBlockState(this.tileEntity.getPos(), tileEntity.getBlockState().with(AbstractBarrelBlock.OPEN, false), 3);
+    tileEntity.getWorld().setBlockState(this.tileEntity.getPos(), tileEntity.getBlockState().with(BarrelBlock.PROPERTY_OPEN, false), 3);
   }
 }
 
