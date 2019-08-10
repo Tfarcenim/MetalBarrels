@@ -1,20 +1,16 @@
 package com.tfar.metalbarrels.container;
 
+import com.tfar.metalbarrels.MetalBarrels;
 import com.tfar.metalbarrels.tile.AbstractBarrelTile;
 import net.minecraft.block.BarrelBlock;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -24,13 +20,11 @@ import javax.annotation.Nonnull;
 
 public abstract class AbstractBarrelContainer extends Container {
 
-  public TileEntity tileEntity;
+  public AbstractBarrelTile tileEntity;
   protected PlayerEntity playerEntity;
   protected IItemHandler playerInventory;
   private int width;
   private int height;
-
-  protected int playerCount = 0;
 
   public AbstractBarrelContainer(ContainerType<?> containerType,
                                  int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player,
@@ -43,15 +37,18 @@ public abstract class AbstractBarrelContainer extends Container {
     super(containerType, id);
     this.width = width;
     this.height = height;
-    tileEntity = world.getTileEntity(pos);
+    tileEntity = (AbstractBarrelTile)world.getTileEntity(pos);
     world.setBlockState(pos, tileEntity.getBlockState().with(BarrelBlock.PROPERTY_OPEN, true), 3);
-    if (playerCount == 0) func_213965_a(world, pos, tileEntity.getBlockState(), SoundEvents.BLOCK_BARREL_OPEN);
-    playerCount++;
+    if (tileEntity.players == 0) {
+      this.tileEntity.soundStuff(tileEntity.getBlockState(), SoundEvents.BLOCK_BARREL_OPEN);
+      this.tileEntity.changeState(tileEntity.getBlockState(), true);
+    }
+    tileEntity.players++;
     this.playerEntity = player;
 
     for (int i = 0; i < height; i++)
       for (int j = 0; j < width; j++)
-        addSlot(new SlotItemHandler(((AbstractBarrelTile) tileEntity).handler,
+        addSlot(new SlotItemHandler(tileEntity.handler,
                 j + width * i, containerX + j * 18, containerY + i * 18));
     this.playerInventory = new InvWrapper(playerInventory);
 
@@ -91,22 +88,21 @@ public abstract class AbstractBarrelContainer extends Container {
     return itemstack;
   }
 
-  private void func_213965_a(World w, BlockPos pos, BlockState p_213965_1_, SoundEvent p_213965_2_) {
-    Vec3i vec3i = p_213965_1_.get(BarrelBlock.PROPERTY_FACING).getDirectionVec();
-    double d0 = pos.getX() + 0.5 + vec3i.getX() / 2d;
-    double d1 = pos.getY() + 0.5 + vec3i.getY() / 2d;
-    double d2 = pos.getZ() + 0.5 + vec3i.getZ() / 2d;
-    w.playSound(null, d0, d1, d2, p_213965_2_, SoundCategory.BLOCKS, 0.5F, w.rand.nextFloat() * 0.1F + 0.9F);
-  }
-
   /**
    * Called when the container is closed.
    */
   public void onContainerClosed(PlayerEntity playerIn) {
-    playerCount--;
-    if (tileEntity == null)return;
-    func_213965_a(tileEntity.getWorld(), tileEntity.getPos(), tileEntity.getBlockState(), SoundEvents.BLOCK_BARREL_CLOSE);
-    tileEntity.getWorld().setBlockState(this.tileEntity.getPos(), tileEntity.getBlockState().with(BarrelBlock.PROPERTY_OPEN, false), 3);
+    if (tileEntity == null){
+      MetalBarrels.logger.warn("unexpected null on container close");
+      return;
+    }
+    if (!playerIn.isSpectator()) {
+      --this.tileEntity.players;
+    }
+    if (tileEntity.players <= 0){
+      tileEntity.soundStuff(tileEntity.getBlockState(),SoundEvents.BLOCK_BARREL_CLOSE);
+      tileEntity.changeState(playerIn.world.getBlockState(tileEntity.getPos()),false);
+    }
   }
 }
 

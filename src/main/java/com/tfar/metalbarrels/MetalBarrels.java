@@ -26,6 +26,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +37,8 @@ import java.util.Set;
 public class MetalBarrels {
 
   public static final String MODID = "metalbarrels";
+
+  public static final Logger logger = LogManager.getLogger();
 
   public static final ItemGroup tab = new ItemGroup(MODID) {
     @Override
