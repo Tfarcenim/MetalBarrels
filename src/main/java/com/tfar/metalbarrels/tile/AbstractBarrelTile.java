@@ -8,15 +8,13 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.INameable;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,6 +32,8 @@ public abstract class AbstractBarrelTile extends TileEntity implements INamedCon
   }
 
   public BarrelHandler handler;
+  public LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler).cast();
+
   public int players = 0;
 
   @Nonnull
@@ -78,7 +78,7 @@ public abstract class AbstractBarrelTile extends TileEntity implements INamedCon
   @Nonnull
   @Override
   public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-    return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? LazyOptional.of(() -> handler).cast() : super.getCapability(cap, side);
+    return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? optional.cast() : super.getCapability(cap, side);
   }
 
   public void setCustomName(ITextComponent name) {

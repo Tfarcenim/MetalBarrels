@@ -26,5 +26,3 @@ public class CopperBarrelTile extends AbstractBarrelTile {
     return new CopperBarrelContainer(id, world, pos, playerInventory, player);
   }
 }
-
-
