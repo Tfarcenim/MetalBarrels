@@ -32,7 +32,7 @@ public abstract class AbstractBarrelTile extends TileEntity implements INamedCon
   }
 
   public BarrelHandler handler;
-  public LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler).cast();
+  public LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler);
 
   public int players = 0;
 

@@ -5,7 +5,7 @@
     ],
     "key":{
         "c":{"tag":"forge:ingots/copper"},
-        "b":{"tag":"forge:barrels"}
+        "b":{"tag":"forge:barrels/wooden"}
     },
     "result":{"item":"metalbarrels:copper_barrel"}
 }
