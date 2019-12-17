@@ -88,7 +88,7 @@ public class MetalBarrels {
       registerBlock(new GoldBarrelBlock(metal),"gold_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new DiamondBarrelBlock(metal),"diamond_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new DiamondBarrelBlock(obsidian),"obsidian_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new CrystalBarrelBlock(metal),"crystal_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new CrystalBarrelBlock(metal.func_226896_b_()),"crystal_barrel",blockRegistryEvent.getRegistry());
     }
     private static void registerBlock(Block block, String name, IForgeRegistry<Block> registry) {
       registry.register(block.setRegistryName(name));

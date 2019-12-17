@@ -70,7 +70,7 @@ minecraft {
         }
     }
 }
-
+/*
 repositories{
     maven {
         // location of the maven that hosts JEI files
@@ -82,7 +82,7 @@ repositories{
         name = "ModMaven"
         url = "https://modmaven.k-4u.nl"
     }
-}
+}*/
 
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
@@ -90,9 +90,9 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}" //21
 
     // compile against the JEI API but do not include it at runtime
-    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
+    //compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     // at runtime, use the full JEI jar
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+    //runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 
     //compile fg.deobf("curse.maven:iron-chests:2783917")
 

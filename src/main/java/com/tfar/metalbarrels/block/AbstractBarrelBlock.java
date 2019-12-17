@@ -12,6 +12,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -68,15 +69,16 @@ public abstract class AbstractBarrelBlock extends BarrelBlock {
   }
 
   @Override
-  public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+  public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos,
+                                         PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (!world.isRemote) {
       TileEntity tileEntity = world.getTileEntity(pos);
       if (tileEntity instanceof INamedContainerProvider) {
         NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
         player.addStat(Stats.OPEN_BARREL);
-      } else throw new IllegalStateException("Our named container provider is missing!");
+      }
     }
-    return true;
+    return ActionResultType.SUCCESS;
   }
 
   @Override

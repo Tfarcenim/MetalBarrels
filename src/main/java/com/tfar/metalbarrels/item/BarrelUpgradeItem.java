@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -67,7 +68,7 @@ public class BarrelUpgradeItem extends Item {
     if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos).getBlock())) {
       return ActionResultType.FAIL;
     }
-    if (world.isRemote || !player.isSneaking())
+    if (world.isRemote || player.getPose() != Pose.CROUCHING)
       return ActionResultType.PASS;
 
     if (state.getBlock() instanceof BarrelBlock)
