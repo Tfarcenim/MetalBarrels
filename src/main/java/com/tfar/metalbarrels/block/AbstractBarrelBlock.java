@@ -3,9 +3,7 @@ package com.tfar.metalbarrels.block;
 import com.tfar.metalbarrels.tile.AbstractBarrelTile;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -23,17 +21,15 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Random;
 import java.util.stream.IntStream;
+
+import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
 
 @SuppressWarnings("deprecation")
 public abstract class AbstractBarrelBlock extends BarrelBlock {
 
-  private static final Random RANDOM = new Random();
-
   public AbstractBarrelBlock(Properties properties) {
     super(properties);
-   // this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(OPEN, false));
   }
 
   @Override
@@ -52,33 +48,23 @@ public abstract class AbstractBarrelBlock extends BarrelBlock {
     IntStream.range(0, barrel.handler.getSlots()).mapToObj(i -> barrel.handler.getStackInSlot(i)).filter(stack -> !stack.isEmpty()).forEach(stack -> spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
   }
 
-  public static void spawnItemStack(World worldIn, double x, double y, double z, ItemStack stack) {
-    double d0 = EntityType.ITEM.getWidth();
-    double d1 = 1 - d0;
-    double d2 = d0 / 2;
-    double d3 = Math.floor(x) + RANDOM.nextDouble() * d1 + d2;
-    double d4 = Math.floor(y) + RANDOM.nextDouble() * d1;
-    double d5 = Math.floor(z) + RANDOM.nextDouble() * d1 + d2;
-
-    while(!stack.isEmpty()) {
-      ItemEntity itementity = new ItemEntity(worldIn, d3, d4, d5, stack.split(RANDOM.nextInt(21) + 10));
-      float f = 0.05F;
-      itementity.setMotion(RANDOM.nextGaussian() * f, RANDOM.nextGaussian() * f + 0.2, RANDOM.nextGaussian() * f);
-      worldIn.addEntity(itementity);
-    }
-  }
-
   @Override
   public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos,
                                          PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (!world.isRemote) {
-      TileEntity tileEntity = world.getTileEntity(pos);
-      if (tileEntity instanceof INamedContainerProvider) {
-        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) tileEntity, tileEntity.getPos());
+      INamedContainerProvider tileEntity = getContainer(state,world,pos);
+      if (tileEntity != null) {
+        NetworkHooks.openGui((ServerPlayerEntity) player, tileEntity, pos);
         player.addStat(Stats.OPEN_BARREL);
       }
     }
     return ActionResultType.SUCCESS;
+  }
+
+  @Nullable
+  @Override
+  public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
+    return (INamedContainerProvider)worldIn.getTileEntity(pos);
   }
 
   @Override
@@ -113,11 +99,6 @@ public abstract class AbstractBarrelBlock extends BarrelBlock {
         ((AbstractBarrelTile)tileentity).setCustomName(stack.getDisplayName());
       }
     }
-  }
-
-  @Override
-  public int getHarvestLevel(BlockState state) {
-    return 1;
   }
 
   @Nullable

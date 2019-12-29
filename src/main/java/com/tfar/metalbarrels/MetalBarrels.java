@@ -9,6 +9,7 @@ import com.tfar.metalbarrels.screens.*;
 import com.tfar.metalbarrels.tile.*;
 import com.tfar.metalbarrels.util.Tags;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.ContainerType;
@@ -80,15 +81,17 @@ public class MetalBarrels {
 
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-      Block.Properties metal = Block.Properties.create(Material.IRON).hardnessAndResistance(2.5f,6);
-      Block.Properties obsidian = Block.Properties.create(Material.ROCK).hardnessAndResistance(15,6000);
-      registerBlock(new CopperBarrelBlock(metal),"copper_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new IronBarrelBlock(metal),"iron_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new SilverBarrelBlock(metal),"silver_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new GoldBarrelBlock(metal),"gold_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new DiamondBarrelBlock(metal),"diamond_barrel",blockRegistryEvent.getRegistry());
+      Block.Properties metal = Block.Properties.create(Material.IRON).hardnessAndResistance(2.5f,6).sound(SoundType.METAL);
+      Block.Properties softmetal = metal.harvestLevel(1);
+      Block.Properties hardmetal = metal.harvestLevel(2);
+      Block.Properties obsidian = Block.Properties.create(Material.ROCK).hardnessAndResistance(15,6000).harvestLevel(3);
+      registerBlock(new CopperBarrelBlock(softmetal),"copper_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new IronBarrelBlock(softmetal),"iron_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new SilverBarrelBlock(hardmetal),"silver_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new GoldBarrelBlock(hardmetal),"gold_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new DiamondBarrelBlock(hardmetal),"diamond_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new DiamondBarrelBlock(obsidian),"obsidian_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new CrystalBarrelBlock(metal.func_226896_b_()),"crystal_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new CrystalBarrelBlock(hardmetal.func_226896_b_()),"crystal_barrel",blockRegistryEvent.getRegistry());
     }
     private static void registerBlock(Block block, String name, IForgeRegistry<Block> registry) {
       registry.register(block.setRegistryName(name));

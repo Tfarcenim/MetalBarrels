@@ -15,8 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class Client {
   @SubscribeEvent
   public static void doClientStuff(final FMLClientSetupEvent event) {
-    ClientRegistry.bindTileEntityRenderer(MetalBarrels.ObjectHolders.CRYSTAL_TILE,
-            new CrystalBarrelTileSpecialRenderer(TileEntityRendererDispatcher.instance));
+    ClientRegistry.bindTileEntityRenderer(MetalBarrels.ObjectHolders.CRYSTAL_TILE, CrystalBarrelTileSpecialRenderer::new);
     RenderTypeLookup.setRenderLayer(MetalBarrels.ObjectHolders.CRYSTAL_BARREL,RenderType.func_228643_e_());
   }
 }

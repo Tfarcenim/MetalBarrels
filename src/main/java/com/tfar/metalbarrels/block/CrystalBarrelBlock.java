@@ -18,9 +18,4 @@ public class CrystalBarrelBlock extends AbstractBarrelBlock {
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
     return new CrystalBarrelTile();
   }
-
-  @Override
-  public int getHarvestLevel(BlockState state) {
-    return 2;
-  }
 }

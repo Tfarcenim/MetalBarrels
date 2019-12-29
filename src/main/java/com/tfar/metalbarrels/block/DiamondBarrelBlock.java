@@ -1,6 +1,5 @@
 package com.tfar.metalbarrels.block;
 
-import com.tfar.metalbarrels.MetalBarrels;
 import com.tfar.metalbarrels.tile.DiamondBarrelTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -20,8 +19,4 @@ public class DiamondBarrelBlock extends AbstractBarrelBlock {
     return new DiamondBarrelTile();
   }
 
-  @Override
-  public int getHarvestLevel(BlockState state) {
-    return state.getBlock() == MetalBarrels.ObjectHolders.OBSIDIAN_BARREL ? 3 : 2;
-  }
 }

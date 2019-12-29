@@ -33,3 +33,9 @@ description='''
 Adds additional tiers of barrels
 
 '''
+[[dependencies.metalbarrels]]
+    modId="forge"
+    mandatory=true
+    versionRange="[30.0.17,)"
+    ordering="NONE"
+    side="BOTH"
