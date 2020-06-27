@@ -1,7 +1,7 @@
 package com.tfar.metalbarrels.container;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.tile.AbstractBarrelTile;
+import com.tfar.metalbarrels.tile.MetalBarrelTile;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 public class MetalBarrelContainer extends Container {
 
-  public AbstractBarrelTile tileEntity;
+  public MetalBarrelTile tileEntity;
   protected PlayerEntity playerEntity;
   protected IItemHandler playerInventory;
   private int width;
@@ -39,7 +39,7 @@ public class MetalBarrelContainer extends Container {
     super(containerType, id);
     this.width = width;
     this.height = height;
-    tileEntity = (AbstractBarrelTile)world.getTileEntity(pos);
+    tileEntity = (MetalBarrelTile)world.getTileEntity(pos);
     world.setBlockState(pos, tileEntity.getBlockState().with(BarrelBlock.PROPERTY_OPEN, true), 3);
     if (tileEntity.players == 0) {
       this.tileEntity.soundStuff(tileEntity.getBlockState(), SoundEvents.BLOCK_BARREL_OPEN);
@@ -88,6 +88,11 @@ public class MetalBarrelContainer extends Container {
 	public static MetalBarrelContainer diamond(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
 		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.DIAMOND_CONTAINER,id,world,pos,playerInventory,player,
 						12,9,8,18, 194,35);
+	}
+
+	public static MetalBarrelContainer netherite(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.NETHERITE_CONTAINER,id,world,pos,playerInventory,player,
+						15,9,8,18, 194,35 + 27);
 	}
 
   @Override

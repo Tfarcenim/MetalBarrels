@@ -1,6 +1,6 @@
 package com.tfar.metalbarrels.block;
 
-import com.tfar.metalbarrels.tile.AbstractBarrelTile;
+import com.tfar.metalbarrels.tile.MetalBarrelTile;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -41,15 +41,15 @@ public class MetalBarrelBlock extends BarrelBlock {
   public void onReplaced(BlockState state, @Nonnull World worldIn,@Nonnull BlockPos pos,@Nonnull BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
-      if (tileentity instanceof AbstractBarrelTile) {
-        dropItems((AbstractBarrelTile)tileentity,worldIn, pos);
+      if (tileentity instanceof MetalBarrelTile) {
+        dropItems((MetalBarrelTile)tileentity,worldIn, pos);
         worldIn.updateComparatorOutputLevel(pos, this);
       }
       super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
   }
 
-  public static void dropItems(AbstractBarrelTile barrel, World world, BlockPos pos) {
+  public static void dropItems(MetalBarrelTile barrel, World world, BlockPos pos) {
     IntStream.range(0, barrel.handler.getSlots()).mapToObj(i -> barrel.handler.getStackInSlot(i)).filter(stack -> !stack.isEmpty()).forEach(stack -> spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
   }
 
@@ -99,15 +99,15 @@ public class MetalBarrelBlock extends BarrelBlock {
   @Override
   public int getComparatorInputOverride(BlockState blockState, World world, BlockPos pos) {
     TileEntity barrel = world.getTileEntity(pos);
-    return barrel instanceof AbstractBarrelTile ? ItemHandlerHelper.calcRedstoneFromInventory(((AbstractBarrelTile) barrel).handler) : 0;
+    return barrel instanceof MetalBarrelTile ? ItemHandlerHelper.calcRedstoneFromInventory(((MetalBarrelTile) barrel).handler) : 0;
   }
 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
     if (stack.hasDisplayName()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
-      if (tileentity instanceof AbstractBarrelTile) {
-        ((AbstractBarrelTile)tileentity).setCustomName(stack.getDisplayName());
+      if (tileentity instanceof MetalBarrelTile) {
+        ((MetalBarrelTile)tileentity).setCustomName(stack.getDisplayName());
       }
     }
   }

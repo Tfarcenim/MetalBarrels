@@ -3,7 +3,6 @@ borrowed from iron chests
  ********************* */
 package com.tfar.metalbarrels.network;
 
-import com.tfar.metalbarrels.tile.CrystalBarrelTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -67,9 +66,9 @@ public class PacketTopStackSyncChest {
         if (world != null) {
           TileEntity tile = world.getTileEntity(message.pos);
 
-          if (tile instanceof CrystalBarrelTile) {
+          /*if (tile instanceof CrystalBarrelTile) {
             ((CrystalBarrelTile) tile).receiveMessageFromServer(message.topStacks);
-          }
+          }*/
         }
       });
       ctx.get().setPacketHandled(true);

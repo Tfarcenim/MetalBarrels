@@ -1,5 +1,6 @@
 package com.tfar.metalbarrels.screens;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tfar.metalbarrels.container.MetalBarrelContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -19,10 +20,10 @@ public abstract class AbstractBarrelScreen<T extends MetalBarrelContainer> exten
   }
 
   @Override
-  public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
-    this.renderBackground();
-    super.render(p_render_1_, p_render_2_, p_render_3_);
-    this.renderHoveredToolTip(p_render_1_, p_render_2_);
+  public void func_230430_a_(MatrixStack stack,int x, int y, float p_render_3_) {
+    this.func_230446_a_(stack);
+    super.func_230430_a_(stack,x, y, p_render_3_);
+    this.func_230459_a_(stack,x,y);
   }
 
   /**
@@ -33,7 +34,7 @@ public abstract class AbstractBarrelScreen<T extends MetalBarrelContainer> exten
    * @param mouseY
    */
   @Override
-  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-    this.minecraft.getTextureManager().bindTexture(texture);
+  protected void func_230450_a_(MatrixStack stack,float partialTicks, int mouseX, int mouseY) {
+    this.field_230706_i_.getTextureManager().bindTexture(texture);
   }
 }

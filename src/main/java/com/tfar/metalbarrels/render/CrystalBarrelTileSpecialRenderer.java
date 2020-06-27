@@ -1,7 +1,6 @@
 package com.tfar.metalbarrels.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.tfar.metalbarrels.tile.CrystalBarrelTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -13,7 +12,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Random;
 
-public class CrystalBarrelTileSpecialRenderer extends TileEntityRenderer<CrystalBarrelTile> {
+/*public class CrystalBarrelTileSpecialRenderer extends TileEntityRenderer<CrystalBarrelTile> {
   private static ItemEntity customItem;
 
   private Random random = new Random();
@@ -73,4 +72,4 @@ public class CrystalBarrelTileSpecialRenderer extends TileEntityRenderer<Crystal
       }
     }
   }
-}
+}*/

@@ -1,11 +1,9 @@
 package com.tfar.metalbarrels.item;
 
-import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.tile.AbstractBarrelTile;
+import com.tfar.metalbarrels.tile.MetalBarrelTile;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +22,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
@@ -37,14 +34,12 @@ public class BarrelUpgradeItem extends Item {
 
   protected final UpgradeInfo upgradeInfo;
 
-
-
   public BarrelUpgradeItem(Properties properties, UpgradeInfo info) {
     super(properties);
     this.upgradeInfo = info;
   }
 
-  private static final ITextComponent s = new TranslationTextComponent("tooltip.metalbarrels.ironchest").applyTextStyle(TextFormatting.GREEN);
+  private static final ITextComponent s = new TranslationTextComponent("tooltip.metalbarrels.ironchest").func_240699_a_(TextFormatting.GREEN);
 
   public static boolean IRON_CHESTS_LOADED;
 
@@ -74,7 +69,7 @@ public class BarrelUpgradeItem extends Item {
     if (state.getBlock() instanceof BarrelBlock)
     if (state.get(BlockStateProperties.OPEN)) {
       player.sendStatusMessage(new TranslationTextComponent("metalbarrels.in_use")
-              .setStyle(new Style().setColor(TextFormatting.RED)), true);
+              .func_230530_a_(Style.field_240709_b_.func_240712_a_(TextFormatting.RED)), true);
       return ActionResultType.PASS;
     }
 
@@ -82,15 +77,15 @@ public class BarrelUpgradeItem extends Item {
     final List<ItemStack> oldBarrelContents = new ArrayList<>();
 
     Direction facing = Direction.NORTH;
-    if (state.has(BlockStateProperties.HORIZONTAL_FACING)){
+    if (state.func_235901_b_(BlockStateProperties.HORIZONTAL_FACING)){
       facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
-    }else if (state.has(BlockStateProperties.FACING)){
+    }else if (state.func_235901_b_(BlockStateProperties.FACING)){
       facing = state.get(BlockStateProperties.FACING);
     }
 
-    if (oldBarrel instanceof AbstractBarrelTile)
+    if (oldBarrel instanceof MetalBarrelTile)
       //shortcut
-      oldBarrelContents.addAll(((AbstractBarrelTile) oldBarrel).handler.getContents());
+      oldBarrelContents.addAll(((MetalBarrelTile) oldBarrel).handler.getContents());
     else oldBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
                     .mapToObj(itemHandler::getStackInSlot).forEach(oldBarrelContents::add));
@@ -100,9 +95,9 @@ public class BarrelUpgradeItem extends Item {
 
     BlockState newState = newBlock.getDefaultState();
 
-    if (newState.has(BlockStateProperties.HORIZONTAL_FACING)){
+    if (newState.func_235901_b_(BlockStateProperties.HORIZONTAL_FACING)){
       newState = newState.with(BlockStateProperties.HORIZONTAL_FACING,facing);
-    }else if (newState.has(BlockStateProperties.FACING)){
+    }else if (newState.func_235901_b_(BlockStateProperties.FACING)){
       newState = newState.with(BlockStateProperties.FACING,facing);
     }
 
@@ -115,7 +110,7 @@ public class BarrelUpgradeItem extends Item {
       heldStack.shrink(1);
 
     player.sendStatusMessage(new TranslationTextComponent("metalbarrels.upgrade_successful")
-            .setStyle(new Style().setColor(TextFormatting.GREEN)), true);
+            .func_230530_a_(Style.field_240709_b_.func_240721_b_(TextFormatting.GREEN)), true);
     return ActionResultType.SUCCESS;
   }
 }

@@ -1,7 +1,6 @@
 package com.tfar.metalbarrels.block;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -22,18 +21,6 @@ public class CrystalBarrelBlock extends MetalBarrelBlock {
 
 	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
 		return true;
-	}
-
-	public boolean causesSuffocation(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
-	}
-
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
-	}
-
-	public boolean canEntitySpawn(BlockState state, IBlockReader worldIn, BlockPos pos, EntityType<?> type) {
-		return false;
 	}
 
 }

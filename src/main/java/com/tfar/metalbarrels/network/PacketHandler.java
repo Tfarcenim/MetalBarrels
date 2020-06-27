@@ -19,7 +19,7 @@ public class PacketHandler {
           .simpleChannel();
 
   public static void register() {
-    HANDLER.registerMessage(0, PacketTopStackSyncChest.class, PacketTopStackSyncChest::encode, PacketTopStackSyncChest::decode, PacketTopStackSyncChest.Handler::handle);
+    //HANDLER.registerMessage(0, PacketTopStackSyncChest.class, PacketTopStackSyncChest::encode, PacketTopStackSyncChest::decode, PacketTopStackSyncChest.Handler::handle);
   }
 
   public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
