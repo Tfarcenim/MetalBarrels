@@ -1,16 +1,16 @@
 package com.tfar.metalbarrels.screens;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.container.GoldBarrelContainer;
+import com.tfar.metalbarrels.container.MetalBarrelContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class GoldBarrelScreen extends AbstractBarrelScreen<GoldBarrelContainer> {
+public class GoldBarrelScreen extends AbstractBarrelScreen<MetalBarrelContainer> {
 
 
   private static final ResourceLocation GOLD = new ResourceLocation(MetalBarrels.MODID,"textures/gui/container/gold.png");
-  public GoldBarrelScreen(GoldBarrelContainer goldBarrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public GoldBarrelScreen(MetalBarrelContainer goldBarrelContainer, PlayerInventory playerInventory, ITextComponent component) {
     super(goldBarrelContainer, playerInventory, component, GOLD, 176, 276);
   }
 

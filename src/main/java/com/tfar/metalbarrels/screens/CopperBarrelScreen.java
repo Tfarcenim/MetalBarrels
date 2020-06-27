@@ -1,16 +1,16 @@
 package com.tfar.metalbarrels.screens;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.container.CopperBarrelContainer;
+import com.tfar.metalbarrels.container.MetalBarrelContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class CopperBarrelScreen extends AbstractBarrelScreen<CopperBarrelContainer> {
+public class CopperBarrelScreen extends AbstractBarrelScreen<MetalBarrelContainer> {
 
 
   private static final ResourceLocation COPPER = new ResourceLocation(MetalBarrels.MODID,"textures/gui/container/copper.png");
-  public CopperBarrelScreen(CopperBarrelContainer copperBarrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public CopperBarrelScreen(MetalBarrelContainer copperBarrelContainer, PlayerInventory playerInventory, ITextComponent component) {
     super(copperBarrelContainer, playerInventory, component, COPPER, 176, 204);
   }
 

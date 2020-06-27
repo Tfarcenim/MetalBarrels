@@ -14,6 +14,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -21,15 +22,19 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
 
 @SuppressWarnings("deprecation")
-public abstract class AbstractBarrelBlock extends BarrelBlock {
+public class MetalBarrelBlock extends BarrelBlock {
 
-  public AbstractBarrelBlock(Properties properties) {
+  protected final Supplier<TileEntity> tileEntitySupplier;
+
+  public MetalBarrelBlock(Properties properties, Supplier<TileEntity> tileEntitySupplier) {
     super(properties);
+    this.tileEntitySupplier = tileEntitySupplier;
   }
 
   @Override
@@ -49,7 +54,7 @@ public abstract class AbstractBarrelBlock extends BarrelBlock {
   }
 
   @Override
-  public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos,
+  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos,
                                          PlayerEntity player, Hand hand, BlockRayTraceResult result) {
     if (!world.isRemote) {
       INamedContainerProvider tileEntity = getContainer(state,world,pos);
@@ -70,6 +75,12 @@ public abstract class AbstractBarrelBlock extends BarrelBlock {
   @Override
   public boolean hasTileEntity(BlockState state) {
     return true;
+  }
+
+  @Nullable
+  @Override
+  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    return tileEntitySupplier.get();
   }
 
   /**

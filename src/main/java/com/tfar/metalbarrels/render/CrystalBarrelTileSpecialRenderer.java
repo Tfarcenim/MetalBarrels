@@ -1,8 +1,6 @@
 package com.tfar.metalbarrels.render;
 
-import com.google.common.primitives.SignedBytes;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.tfar.metalbarrels.tile.CrystalBarrelTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -20,7 +18,18 @@ public class CrystalBarrelTileSpecialRenderer extends TileEntityRenderer<Crystal
 
   private Random random = new Random();
 
-  private ItemRenderer itemRenderer;
+  private ItemRenderer itemRenderer = new ItemRenderer(Minecraft.getInstance().getRenderManager(), Minecraft.getInstance().getItemRenderer()) {
+
+      @Override
+      public boolean shouldBob() {
+        return false;
+      }
+
+      @Override
+      public boolean shouldSpreadItems() {
+        return true;
+      }
+    };
 
   private static float[][] shifts = {{0.3F, 0.45F, 0.3F}, {0.7F, 0.45F, 0.3F}, {0.3F, 0.45F, 0.7F}, {0.7F, 0.45F, 0.7F}, {0.3F, 0.1F, 0.3F}, {0.7F, 0.1F, 0.3F}, {0.3F, 0.1F, 0.7F}, {0.7F, 0.1F, 0.7F}, {0.5F, 0.32F, 0.5F}};
 
@@ -29,16 +38,18 @@ public class CrystalBarrelTileSpecialRenderer extends TileEntityRenderer<Crystal
   }
 
   @Override
-  public void func_225616_a_(CrystalBarrelTile crystalTile, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
+  public void render(CrystalBarrelTile crystalTile, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int combinedLight, int combinedOverlayIn) {
 
-    if (this.field_228858_b_.renderInfo != null) {
-      if (crystalTile.getDistanceSq(this.field_228858_b_.renderInfo.getProjectedView().x, this.field_228858_b_.renderInfo.getProjectedView().y, this.field_228858_b_.renderInfo.getProjectedView().z) < 128d) {
+    if (this.renderDispatcher.renderInfo != null) {
+      if (crystalTile.getDistanceSq(this.renderDispatcher.renderInfo.getProjectedView().x, this.renderDispatcher.renderInfo.getProjectedView().y, this.renderDispatcher.renderInfo.getProjectedView().z) < 128d) {
         this.random.setSeed(254L);
         int shift = 0;
 
         if (crystalTile.topStacks.get(1).isEmpty()) {
           shift = 8;
         }
+
+        matrixStack.translate(.5,.5,.5);
 
         if (customItem == null) {
           customItem = new ItemEntity(EntityType.ITEM, crystalTile.getWorld());
@@ -56,26 +67,7 @@ public class CrystalBarrelTileSpecialRenderer extends TileEntityRenderer<Crystal
 
           customItem.setItem(item);
 
-          if (this.itemRenderer == null) {
-            this.itemRenderer = new ItemRenderer(Minecraft.getInstance().getRenderManager(), Minecraft.getInstance().getItemRenderer()) {
-              @Override
-              public int getModelCount(ItemStack stack) {
-                return SignedBytes.saturatedCast(Math.min(stack.getCount() / 32, 15) + 1);
-              }
-
-              @Override
-              public boolean shouldBob() {
-                return false;
-              }
-
-              @Override
-              public boolean shouldSpreadItems() {
-                return true;
-              }
-            };
-          }
-
-          this.itemRenderer.func_225623_a_(customItem, 0f, 0f, matrixStack, iRenderTypeBuffer,1);
+          this.itemRenderer.render(customItem, 0f, 0f, matrixStack, iRenderTypeBuffer,combinedLight);
 
         }
       }

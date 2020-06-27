@@ -9,6 +9,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,7 +19,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 
-public abstract class AbstractBarrelContainer extends Container {
+public class MetalBarrelContainer extends Container {
 
   public AbstractBarrelTile tileEntity;
   protected PlayerEntity playerEntity;
@@ -26,14 +27,15 @@ public abstract class AbstractBarrelContainer extends Container {
   private int width;
   private int height;
 
-  public AbstractBarrelContainer(ContainerType<?> containerType,
-                                 int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player,
-                                 int width, int height, int containerX, int containerY, int playerY) {this
+
+  public MetalBarrelContainer(ContainerType<?> containerType,
+                              int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player,
+                              int width, int height, int containerX, int containerY, int playerY) {this
           (containerType,id,world,pos,playerInventory,player,width,height,containerX,containerY,playerY,8);}
 
-  public AbstractBarrelContainer(ContainerType<?> containerType,
-                                 int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player,
-                                 int width, int height, int containerX, int containerY, int playerY, int playerX) {
+  public MetalBarrelContainer(ContainerType<?> containerType,
+                              int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player,
+                              int width, int height, int containerX, int containerY, int playerY, int playerX) {
     super(containerType, id);
     this.width = width;
     this.height = height;
@@ -61,6 +63,36 @@ public abstract class AbstractBarrelContainer extends Container {
     for (int i = 0; i < 9; i++) {
       this.addSlot(new Slot(playerInventory, i, i * 18 + playerX, playerY + 58));
     }
+  }
+
+  public static MetalBarrelContainer copper(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
+  	return new MetalBarrelContainer(MetalBarrels.ObjectHolders.COPPER_CONTAINER,id,world,pos,playerInventory,player,
+						9,5,8,18, 122);
+	}
+
+	public static MetalBarrelContainer iron(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.IRON_CONTAINER,id,world,pos,playerInventory,player,
+						9,6,8,18, 140);
+	}
+
+	public static MetalBarrelContainer silver(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.SILVER_CONTAINER,id,world,pos,playerInventory,player,
+						9,8,8,18, 176);
+	}
+
+	public static MetalBarrelContainer gold(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.GOLD_CONTAINER,id,world,pos,playerInventory,player,
+						9,9,8,18, 194);
+	}
+
+	public static MetalBarrelContainer diamond(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.DIAMOND_CONTAINER,id,world,pos,playerInventory,player,
+						12,9,8,18, 194,35);
+	}
+
+  @Override
+  public boolean canInteractWith(@Nonnull PlayerEntity playerIn) {
+    return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, tileEntity.getBlockState().getBlock());
   }
 
   @Nonnull

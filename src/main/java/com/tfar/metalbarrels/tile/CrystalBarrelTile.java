@@ -1,7 +1,7 @@
 package com.tfar.metalbarrels.tile;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.container.DiamondBarrelContainer;
+import com.tfar.metalbarrels.container.MetalBarrelContainer;
 import com.tfar.metalbarrels.network.PacketHandler;
 import com.tfar.metalbarrels.network.PacketTopStackSyncChest;
 import net.minecraft.block.BlockState;
@@ -41,7 +41,7 @@ public class CrystalBarrelTile extends AbstractBarrelTile implements ITickableTi
   @Nullable
   @Override
   public Container createMenu(int id, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
-    return new DiamondBarrelContainer(id, world, pos, playerInventory, player);
+    return MetalBarrelContainer.diamond(id, world, pos, playerInventory, player);
   }
 
   @Override

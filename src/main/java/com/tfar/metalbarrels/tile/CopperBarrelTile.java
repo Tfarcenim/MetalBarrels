@@ -1,7 +1,7 @@
 package com.tfar.metalbarrels.tile;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.container.CopperBarrelContainer;
+import com.tfar.metalbarrels.container.MetalBarrelContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -23,6 +23,6 @@ public class CopperBarrelTile extends AbstractBarrelTile {
   @Nullable
   @Override
   public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-    return new CopperBarrelContainer(id, world, pos, playerInventory, player);
+    return MetalBarrelContainer.copper(id, world, pos, playerInventory, player);
   }
 }

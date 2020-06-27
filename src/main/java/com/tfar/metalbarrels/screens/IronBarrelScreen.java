@@ -2,16 +2,16 @@ package com.tfar.metalbarrels.screens;
 
 import com.tfar.metalbarrels.MetalBarrels;
 
-import com.tfar.metalbarrels.container.IronBarrelContainer;
+import com.tfar.metalbarrels.container.MetalBarrelContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class IronBarrelScreen extends AbstractBarrelScreen<IronBarrelContainer> {
+public class IronBarrelScreen extends AbstractBarrelScreen<MetalBarrelContainer> {
 
 
   private static final ResourceLocation IRON = new ResourceLocation(MetalBarrels.MODID,"textures/gui/container/iron.png");
-  public IronBarrelScreen(IronBarrelContainer ironBarrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public IronBarrelScreen(MetalBarrelContainer ironBarrelContainer, PlayerInventory playerInventory, ITextComponent component) {
     super(ironBarrelContainer, playerInventory, component, IRON, 176, 222);
   }
 

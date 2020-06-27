@@ -1,16 +1,16 @@
 package com.tfar.metalbarrels.screens;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.container.DiamondBarrelContainer;
+import com.tfar.metalbarrels.container.MetalBarrelContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class DiamondBarrelScreen extends AbstractBarrelScreen<DiamondBarrelContainer> {
+public class DiamondBarrelScreen extends AbstractBarrelScreen<MetalBarrelContainer> {
 
 
   private static final ResourceLocation DIAMOND = new ResourceLocation(MetalBarrels.MODID,"textures/gui/container/diamond.png");
-  public DiamondBarrelScreen(DiamondBarrelContainer diamondBarrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public DiamondBarrelScreen(MetalBarrelContainer diamondBarrelContainer, PlayerInventory playerInventory, ITextComponent component) {
     super(diamondBarrelContainer, playerInventory, component, DIAMOND, 230, 276);
   }
 

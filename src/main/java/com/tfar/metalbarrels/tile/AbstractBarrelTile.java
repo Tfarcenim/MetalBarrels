@@ -1,6 +1,6 @@
 package com.tfar.metalbarrels.tile;
 
-import com.tfar.metalbarrels.block.AbstractBarrelBlock;
+import com.tfar.metalbarrels.block.MetalBarrelBlock;
 import com.tfar.metalbarrels.util.BarrelHandler;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
@@ -48,13 +48,13 @@ public abstract class AbstractBarrelTile extends TileEntity implements INamedCon
   }
 
   public void changeState(BlockState p_213963_1_, boolean p_213963_2_) {
-    if (p_213963_1_.getBlock() instanceof AbstractBarrelBlock)
+    if (p_213963_1_.getBlock() instanceof MetalBarrelBlock)
     this.world.setBlockState(this.getPos(), p_213963_1_.with(BarrelBlock.PROPERTY_OPEN, p_213963_2_), 3);
     //else MetalBarrels.logger.warn("Attempted to set invalid property of {}",p_213963_1_.toString());
   }
 
   public void soundStuff(BlockState p_213965_1_, SoundEvent p_213965_2_) {
-    if (!(p_213965_1_.getBlock() instanceof AbstractBarrelBlock)){
+    if (!(p_213965_1_.getBlock() instanceof MetalBarrelBlock)){
       //MetalBarrels.logger.warn("Attempted to set invalid property of {}",p_213965_1_.toString());
       return;
     }

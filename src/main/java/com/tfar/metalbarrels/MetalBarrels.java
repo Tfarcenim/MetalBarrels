@@ -85,13 +85,13 @@ public class MetalBarrels {
       Block.Properties softmetal = metal.harvestLevel(1);
       Block.Properties hardmetal = metal.harvestLevel(2);
       Block.Properties obsidian = Block.Properties.create(Material.ROCK).hardnessAndResistance(15,6000).harvestLevel(3);
-      registerBlock(new CopperBarrelBlock(softmetal),"copper_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new IronBarrelBlock(softmetal),"iron_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new SilverBarrelBlock(hardmetal),"silver_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new GoldBarrelBlock(hardmetal),"gold_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new DiamondBarrelBlock(hardmetal),"diamond_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new DiamondBarrelBlock(obsidian),"obsidian_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new CrystalBarrelBlock(hardmetal.func_226896_b_()),"crystal_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(softmetal,CopperBarrelTile::new),"copper_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(softmetal,IronBarrelTile::new),"iron_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(hardmetal,SilverBarrelTile::new),"silver_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(hardmetal,GoldBarrelTile::new),"gold_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(hardmetal,DiamondBarrelTile::new),"diamond_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(obsidian,DiamondBarrelTile::new),"obsidian_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new CrystalBarrelBlock(hardmetal.notSolid(),CrystalBarrelTile::new),"crystal_barrel",blockRegistryEvent.getRegistry());
     }
     private static void registerBlock(Block block, String name, IForgeRegistry<Block> registry) {
       registry.register(block.setRegistryName(name));
@@ -267,15 +267,13 @@ public class MetalBarrels {
     @SubscribeEvent
     public static void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
 
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new CopperBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("copper_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new IronBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("iron_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new SilverBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("silver_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new GoldBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("gold_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new DiamondBarrelContainer(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("diamond_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.copper(windowId,inv.player.world,data.readBlockPos(),inv,inv.player)).setRegistryName("copper"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.iron(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("iron"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.silver(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("silver"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.gold(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("gold"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.diamond(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("diamond"));
 
     }
-
-
 
     @SubscribeEvent
     public static void registerTiles(RegistryEvent.Register<TileEntityType<?>> event) {
@@ -305,25 +303,25 @@ public class MetalBarrels {
   public static class ObjectHolders {
 
     public static final Block COPPER_BARREL = null;
-    public static final ContainerType<CopperBarrelContainer> COPPER_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> COPPER_CONTAINER = null;
     public static final TileEntityType<CopperBarrelTile> COPPER_TILE = null;
 
     public static final Block IRON_BARREL = null;
-    public static final ContainerType<IronBarrelContainer> IRON_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> IRON_CONTAINER = null;
     public static final TileEntityType<IronBarrelTile> IRON_TILE = null;
 
     public static final Block GOLD_BARREL = null;
-    public static final ContainerType<GoldBarrelContainer> GOLD_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> GOLD_CONTAINER = null;
     public static final TileEntityType<GoldBarrelTile> GOLD_TILE = null;
 
     public static final Block DIAMOND_BARREL = null;
-    public static final ContainerType<DiamondBarrelContainer> DIAMOND_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> DIAMOND_CONTAINER = null;
     public static final TileEntityType<DiamondBarrelTile> DIAMOND_TILE = null;
 
     public static final Block OBSIDIAN_BARREL = null;
 
     public static final Block SILVER_BARREL = null;
-    public static final ContainerType<SilverBarrelContainer> SILVER_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> SILVER_CONTAINER = null;
     public static final TileEntityType<SilverBarrelTile> SILVER_TILE = null;
 
     public static final Block CRYSTAL_BARREL = null;

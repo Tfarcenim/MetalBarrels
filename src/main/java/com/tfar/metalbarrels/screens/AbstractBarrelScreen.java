@@ -1,12 +1,12 @@
 package com.tfar.metalbarrels.screens;
 
-import com.tfar.metalbarrels.container.AbstractBarrelContainer;
+import com.tfar.metalbarrels.container.MetalBarrelContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public abstract class AbstractBarrelScreen<T extends AbstractBarrelContainer> extends ContainerScreen<T> {
+public abstract class AbstractBarrelScreen<T extends MetalBarrelContainer> extends ContainerScreen<T> {
 
   private final ResourceLocation texture;
 

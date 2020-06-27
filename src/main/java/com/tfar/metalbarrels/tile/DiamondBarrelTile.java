@@ -1,7 +1,7 @@
 package com.tfar.metalbarrels.tile;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import com.tfar.metalbarrels.container.DiamondBarrelContainer;
+import com.tfar.metalbarrels.container.MetalBarrelContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -24,7 +24,7 @@ public class DiamondBarrelTile extends AbstractBarrelTile {
   @Nullable
   @Override
   public Container createMenu(int id, @Nonnull PlayerInventory playerInventory,@Nonnull PlayerEntity player) {
-    return new DiamondBarrelContainer(id, world, pos, playerInventory, player);
+    return MetalBarrelContainer.diamond(id, world, pos, playerInventory, player);
   }
 }
 
