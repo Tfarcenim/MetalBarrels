@@ -1,6 +1,6 @@
 package com.tfar.metalbarrels.tile;
 
-import com.tfar.metalbarrels.util.ContainerFunction;
+import com.tfar.metalbarrels.util.ContainerFactory;
 import com.tfar.metalbarrels.util.MetalBarrelBlockEntityType;
 import com.tfar.metalbarrels.block.MetalBarrelBlock;
 import com.tfar.metalbarrels.util.BarrelHandler;
@@ -32,14 +32,14 @@ public class MetalBarrelTile extends TileEntity implements INamedContainerProvid
 
   protected final int width;
   protected final int height;
-  private final ContainerFunction<Integer, World, BlockPos, PlayerInventory, PlayerEntity, Container> containerFunction;
+  private final ContainerFactory<Integer, World, BlockPos, PlayerInventory, PlayerEntity, Container> containerFactory;
   private ITextComponent customName;
 
   public MetalBarrelTile(TileEntityType<?> tileEntityType) {
     super(tileEntityType);
     this.width = ((MetalBarrelBlockEntityType)tileEntityType).width;
     this.height = ((MetalBarrelBlockEntityType)tileEntityType).height;
-    this.containerFunction = ((MetalBarrelBlockEntityType)tileEntityType).containerFunction;
+    this.containerFactory = ((MetalBarrelBlockEntityType)tileEntityType).containerFactory;
     handler = new BarrelHandler(this.width * this.height,this);
   }
 
@@ -124,6 +124,6 @@ public class MetalBarrelTile extends TileEntity implements INamedContainerProvid
   @Nullable
   @Override
   public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
-    return containerFunction.apply(id,world,pos, inv, player);
+    return containerFactory.apply(id,world,pos, inv, player);
   }
 }

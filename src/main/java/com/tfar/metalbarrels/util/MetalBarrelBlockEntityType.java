@@ -17,12 +17,12 @@ public class MetalBarrelBlockEntityType<T extends TileEntity> extends TileEntity
 
 	public final int width;
 	public final int height;
-	public final ContainerFunction<Integer, World, BlockPos, PlayerInventory, PlayerEntity, Container> containerFunction;
+	public final ContainerFactory<Integer, World, BlockPos, PlayerInventory, PlayerEntity, Container> containerFactory;
 
-	public MetalBarrelBlockEntityType(Supplier<T> factoryIn, Set<Block> validBlocksIn, Type dataFixerType, int width, int height, ContainerFunction<Integer, World, BlockPos, PlayerInventory, PlayerEntity, Container> containerFunction) {
+	public MetalBarrelBlockEntityType(Supplier<T> factoryIn, Set<Block> validBlocksIn, Type dataFixerType, int width, int height, ContainerFactory<Integer, World, BlockPos, PlayerInventory, PlayerEntity, Container> containerFactory) {
 		super(factoryIn, validBlocksIn, dataFixerType);
 		this.width = width;
 		this.height = height;
-		this.containerFunction = containerFunction;
+		this.containerFactory = containerFactory;
 	}
 }

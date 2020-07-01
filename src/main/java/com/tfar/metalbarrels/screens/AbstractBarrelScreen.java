@@ -17,6 +17,7 @@ public abstract class AbstractBarrelScreen<T extends MetalBarrelContainer> exten
     this.xSize = width;
     this.ySize = height;
     this.texture = texture;
+    this.field_238745_s_ = this.ySize - 94;
   }
 
   @Override
