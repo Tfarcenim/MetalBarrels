@@ -23,8 +23,8 @@ public class IronBarrelScreen extends AbstractBarrelScreen<MetalBarrelContainer>
   @Override
   protected void func_230450_a_(MatrixStack stack,float partialTicks, int mouseX, int mouseY) {
     super.func_230450_a_(stack,partialTicks,mouseX,mouseY);
-    int i = (this.field_230708_k_ - this.xSize) / 2;
-    int j = (this.field_230709_l_ - this.ySize) / 2;
-    this.func_238474_b_(stack,i, j, 0, 0, this.xSize, this.ySize);
+    int i = (this.width - this.xSize) / 2;
+    int j = (this.height - this.ySize) / 2;
+    this.blit(stack,i, j, 0, 0, this.xSize, this.ySize);
   }
 }

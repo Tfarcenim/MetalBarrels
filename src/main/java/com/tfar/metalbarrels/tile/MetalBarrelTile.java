@@ -78,13 +78,13 @@ public class MetalBarrelTile extends TileEntity implements INamedContainerProvid
   }
 
   @Override//read
-  public void func_230337_a_(BlockState state,CompoundNBT tag) {
+  public void read(BlockState state,CompoundNBT tag) {
     CompoundNBT invTag = tag.getCompound("inv");
     handler.deserializeNBT(invTag);
     if (tag.contains("CustomName", 8)) {
       this.customName = ITextComponent.Serializer.func_240643_a_(tag.getString("CustomName"));
     }
-    super.func_230337_a_(state,tag);
+    super.read(state,tag);
   }
 
   @Nonnull

@@ -69,7 +69,7 @@ public class BarrelUpgradeItem extends Item {
     if (state.getBlock() instanceof BarrelBlock)
     if (state.get(BlockStateProperties.OPEN)) {
       player.sendStatusMessage(new TranslationTextComponent("metalbarrels.in_use")
-              .func_230530_a_(Style.field_240709_b_.func_240712_a_(TextFormatting.RED)), true);
+              .func_230530_a_(Style.EMPTY.applyFormatting(TextFormatting.RED)), true);
       return ActionResultType.PASS;
     }
 
@@ -110,7 +110,7 @@ public class BarrelUpgradeItem extends Item {
       heldStack.shrink(1);
 
     player.sendStatusMessage(new TranslationTextComponent("metalbarrels.upgrade_successful")
-            .func_230530_a_(Style.field_240709_b_.func_240721_b_(TextFormatting.GREEN)), true);
+            .func_230530_a_(Style.EMPTY.applyFormatting(TextFormatting.GREEN)), true);
     return ActionResultType.SUCCESS;
   }
 }

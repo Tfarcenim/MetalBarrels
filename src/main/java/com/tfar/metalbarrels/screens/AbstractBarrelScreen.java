@@ -21,9 +21,9 @@ public abstract class AbstractBarrelScreen<T extends MetalBarrelContainer> exten
   }
 
   @Override
-  public void func_230430_a_(MatrixStack stack,int x, int y, float p_render_3_) {
-    this.func_230446_a_(stack);
-    super.func_230430_a_(stack,x, y, p_render_3_);
+  public void render(MatrixStack stack,int x, int y, float p_render_3_) {
+    this.renderBackground(stack);
+    super.render(stack,x, y, p_render_3_);
     this.func_230459_a_(stack,x,y);
   }
 
@@ -36,6 +36,6 @@ public abstract class AbstractBarrelScreen<T extends MetalBarrelContainer> exten
    */
   @Override
   protected void func_230450_a_(MatrixStack stack,float partialTicks, int mouseX, int mouseY) {
-    this.field_230706_i_.getTextureManager().bindTexture(texture);
+    this.minecraft.getTextureManager().bindTexture(texture);
   }
 }
