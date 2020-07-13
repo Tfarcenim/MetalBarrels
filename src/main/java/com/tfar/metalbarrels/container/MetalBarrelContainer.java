@@ -24,21 +24,22 @@ public class MetalBarrelContainer extends Container {
   public MetalBarrelTile tileEntity;
   protected PlayerEntity playerEntity;
   protected IItemHandler playerInventory;
-  private int width;
-  private int height;
+  public int width;
+  public int height;
 
 
   public MetalBarrelContainer(ContainerType<?> containerType,
-                              int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player,
-                              int width, int height, int containerX, int containerY, int playerY) {this
-          (containerType,id,world,pos,playerInventory,player,width,height,containerX,containerY,playerY,8);}
+															int id, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player,
+															int width, int height, int containerX, int containerY, int playerY) {this
+          (containerType,id,pos,playerInventory,player,width,height,containerX,containerY,playerY,8);}
 
   public MetalBarrelContainer(ContainerType<?> containerType,
-                              int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player,
+                              int id, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player,
                               int width, int height, int containerX, int containerY, int playerY, int playerX) {
     super(containerType, id);
     this.width = width;
     this.height = height;
+    World world = player.world;
     tileEntity = (MetalBarrelTile)world.getTileEntity(pos);
     world.setBlockState(pos, tileEntity.getBlockState().with(BarrelBlock.PROPERTY_OPEN, true), 3);
     if (tileEntity.players == 0) {
@@ -65,33 +66,33 @@ public class MetalBarrelContainer extends Container {
     }
   }
 
-  public static MetalBarrelContainer copper(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-  	return new MetalBarrelContainer(MetalBarrels.ObjectHolders.COPPER_CONTAINER,id,world,pos,playerInventory,player,
+  public static MetalBarrelContainer copper(int id, PlayerInventory playerInventory, PlayerEntity player, BlockPos pos){
+  	return new MetalBarrelContainer(MetalBarrels.ObjectHolders.COPPER_CONTAINER,id, pos,playerInventory,player,
 						9,5,8,18, 122);
 	}
 
-	public static MetalBarrelContainer iron(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.IRON_CONTAINER,id,world,pos,playerInventory,player,
+	public static MetalBarrelContainer iron(int id, PlayerInventory playerInventory, PlayerEntity player, BlockPos pos){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.IRON_CONTAINER,id, pos,playerInventory,player,
 						9,6,8,18, 140);
 	}
 
-	public static MetalBarrelContainer silver(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.SILVER_CONTAINER,id,world,pos,playerInventory,player,
+	public static MetalBarrelContainer silver(int id, PlayerInventory playerInventory, PlayerEntity player, BlockPos pos){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.SILVER_CONTAINER,id, pos,playerInventory,player,
 						9,8,8,18, 176);
 	}
 
-	public static MetalBarrelContainer gold(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.GOLD_CONTAINER,id,world,pos,playerInventory,player,
+	public static MetalBarrelContainer gold(int id, PlayerInventory playerInventory, PlayerEntity player, BlockPos pos){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.GOLD_CONTAINER,id, pos,playerInventory,player,
 						9,9,8,18, 194);
 	}
 
-	public static MetalBarrelContainer diamond(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.DIAMOND_CONTAINER,id,world,pos,playerInventory,player,
+	public static MetalBarrelContainer diamond(int id, PlayerInventory playerInventory, PlayerEntity player, BlockPos pos){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.DIAMOND_CONTAINER,id,pos,playerInventory,player,
 						12,9,8,18, 194,35);
 	}
 
-	public static MetalBarrelContainer netherite(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.NETHERITE_CONTAINER,id,world,pos,playerInventory,player,
+	public static MetalBarrelContainer netherite(int id, PlayerInventory playerInventory, PlayerEntity player, BlockPos pos){
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.NETHERITE_CONTAINER,id,pos,playerInventory,player,
 						15,9,8,18, 194,35 + 27);
 	}
 

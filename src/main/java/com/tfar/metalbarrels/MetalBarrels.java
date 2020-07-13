@@ -43,7 +43,6 @@ import java.util.Set;
 public class MetalBarrels {
 
   public static final String MODID = "metalbarrels";
-  //public static final boolean IRON_CHESTS_LOADED = ModList.get().isLoaded("ironchest");
 
   public static final Logger logger = LogManager.getLogger();
 
@@ -68,12 +67,12 @@ public class MetalBarrels {
 
   private void doClientStuff(final FMLClientSetupEvent event) {
     // do something that can only be done on the client
-    ScreenManager.registerFactory(ObjectHolders.COPPER_CONTAINER, CopperBarrelScreen::new);
-    ScreenManager.registerFactory(ObjectHolders.IRON_CONTAINER, IronBarrelScreen::new);
-    ScreenManager.registerFactory(ObjectHolders.SILVER_CONTAINER, SilverBarrelScreen::new);
-    ScreenManager.registerFactory(ObjectHolders.GOLD_CONTAINER, GoldBarrelScreen::new);
-    ScreenManager.registerFactory(ObjectHolders.DIAMOND_CONTAINER, DiamondBarrelScreen::new);
-    ScreenManager.registerFactory(ObjectHolders.NETHERITE_CONTAINER, NetheriteBarrelScreen::new);
+    ScreenManager.registerFactory(ObjectHolders.COPPER_CONTAINER, MetalBarrelScreen::copper);
+    ScreenManager.registerFactory(ObjectHolders.IRON_CONTAINER, MetalBarrelScreen::iron);
+    ScreenManager.registerFactory(ObjectHolders.SILVER_CONTAINER, MetalBarrelScreen::silver);
+    ScreenManager.registerFactory(ObjectHolders.GOLD_CONTAINER, MetalBarrelScreen::gold);
+    ScreenManager.registerFactory(ObjectHolders.DIAMOND_CONTAINER, MetalBarrelScreen::diamond);
+    ScreenManager.registerFactory(ObjectHolders.NETHERITE_CONTAINER, MetalBarrelScreen::netherite);
   }
 
   // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
@@ -276,12 +275,12 @@ public class MetalBarrels {
     @SubscribeEvent
     public static void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
 
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.copper(windowId,inv.player.world,data.readBlockPos(),inv,inv.player)).setRegistryName("copper_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.iron(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("iron_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.silver(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("silver_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.gold(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("gold_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.diamond(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("diamond_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.netherite(windowId, inv.player.world, data.readBlockPos(), inv, inv.player)).setRegistryName("netherite_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.copper(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("copper_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.iron(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("iron_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.silver(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("silver_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.gold(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("gold_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.diamond(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("diamond_container"));
+      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.netherite(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("netherite_container"));
 
     }
 
@@ -294,7 +293,7 @@ public class MetalBarrels {
 
       event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelTile(ObjectHolders.IRON_TILE),
               Sets.newHashSet(ObjectHolders.IRON_BARREL),
-              null, 9, 6, MetalBarrelContainer::iron)
+              null, 9, 6,MetalBarrelContainer::iron)
               .setRegistryName("iron_tile"));
 
       event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelTile(ObjectHolders.SILVER_TILE),

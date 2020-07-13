@@ -17,9 +17,9 @@ public class MetalBarrelBlockEntityType<T extends TileEntity> extends TileEntity
 
 	public final int width;
 	public final int height;
-	public final ContainerFactory<Integer, World, BlockPos, PlayerInventory, PlayerEntity, Container> containerFactory;
+	public final ContainerFactory<Integer,  PlayerInventory, PlayerEntity,BlockPos, Container> containerFactory;
 
-	public MetalBarrelBlockEntityType(Supplier<T> factoryIn, Set<Block> validBlocksIn, Type dataFixerType, int width, int height, ContainerFactory<Integer, World, BlockPos, PlayerInventory, PlayerEntity, Container> containerFactory) {
+	public MetalBarrelBlockEntityType(Supplier<T> factoryIn, Set<Block> validBlocksIn, Type dataFixerType, int width, int height, ContainerFactory<Integer, PlayerInventory, PlayerEntity, BlockPos, Container> containerFactory) {
 		super(factoryIn, validBlocksIn, dataFixerType);
 		this.width = width;
 		this.height = height;

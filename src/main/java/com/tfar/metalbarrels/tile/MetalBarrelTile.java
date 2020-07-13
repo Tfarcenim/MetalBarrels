@@ -32,7 +32,7 @@ public class MetalBarrelTile extends TileEntity implements INamedContainerProvid
 
   protected final int width;
   protected final int height;
-  private final ContainerFactory<Integer, World, BlockPos, PlayerInventory, PlayerEntity, Container> containerFactory;
+  private final ContainerFactory<Integer, PlayerInventory, PlayerEntity, BlockPos, Container> containerFactory;
   private ITextComponent customName;
 
   public MetalBarrelTile(TileEntityType<?> tileEntityType) {
@@ -116,14 +116,13 @@ public class MetalBarrelTile extends TileEntity implements INamedContainerProvid
     return this.customName;
   }
 
-  protected ITextComponent getDefaultName(){
-    ResourceLocation rl = Registry.BLOCK.getKey(getBlockState().getBlock());
-    return new TranslationTextComponent(rl.getNamespace()+"."+rl.getPath());
+  protected ITextComponent getDefaultName() {
+    return new TranslationTextComponent(getBlockState().getBlock().getTranslationKey());
   }
 
   @Nullable
   @Override
   public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
-    return containerFactory.apply(id,world,pos, inv, player);
+    return containerFactory.apply(id, inv, player,pos);
   }
 }

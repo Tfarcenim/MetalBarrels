@@ -8,15 +8,6 @@
   "block.metalbarrels.crystal_barrel": "Crystal Barrel",
   "block.metalbarrels.netherite_barrel": "Netherite Barrel",
 
-  "metalbarrels.copper_barrel": "Copper Barrel",
-  "metalbarrels.iron_barrel": "Iron Barrel",
-  "metalbarrels.gold_barrel": "Gold Barrel",
-  "metalbarrels.silver_barrel": "Silver Barrel",
-  "metalbarrels.diamond_barrel": "Diamond Barrel",
-  "metalbarrels.obsidian_barrel": "Obsidian Barrel",
-  "metalbarrels.crystal_barrel": "Crystal Barrel",
-  "metalbarrels.netherite_barrel": "Netherite Barrel",
-
   "item.metalbarrels.wood_to_copper": "Barrel to Copper Barrel Upgrade",
   "item.metalbarrels.wood_to_iron": "Barrel to Iron Barrel Upgrade",
   "item.metalbarrels.wood_to_silver": "Barrel to Silver Barrel Upgrade",
