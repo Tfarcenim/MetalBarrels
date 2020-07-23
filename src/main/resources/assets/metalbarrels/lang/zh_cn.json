@@ -1,0 +1,51 @@
+{
+  "block.metalbarrels.copper_barrel": "铜储物桶",
+  "block.metalbarrels.iron_barrel": "铁储物桶",
+  "block.metalbarrels.gold_barrel": "金储物桶",
+  "block.metalbarrels.diamond_barrel": "钻石储物桶",
+  "block.metalbarrels.obsidian_barrel": "黑曜石储物桶",
+  "block.metalbarrels.silver_barrel": "银储物桶",
+  "block.metalbarrels.crystal_barrel": "水晶储物桶",
+  "block.metalbarrels.netherite_barrel": "下界合金储物桶",
+
+  "item.metalbarrels.wood_to_copper": "木>铜 储物桶升级",
+  "item.metalbarrels.wood_to_iron": "木>铁 储物桶升级",
+  "item.metalbarrels.wood_to_silver": "木>银 储物桶升级",
+  "item.metalbarrels.wood_to_gold": "木>金 储物桶升级",
+  "item.metalbarrels.wood_to_diamond": "木>钻石 储物桶升级",
+  "item.metalbarrels.wood_to_obsidian": "木>黑曜石 储物桶升级",
+  "item.metalbarrels.wood_to_crystal": "木>水晶 储物桶升级",
+  "item.metalbarrels.wood_to_netherite": "木>下界合金 储物桶升级",
+
+  "item.metalbarrels.copper_to_iron": "铜>铁 储物桶升级",
+  "item.metalbarrels.copper_to_silver": "铜>银 储物桶升级",
+  "item.metalbarrels.copper_to_gold": "铜>金 储物桶升级",
+  "item.metalbarrels.copper_to_diamond": "铜>钻石 储物桶升级",
+  "item.metalbarrels.copper_to_obsidian": "铜>黑曜石 储物桶升级",
+  "item.metalbarrels.copper_to_crystal": "铜>水晶 储物桶升级",
+
+  "item.metalbarrels.iron_to_silver": "铁>银 储物桶升级",
+  "item.metalbarrels.iron_to_gold": "铁>金 储物桶升级",
+  "item.metalbarrels.iron_to_diamond": "铁>钻石 储物桶升级",
+  "item.metalbarrels.iron_to_obsidian": "铁>黑曜石 储物桶升级",
+  "item.metalbarrels.iron_to_crystal": "铁>水晶 储物桶升级",
+
+  "item.metalbarrels.silver_to_gold": "银>金 储物桶升级",
+  "item.metalbarrels.silver_to_diamond": "银>钻石 储物桶升级",
+  "item.metalbarrels.silver_to_obsidian": "银>黑曜石 储物桶升级",
+  "item.metalbarrels.silver_to_crystal": "银>水晶 储物桶升级",
+
+  "item.metalbarrels.gold_to_diamond": "金>钻石 储物桶升级",
+  "item.metalbarrels.gold_to_obsidian": "金>黑曜石 储物桶升级",
+  "item.metalbarrels.gold_to_crystal": "金>水晶 储物桶升级",
+
+  "item.metalbarrels.diamond_to_obsidian": "钻石>黑曜石 储物桶升级",
+  "item.metalbarrels.diamond_to_crystal": "钻石>水晶 储物桶升级",
+
+  "itemGroup.metalbarrels": "金属储物桶",
+
+  "tooltip.metalbarrels.ironchest": "也可升级《更多箱子》里的箱子！",
+
+  "metalbarrels.upgrade_successful": "升级成功",
+  "metalbarrels.in_use": "储物桶被使用中"
+}
