@@ -14,13 +14,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -84,17 +84,17 @@ public class MetalBarrels {
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
       Block.Properties metal = Block.Properties.create(Material.IRON).hardnessAndResistance(2.5f,6).sound(SoundType.METAL);
-      Block.Properties softmetal = metal;
-      Block.Properties hardmetal = metal;
+      Block.Properties softmetal = metal.harvestLevel(1);
+      Block.Properties hardmetal = metal.harvestLevel(2);
       Block.Properties obsidian = Block.Properties.create(Material.ROCK).hardnessAndResistance(15,6000);
-      registerBlock(new MetalBarrelBlock(softmetal, () -> new MetalBarrelTile(ObjectHolders.COPPER_TILE)),"copper_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new MetalBarrelBlock(softmetal,() -> new MetalBarrelTile(ObjectHolders.IRON_TILE)),"iron_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new MetalBarrelBlock(hardmetal,() -> new MetalBarrelTile(ObjectHolders.SILVER_TILE)),"silver_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new MetalBarrelBlock(hardmetal,() -> new MetalBarrelTile(ObjectHolders.GOLD_TILE)),"gold_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new MetalBarrelBlock(hardmetal,() -> new MetalBarrelTile(ObjectHolders.DIAMOND_TILE)),"diamond_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new MetalBarrelBlock(obsidian,() -> new MetalBarrelTile(ObjectHolders.DIAMOND_TILE)),"obsidian_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new MetalBarrelBlock(obsidian,() -> new MetalBarrelTile(ObjectHolders.NETHERITE_TILE)),"netherite_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new CrystalBarrelBlock(hardmetal.notSolid(),() -> new MetalBarrelTile(ObjectHolders.DIAMOND_TILE)),"crystal_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(softmetal, () -> new MetalBarrelBlockEntity(ObjectHolders.COPPER_TILE)),"copper_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(softmetal,() -> new MetalBarrelBlockEntity(ObjectHolders.IRON_TILE)),"iron_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(hardmetal,() -> new MetalBarrelBlockEntity(ObjectHolders.SILVER_TILE)),"silver_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(hardmetal,() -> new MetalBarrelBlockEntity(ObjectHolders.GOLD_TILE)),"gold_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(hardmetal,() -> new MetalBarrelBlockEntity(ObjectHolders.DIAMOND_TILE)),"diamond_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(obsidian,() -> new MetalBarrelBlockEntity(ObjectHolders.DIAMOND_TILE)),"obsidian_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(obsidian,() -> new MetalBarrelBlockEntity(ObjectHolders.NETHERITE_TILE)),"netherite_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new CrystalBarrelBlock(hardmetal.notSolid(),() -> new MetalBarrelBlockEntity(ObjectHolders.DIAMOND_TILE)),"crystal_barrel",blockRegistryEvent.getRegistry());
     }
     private static void registerBlock(Block block, String name, IForgeRegistry<Block> registry) {
       registry.register(block.setRegistryName(name));
@@ -275,50 +275,50 @@ public class MetalBarrels {
     @SubscribeEvent
     public static void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
 
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.copper(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("copper_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.iron(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("iron_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.silver(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("silver_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.gold(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("gold_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.diamond(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("diamond_container"));
-      event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> MetalBarrelContainer.netherite(windowId, inv,inv.player,data.readBlockPos())).setRegistryName("netherite_container"));
+      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::copper).setRegistryName("copper_container"));
+      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::iron).setRegistryName("iron_container"));
+      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::silver).setRegistryName("silver_container"));
+      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::gold).setRegistryName("gold_container"));
+      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::diamond).setRegistryName("diamond_container"));
+      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::netherite).setRegistryName("netherite_container"));
 
     }
 
     @SubscribeEvent
     public static void registerTiles(RegistryEvent.Register<TileEntityType<?>> event) {
-      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelTile(ObjectHolders.COPPER_TILE),
+      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelBlockEntity(ObjectHolders.COPPER_TILE),
               Sets.newHashSet(ObjectHolders.COPPER_BARREL),
-              null, 9, 5, MetalBarrelContainer::copper)
+              null, 9, 5, MetalBarrelContainer::copperS)
               .setRegistryName("copper_tile"));
 
-      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelTile(ObjectHolders.IRON_TILE),
+      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelBlockEntity(ObjectHolders.IRON_TILE),
               Sets.newHashSet(ObjectHolders.IRON_BARREL),
-              null, 9, 6,MetalBarrelContainer::iron)
+              null, 9, 6,MetalBarrelContainer::ironS)
               .setRegistryName("iron_tile"));
 
-      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelTile(ObjectHolders.SILVER_TILE),
+      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelBlockEntity(ObjectHolders.SILVER_TILE),
               Sets.newHashSet(ObjectHolders.SILVER_BARREL),
-              null, 9, 8, MetalBarrelContainer::silver)
+              null, 9, 8, MetalBarrelContainer::silverS)
               .setRegistryName("silver_tile"));
 
-      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelTile(ObjectHolders.GOLD_TILE),
+      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelBlockEntity(ObjectHolders.GOLD_TILE),
               Sets.newHashSet(ObjectHolders.GOLD_BARREL),
-              null, 9, 9, MetalBarrelContainer::gold)
+              null, 9, 9, MetalBarrelContainer::goldS)
               .setRegistryName("gold_tile"));
 
-      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelTile(ObjectHolders.DIAMOND_TILE),
+      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelBlockEntity(ObjectHolders.DIAMOND_TILE),
               Sets.newHashSet(ObjectHolders.DIAMOND_BARREL,ObjectHolders.OBSIDIAN_BARREL),
-              null, 12, 9, MetalBarrelContainer::diamond)
+              null, 12, 9,MetalBarrelContainer::diamondS)
               .setRegistryName("diamond_tile"));
 
-      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelTile(ObjectHolders.NETHERITE_TILE),
+      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelBlockEntity(ObjectHolders.NETHERITE_TILE),
               Sets.newHashSet(ObjectHolders.NETHERITE_BARREL),
-              null, 15, 9, MetalBarrelContainer::netherite)
+              null, 15, 9, MetalBarrelContainer::netheriteS)
               .setRegistryName("netherite_tile"));
 
-      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelTile(ObjectHolders.CRYSTAL_TILE),
+      event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelBlockEntity(ObjectHolders.CRYSTAL_TILE),
               Sets.newHashSet(ObjectHolders.CRYSTAL_BARREL),
-              null, 12, 9, MetalBarrelContainer::diamond)
+              null, 12, 9, MetalBarrelContainer::diamondS)
               .setRegistryName("crystal_tile"));
     }
   }
@@ -339,31 +339,31 @@ public class MetalBarrels {
 
     public static final Block COPPER_BARREL = null;
     public static final ContainerType<MetalBarrelContainer> COPPER_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelTile> COPPER_TILE = null;
+    public static final TileEntityType<MetalBarrelBlockEntity> COPPER_TILE = null;
 
     public static final Block IRON_BARREL = null;
     public static final ContainerType<MetalBarrelContainer> IRON_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelTile> IRON_TILE = null;
+    public static final TileEntityType<MetalBarrelBlockEntity> IRON_TILE = null;
 
     public static final Block GOLD_BARREL = null;
     public static final ContainerType<MetalBarrelContainer> GOLD_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelTile> GOLD_TILE = null;
+    public static final TileEntityType<MetalBarrelBlockEntity> GOLD_TILE = null;
 
     public static final Block DIAMOND_BARREL = null;
     public static final ContainerType<MetalBarrelContainer> DIAMOND_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelTile> DIAMOND_TILE = null;
+    public static final TileEntityType<MetalBarrelBlockEntity> DIAMOND_TILE = null;
 
     public static final Block NETHERITE_BARREL = null;
     public static final ContainerType<MetalBarrelContainer> NETHERITE_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelTile> NETHERITE_TILE = null;
+    public static final TileEntityType<MetalBarrelBlockEntity> NETHERITE_TILE = null;
 
     public static final Block OBSIDIAN_BARREL = null;
 
     public static final Block SILVER_BARREL = null;
     public static final ContainerType<MetalBarrelContainer> SILVER_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelTile> SILVER_TILE = null;
+    public static final TileEntityType<MetalBarrelBlockEntity> SILVER_TILE = null;
 
     public static final Block CRYSTAL_BARREL = null;
-    public static final TileEntityType<MetalBarrelTile> CRYSTAL_TILE = null;
+    public static final TileEntityType<MetalBarrelBlockEntity> CRYSTAL_TILE = null;
   }
 }

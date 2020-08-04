@@ -2,13 +2,12 @@ package com.tfar.metalbarrels.util;
 
 import com.mojang.datafixers.types.Type;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.data.BlockStateVariantBuilder.ITriFunction;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.util.IWorldPosCallable;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -17,9 +16,10 @@ public class MetalBarrelBlockEntityType<T extends TileEntity> extends TileEntity
 
 	public final int width;
 	public final int height;
-	public final ContainerFactory<Integer,  PlayerInventory, PlayerEntity,BlockPos, Container> containerFactory;
+	public final ITriFunction<Integer,  PlayerInventory, IWorldPosCallable,Container> containerFactory;
 
-	public MetalBarrelBlockEntityType(Supplier<T> factoryIn, Set<Block> validBlocksIn, Type dataFixerType, int width, int height, ContainerFactory<Integer, PlayerInventory, PlayerEntity, BlockPos, Container> containerFactory) {
+	public MetalBarrelBlockEntityType(Supplier<T> factoryIn, Set<Block> validBlocksIn, Type dataFixerType, int width, int height,
+																		ITriFunction<Integer, PlayerInventory, IWorldPosCallable, Container> containerFactory) {
 		super(factoryIn, validBlocksIn, dataFixerType);
 		this.width = width;
 		this.height = height;

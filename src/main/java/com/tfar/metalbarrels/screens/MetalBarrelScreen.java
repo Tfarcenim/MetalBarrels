@@ -22,7 +22,7 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
     this.xSize = xSize;
     this.ySize = ySize;
     this.texture = texture;
-    this.field_238745_s_ = this.ySize - 94;
+    this.playerInventoryTitleY = this.ySize - 94;
     isTall = barrelContainer.height > 6;
     isWide = barrelContainer.width > 12;
   }
@@ -42,7 +42,7 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
    * @param mouseY
    */
   @Override
-  protected void func_230450_a_(MatrixStack stack,float partialTicks, int mouseX, int mouseY) {
+  protected void drawGuiContainerBackgroundLayer(MatrixStack stack,float partialTicks, int mouseX, int mouseY) {
     this.minecraft.getTextureManager().bindTexture(texture);
     int i = (this.width - this.xSize) / 2;
     int j = (this.height - this.ySize) / 2;
@@ -68,11 +68,11 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
   }
 
   public static MetalBarrelScreen iron(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component) {
-    return new MetalBarrelScreen(barrelContainer,playerInventory,component,IRON,176,224);
+    return new MetalBarrelScreen(barrelContainer,playerInventory,component,IRON,176,222);
   }
 
   public static MetalBarrelScreen silver(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component) {
-    return new MetalBarrelScreen(barrelContainer,playerInventory,component,SILVER,176,264);
+    return new MetalBarrelScreen(barrelContainer,playerInventory,component,SILVER,176,258);
   }
 
   public static MetalBarrelScreen gold(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component) {

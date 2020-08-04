@@ -1,11 +1,10 @@
 package com.tfar.metalbarrels.tile;
 
-import com.tfar.metalbarrels.util.ContainerFactory;
 import com.tfar.metalbarrels.util.MetalBarrelBlockEntityType;
 import com.tfar.metalbarrels.block.MetalBarrelBlock;
-import com.tfar.metalbarrels.util.BarrelHandler;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.data.BlockStateVariantBuilder.ITriFunction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -14,37 +13,42 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class MetalBarrelTile extends TileEntity implements INamedContainerProvider, INameable {
+public class MetalBarrelBlockEntity extends TileEntity implements INamedContainerProvider, INameable {
 
   protected final int width;
   protected final int height;
-  private final ContainerFactory<Integer, PlayerInventory, PlayerEntity, BlockPos, Container> containerFactory;
-  private ITextComponent customName;
+  protected final ITriFunction<Integer, PlayerInventory, IWorldPosCallable,Container> containerFactory;
+  protected ITextComponent customName;
 
-  public MetalBarrelTile(TileEntityType<?> tileEntityType) {
+  public MetalBarrelBlockEntity(TileEntityType<?> tileEntityType) {
     super(tileEntityType);
     this.width = ((MetalBarrelBlockEntityType)tileEntityType).width;
     this.height = ((MetalBarrelBlockEntityType)tileEntityType).height;
     this.containerFactory = ((MetalBarrelBlockEntityType)tileEntityType).containerFactory;
-    handler = new BarrelHandler(this.width * this.height,this);
+    handler = new ItemStackHandler(width * height) {
+      @Override
+      protected void onContentsChanged(int slot) {
+        super.onContentsChanged(slot);
+        markDirty();
+      }
+    };
+    optional = LazyOptional.of(() -> handler);
   }
 
-  public BarrelHandler handler;
-  public LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler);
+  public final LazyOptional<IItemHandler> optional;
+  public final ItemStackHandler handler;
 
   public int players = 0;
 
@@ -123,6 +127,6 @@ public class MetalBarrelTile extends TileEntity implements INamedContainerProvid
   @Nullable
   @Override
   public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
-    return containerFactory.apply(id, inv, player,pos);
+    return containerFactory.apply(id, inv,IWorldPosCallable.of(world,pos));
   }
 }

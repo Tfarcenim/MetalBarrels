@@ -1,6 +1,6 @@
 package com.tfar.metalbarrels.item;
 
-import com.tfar.metalbarrels.tile.MetalBarrelTile;
+import com.tfar.metalbarrels.tile.MetalBarrelBlockEntity;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -39,7 +39,7 @@ public class BarrelUpgradeItem extends Item {
     this.upgradeInfo = info;
   }
 
-  private static final ITextComponent s = new TranslationTextComponent("tooltip.metalbarrels.ironchest").func_240699_a_(TextFormatting.GREEN);
+  private static final ITextComponent s = new TranslationTextComponent("tooltip.metalbarrels.ironchest").mergeStyle(TextFormatting.GREEN);
 
   public static boolean IRON_CHESTS_LOADED;
 
@@ -69,7 +69,7 @@ public class BarrelUpgradeItem extends Item {
     if (state.getBlock() instanceof BarrelBlock)
     if (state.get(BlockStateProperties.OPEN)) {
       player.sendStatusMessage(new TranslationTextComponent("metalbarrels.in_use")
-              .func_230530_a_(Style.EMPTY.applyFormatting(TextFormatting.RED)), true);
+              .mergeStyle(Style.EMPTY.applyFormatting(TextFormatting.RED)), true);
       return ActionResultType.PASS;
     }
 
@@ -77,16 +77,13 @@ public class BarrelUpgradeItem extends Item {
     final List<ItemStack> oldBarrelContents = new ArrayList<>();
 
     Direction facing = Direction.NORTH;
-    if (state.func_235901_b_(BlockStateProperties.HORIZONTAL_FACING)){
+    if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)){
       facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
-    }else if (state.func_235901_b_(BlockStateProperties.FACING)){
+    }else if (state.hasProperty(BlockStateProperties.FACING)){
       facing = state.get(BlockStateProperties.FACING);
     }
 
-    if (oldBarrel instanceof MetalBarrelTile)
-      //shortcut
-      oldBarrelContents.addAll(((MetalBarrelTile) oldBarrel).handler.getContents());
-    else oldBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    oldBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
                     .mapToObj(itemHandler::getStackInSlot).forEach(oldBarrelContents::add));
     oldBarrel.remove();
@@ -95,9 +92,9 @@ public class BarrelUpgradeItem extends Item {
 
     BlockState newState = newBlock.getDefaultState();
 
-    if (newState.func_235901_b_(BlockStateProperties.HORIZONTAL_FACING)){
+    if (newState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)){
       newState = newState.with(BlockStateProperties.HORIZONTAL_FACING,facing);
-    }else if (newState.func_235901_b_(BlockStateProperties.FACING)){
+    } else if (newState.hasProperty(BlockStateProperties.FACING)){
       newState = newState.with(BlockStateProperties.FACING,facing);
     }
 
@@ -110,7 +107,7 @@ public class BarrelUpgradeItem extends Item {
       heldStack.shrink(1);
 
     player.sendStatusMessage(new TranslationTextComponent("metalbarrels.upgrade_successful")
-            .func_230530_a_(Style.EMPTY.applyFormatting(TextFormatting.GREEN)), true);
+            .mergeStyle(Style.EMPTY.applyFormatting(TextFormatting.GREEN)), true);
     return ActionResultType.SUCCESS;
   }
 }

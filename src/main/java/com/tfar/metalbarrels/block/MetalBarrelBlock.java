@@ -1,23 +1,22 @@
 package com.tfar.metalbarrels.block;
 
-import com.tfar.metalbarrels.tile.MetalBarrelTile;
+import com.tfar.metalbarrels.tile.MetalBarrelBlockEntity;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
@@ -41,16 +40,17 @@ public class MetalBarrelBlock extends BarrelBlock {
   public void onReplaced(BlockState state, @Nonnull World worldIn,@Nonnull BlockPos pos,@Nonnull BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
-      if (tileentity instanceof MetalBarrelTile) {
-        dropItems((MetalBarrelTile)tileentity,worldIn, pos);
+      if (tileentity instanceof MetalBarrelBlockEntity) {
+        dropItems((MetalBarrelBlockEntity)tileentity,worldIn, pos);
         worldIn.updateComparatorOutputLevel(pos, this);
       }
       super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
   }
 
-  public static void dropItems(MetalBarrelTile barrel, World world, BlockPos pos) {
-    IntStream.range(0, barrel.handler.getSlots()).mapToObj(i -> barrel.handler.getStackInSlot(i)).filter(stack -> !stack.isEmpty()).forEach(stack -> spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+  public static void dropItems(MetalBarrelBlockEntity barrel, World world, BlockPos pos) {
+    IntStream.range(0, barrel.handler.getSlots()).mapToObj(barrel.handler::getStackInSlot)
+            .filter(stack -> !stack.isEmpty()).forEach(stack -> spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
   }
 
   @Override
@@ -59,7 +59,14 @@ public class MetalBarrelBlock extends BarrelBlock {
     if (!world.isRemote) {
       INamedContainerProvider tileEntity = getContainer(state,world,pos);
       if (tileEntity != null) {
-        NetworkHooks.openGui((ServerPlayerEntity) player, tileEntity, pos);
+        MetalBarrelBlockEntity metalBarrelBlockEntity = (MetalBarrelBlockEntity)tileEntity;
+        world.setBlockState(pos, state.with(BarrelBlock.PROPERTY_OPEN, true), 3);
+        if (metalBarrelBlockEntity.players == 0) {
+          metalBarrelBlockEntity.soundStuff(state, SoundEvents.BLOCK_BARREL_OPEN);
+          metalBarrelBlockEntity.changeState(state, true);
+        }
+        metalBarrelBlockEntity.players++;
+        player.openContainer(tileEntity);
         player.addStat(Stats.OPEN_BARREL);
       }
     }
@@ -99,15 +106,15 @@ public class MetalBarrelBlock extends BarrelBlock {
   @Override
   public int getComparatorInputOverride(BlockState blockState, World world, BlockPos pos) {
     TileEntity barrel = world.getTileEntity(pos);
-    return barrel instanceof MetalBarrelTile ? ItemHandlerHelper.calcRedstoneFromInventory(((MetalBarrelTile) barrel).handler) : 0;
+    return barrel instanceof MetalBarrelBlockEntity ? ItemHandlerHelper.calcRedstoneFromInventory(((MetalBarrelBlockEntity) barrel).handler) : 0;
   }
 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
     if (stack.hasDisplayName()) {
       TileEntity tileentity = worldIn.getTileEntity(pos);
-      if (tileentity instanceof MetalBarrelTile) {
-        ((MetalBarrelTile)tileentity).setCustomName(stack.getDisplayName());
+      if (tileentity instanceof MetalBarrelBlockEntity) {
+        ((MetalBarrelBlockEntity)tileentity).setCustomName(stack.getDisplayName());
       }
     }
   }
