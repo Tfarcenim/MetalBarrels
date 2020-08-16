@@ -94,7 +94,7 @@ dependencies {
     // at runtime, use the full JEI jar
     //runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 
-    //compile fg.deobf("curse.maven:iron-chests:2783917")
+    compile fg.deobf("curse.maven:iron-chests:2898344")
 
     //compile fg.deobf("curse.maven:i-like-wood:2785492")
 

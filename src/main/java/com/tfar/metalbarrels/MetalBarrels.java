@@ -66,11 +66,11 @@ public class MetalBarrels {
 
   private void doClientStuff(final FMLClientSetupEvent event) {
     // do something that can only be done on the client
-    ScreenManager.registerFactory(MetalBarrels.ObjectHolders.COPPER_CONTAINER, CopperBarrelScreen::new);
-    ScreenManager.registerFactory(ObjectHolders.IRON_CONTAINER, IronBarrelScreen::new);
-    ScreenManager.registerFactory(ObjectHolders.SILVER_CONTAINER, SilverBarrelScreen::new);
-    ScreenManager.registerFactory(ObjectHolders.GOLD_CONTAINER, GoldBarrelScreen::new);
-    ScreenManager.registerFactory(ObjectHolders.DIAMOND_CONTAINER, DiamondBarrelScreen::new);
+    ScreenManager.registerFactory(MetalBarrels.ObjectHolders.COPPER, CopperBarrelScreen::new);
+    ScreenManager.registerFactory(ObjectHolders.IRON, IronBarrelScreen::new);
+    ScreenManager.registerFactory(ObjectHolders.SILVER, SilverBarrelScreen::new);
+    ScreenManager.registerFactory(ObjectHolders.GOLD, GoldBarrelScreen::new);
+    ScreenManager.registerFactory(ObjectHolders.DIAMOND, DiamondBarrelScreen::new);
   }
 
   // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
@@ -303,25 +303,25 @@ public class MetalBarrels {
   public static class ObjectHolders {
 
     public static final Block COPPER_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> COPPER_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> COPPER = null;
     public static final TileEntityType<CopperBarrelTile> COPPER_TILE = null;
 
     public static final Block IRON_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> IRON_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> IRON = null;
     public static final TileEntityType<IronBarrelTile> IRON_TILE = null;
 
     public static final Block GOLD_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> GOLD_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> GOLD = null;
     public static final TileEntityType<GoldBarrelTile> GOLD_TILE = null;
 
     public static final Block DIAMOND_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> DIAMOND_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> DIAMOND = null;
     public static final TileEntityType<DiamondBarrelTile> DIAMOND_TILE = null;
 
     public static final Block OBSIDIAN_BARREL = null;
 
     public static final Block SILVER_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> SILVER_CONTAINER = null;
+    public static final ContainerType<MetalBarrelContainer> SILVER = null;
     public static final TileEntityType<SilverBarrelTile> SILVER_TILE = null;
 
     public static final Block CRYSTAL_BARREL = null;

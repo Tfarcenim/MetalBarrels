@@ -66,27 +66,27 @@ public class MetalBarrelContainer extends Container {
   }
 
   public static MetalBarrelContainer copper(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-  	return new MetalBarrelContainer(MetalBarrels.ObjectHolders.COPPER_CONTAINER,id,world,pos,playerInventory,player,
+  	return new MetalBarrelContainer(MetalBarrels.ObjectHolders.COPPER,id,world,pos,playerInventory,player,
 						9,5,8,18, 122);
 	}
 
 	public static MetalBarrelContainer iron(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.IRON_CONTAINER,id,world,pos,playerInventory,player,
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.IRON,id,world,pos,playerInventory,player,
 						9,6,8,18, 140);
 	}
 
 	public static MetalBarrelContainer silver(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.SILVER_CONTAINER,id,world,pos,playerInventory,player,
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.SILVER,id,world,pos,playerInventory,player,
 						9,8,8,18, 176);
 	}
 
 	public static MetalBarrelContainer gold(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.GOLD_CONTAINER,id,world,pos,playerInventory,player,
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.GOLD,id,world,pos,playerInventory,player,
 						9,9,8,18, 194);
 	}
 
 	public static MetalBarrelContainer diamond(int id,World world,BlockPos pos,PlayerInventory playerInventory,PlayerEntity player){
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.DIAMOND_CONTAINER,id,world,pos,playerInventory,player,
+		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.DIAMOND,id,world,pos,playerInventory,player,
 						12,9,8,18, 194,35);
 	}
 
