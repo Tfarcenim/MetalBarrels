@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -22,11 +23,15 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -39,6 +44,12 @@ public class BarrelUpgradeItem extends Item {
     this.upgradeInfo = info;
   }
 
+  public static final Method method;
+
+  static {
+    method = ObfuscationReflectionHelper.findMethod(ChestTileEntity.class,"func_190576_q");//getItems
+  }
+
   private static final ITextComponent s = new TranslationTextComponent("tooltip.metalbarrels.ironchest").mergeStyle(TextFormatting.GREEN);
 
   public static boolean IRON_CHESTS_LOADED;
@@ -46,7 +57,7 @@ public class BarrelUpgradeItem extends Item {
   @Override
   @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    if (IRON_CHESTS_LOADED){
+    if (IRON_CHESTS_LOADED) {
       tooltip.add(s);
     }
   }
@@ -83,7 +94,13 @@ public class BarrelUpgradeItem extends Item {
       facing = state.get(BlockStateProperties.FACING);
     }
 
-    oldBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    else if (oldBarrel instanceof ChestTileEntity) {
+      try {
+        oldBarrelContents.addAll((Collection<? extends ItemStack>) method.invoke(oldBarrel));
+      } catch (IllegalAccessException | InvocationTargetException e) {
+        e.printStackTrace();
+      }
+    } else oldBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
                     .mapToObj(itemHandler::getStackInSlot).forEach(oldBarrelContents::add));
     oldBarrel.remove();

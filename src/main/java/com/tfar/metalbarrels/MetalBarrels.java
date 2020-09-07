@@ -9,18 +9,18 @@ import com.tfar.metalbarrels.network.PacketHandler;
 import com.tfar.metalbarrels.screens.*;
 import com.tfar.metalbarrels.tile.*;
 import com.tfar.metalbarrels.util.MetalBarrelBlockEntityType;
-import com.tfar.metalbarrels.util.Tags;
+import com.tfar.metalbarrels.util.ModTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -105,165 +105,170 @@ public class MetalBarrels {
     public static void onItemsRegistry(final RegistryEvent.Register<Item> itemRegistryEvent) {
 
       IForgeRegistry<Item> registry = itemRegistryEvent.getRegistry();
-      Item.Properties properties = new Item.Properties().group(tab);
       for (Block block : MOD_BLOCKS) {
-        registerItem(new BlockItem(block, properties), block.getRegistryName().toString(), registry);
+        Item.Properties properties = new Item.Properties().group(tab);
+        if (block == ObjectHolders.NETHERITE_BARREL) {
+          properties.isBurnable();
+        }
+        Item item = new BlockItem(block, properties);
+        registerItem(item, block.getRegistryName().toString(), registry);
       }
 
       //wood to x
+      Item.Properties properties = new Item.Properties().group(tab);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.WOODEN_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.WOODEN_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.COPPER_BARREL))
-              ).add(Tags.Blocks.WOODEN_CHESTS,IronChestObjectHolders.COPPER_CHEST,"ironchest"))
+              ).add(Tags.Blocks.CHESTS_WOODEN,IronChestObjectHolders.COPPER_CHEST,"ironchest"))
               ,"wood_to_copper",registry);
 
-      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.WOODEN_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.WOODEN_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.IRON_BARREL))
-              ).add(Tags.Blocks.WOODEN_CHESTS,IronChestObjectHolders.IRON_CHEST,"ironchest"))
+              ).add(Tags.Blocks.CHESTS_WOODEN,IronChestObjectHolders.IRON_CHEST,"ironchest"))
               ,"wood_to_iron",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.WOODEN_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.WOODEN_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.SILVER_BARREL))
-              ).add(Tags.Blocks.WOODEN_CHESTS,IronChestObjectHolders.SILVER_CHEST,"ironchest"))
+              ).add(Tags.Blocks.CHESTS_WOODEN,IronChestObjectHolders.SILVER_CHEST,"ironchest"))
               ,"wood_to_silver",registry);
 
-      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.WOODEN_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.WOODEN_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.GOLD_BARREL))
-              ).add(Tags.Blocks.WOODEN_CHESTS,IronChestObjectHolders.GOLD_CHEST,"ironchest"))
+              ).add(Tags.Blocks.CHESTS_WOODEN,IronChestObjectHolders.GOLD_CHEST,"ironchest"))
               ,"wood_to_gold",registry);
 
-      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.WOODEN_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.WOODEN_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.DIAMOND_BARREL)))
-                      .add(Tags.Blocks.WOODEN_CHESTS,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
+                      .add(Tags.Blocks.CHESTS_WOODEN,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
               ,"wood_to_diamond",registry);
 
-      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.WOODEN_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.WOODEN_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.OBSIDIAN_BARREL)))
-                      .add(Tags.Blocks.WOODEN_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
+                      .add(Tags.Blocks.CHESTS_WOODEN,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
               ,"wood_to_obsidian",registry);
 
 			registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(
-							Collections.singleton(Tags.Blocks.WOODEN_BARRELS)),
+							Collections.singleton(ModTags.Blocks.WOODEN_BARRELS)),
 											new ArrayList<>(Collections.singleton(ObjectHolders.NETHERITE_BARREL))))
 							,"wood_to_netherite",registry);
 
       //copper to x
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.COPPER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.COPPER_BARRELS)),
                       new ArrayList<>(Collections.singleton(ObjectHolders.IRON_BARREL)))
-                      .add(Tags.Blocks.COPPER_CHESTS,IronChestObjectHolders.IRON_CHEST,"ironchest"))
+                      .add(ModTags.Blocks.COPPER_CHESTS,IronChestObjectHolders.IRON_CHEST,"ironchest"))
               ,"copper_to_iron",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.COPPER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.COPPER_BARRELS)),
                       new ArrayList<>(Collections.singleton(ObjectHolders.SILVER_BARREL)))
-                      .add(Tags.Blocks.COPPER_CHESTS,IronChestObjectHolders.SILVER_CHEST,"ironchest"))
+                      .add(ModTags.Blocks.COPPER_CHESTS,IronChestObjectHolders.SILVER_CHEST,"ironchest"))
               ,"copper_to_silver",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.COPPER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.COPPER_BARRELS)),
                       new ArrayList<>(Collections.singleton(ObjectHolders.GOLD_BARREL)))
-                      .add(Tags.Blocks.COPPER_CHESTS,IronChestObjectHolders.GOLD_CHEST,"ironchest"))
+                      .add(ModTags.Blocks.COPPER_CHESTS,IronChestObjectHolders.GOLD_CHEST,"ironchest"))
               ,"copper_to_gold",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.COPPER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.COPPER_BARRELS)),
                       new ArrayList<>(Collections.singleton(ObjectHolders.DIAMOND_BARREL)))
-                      .add(Tags.Blocks.COPPER_CHESTS,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
+                      .add(ModTags.Blocks.COPPER_CHESTS,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
               ,"copper_to_diamond",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.COPPER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.COPPER_BARRELS)),
                       new ArrayList<>(Collections.singleton(ObjectHolders.OBSIDIAN_BARREL)))
-                      .add(Tags.Blocks.COPPER_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
+                      .add(ModTags.Blocks.COPPER_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
               ,"copper_to_obsidian",registry);
 
       //iron to x
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.IRON_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.IRON_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.SILVER_BARREL))
-              ).add(Tags.Blocks.IRON_CHESTS,IronChestObjectHolders.SILVER_CHEST,"ironchest"))
+              ).add(ModTags.Blocks.IRON_CHESTS,IronChestObjectHolders.SILVER_CHEST,"ironchest"))
 
               ,"iron_to_silver",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.IRON_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.IRON_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.GOLD_BARREL))
-              ).add(Tags.Blocks.IRON_CHESTS,IronChestObjectHolders.GOLD_CHEST,"ironchest"))
+              ).add(ModTags.Blocks.IRON_CHESTS,IronChestObjectHolders.GOLD_CHEST,"ironchest"))
 
               ,"iron_to_gold",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.IRON_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.IRON_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.DIAMOND_BARREL))
-              ).add(Tags.Blocks.IRON_CHESTS,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
+              ).add(ModTags.Blocks.IRON_CHESTS,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
 
               ,"iron_to_diamond",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.IRON_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.IRON_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.OBSIDIAN_BARREL))
-              ).add(Tags.Blocks.IRON_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
+              ).add(ModTags.Blocks.IRON_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
 
               ,"iron_to_obsidian",registry);
 
       //silver to x
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.SILVER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.SILVER_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.GOLD_BARREL))
-      ).add(Tags.Blocks.SILVER_CHESTS,IronChestObjectHolders.GOLD_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.SILVER_CHESTS,IronChestObjectHolders.GOLD_CHEST,"ironchest"))
               ,"silver_to_gold",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.SILVER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.SILVER_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.DIAMOND_BARREL))
-      ).add(Tags.Blocks.SILVER_CHESTS,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.SILVER_CHESTS,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
               ,"silver_to_diamond",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.SILVER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.SILVER_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.OBSIDIAN_BARREL))
-      ).add(Tags.Blocks.SILVER_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.SILVER_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
               ,"silver_to_obsidian",registry);
 
       //gold to x
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.GOLD_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.GOLD_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.DIAMOND_BARREL))
-      ).add(Tags.Blocks.GOLD_CHESTS,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.GOLD_CHESTS,IronChestObjectHolders.DIAMOND_CHEST,"ironchest"))
               ,"gold_to_diamond",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.GOLD_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.GOLD_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.OBSIDIAN_BARREL))
-      ).add(Tags.Blocks.GOLD_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.GOLD_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
               ,"gold_to_obsidian",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.DIAMOND_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.DIAMOND_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.OBSIDIAN_BARREL))
-      ).add(Tags.Blocks.DIAMOND_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.DIAMOND_CHESTS,IronChestObjectHolders.OBSIDIAN_CHEST,"ironchest"))
               ,"diamond_to_obsidian",registry);
 
       //crystal
 
-      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.WOODEN_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.WOODEN_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.CRYSTAL_BARREL))
-      ).add(Tags.Blocks.WOODEN_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
+      ).add(Tags.Blocks.CHESTS_WOODEN,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
               ,"wood_to_crystal",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.COPPER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.COPPER_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.CRYSTAL_BARREL))
-      ).add(Tags.Blocks.COPPER_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.COPPER_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
               ,"copper_to_crystal",registry);
 
-      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.IRON_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.IRON_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.CRYSTAL_BARREL))
-      ).add(Tags.Blocks.IRON_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.IRON_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
               ,"iron_to_crystal",registry);
 
-      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.SILVER_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.SILVER_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.CRYSTAL_BARREL))
-      ).add(Tags.Blocks.SILVER_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.SILVER_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
               ,"silver_to_crystal",registry);
 
-      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.GOLD_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.GOLD_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.CRYSTAL_BARREL))
-      ).add(Tags.Blocks.GOLD_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.GOLD_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
               ,"gold_to_crystal",registry);
 
-      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(Tags.Blocks.DIAMOND_BARRELS)),
+      registerItem(new BarrelUpgradeItem(properties, new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.DIAMOND_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.CRYSTAL_BARREL))
-      ).add(Tags.Blocks.DIAMOND_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
+      ).add(ModTags.Blocks.DIAMOND_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
               ,"diamond_to_crystal",registry);
 
     }

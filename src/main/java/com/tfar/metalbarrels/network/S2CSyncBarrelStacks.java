@@ -16,20 +16,20 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class PacketTopStackSyncChest {
+public class S2CSyncBarrelStacks {
   private final int dimension;
 
   private final BlockPos pos;
 
   private final NonNullList<ItemStack> topStacks;
 
-  public PacketTopStackSyncChest(int dimension, BlockPos pos, NonNullList<ItemStack> topStacks) {
+  public S2CSyncBarrelStacks(int dimension, BlockPos pos, NonNullList<ItemStack> topStacks) {
     this.dimension = dimension;
     this.pos = pos;
     this.topStacks = topStacks;
   }
 
-  public static void encode(PacketTopStackSyncChest msg, PacketBuffer buf) {
+  public static void encode(S2CSyncBarrelStacks msg, PacketBuffer buf) {
     buf.writeInt(msg.dimension);
     buf.writeInt(msg.pos.getX());
     buf.writeInt(msg.pos.getY());
@@ -41,7 +41,7 @@ public class PacketTopStackSyncChest {
     }
   }
 
-  public static PacketTopStackSyncChest decode(PacketBuffer buf) {
+  public static S2CSyncBarrelStacks decode(PacketBuffer buf) {
     int dimension = buf.readInt();
     BlockPos pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
 
@@ -54,11 +54,11 @@ public class PacketTopStackSyncChest {
       topStacks.set(item, itemStack);
     }
 
-    return new PacketTopStackSyncChest(dimension, pos, topStacks);
+    return new S2CSyncBarrelStacks(dimension, pos, topStacks);
   }
 
   public static class Handler {
-    public static void handle(final PacketTopStackSyncChest message, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(final S2CSyncBarrelStacks message, Supplier<NetworkEvent.Context> ctx) {
       ctx.get().enqueueWork(() -> {
 
       World world = DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().world);

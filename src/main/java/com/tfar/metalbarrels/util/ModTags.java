@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 
-public class Tags {
+public class ModTags {
 
   public static class Blocks {
     public static final ITag.INamedTag<Block> WOODEN_BARRELS = tag("barrels/wooden");
@@ -14,7 +14,6 @@ public class Tags {
     public static final ITag.INamedTag<Block> GOLD_BARRELS = tag("barrels/gold");
     public static final ITag.INamedTag<Block> DIAMOND_BARRELS = tag("barrels/diamond");
 
-    public static final ITag.INamedTag<Block> WOODEN_CHESTS = tag("chests/wooden");
     public static final ITag.INamedTag<Block> COPPER_CHESTS = tag("chests/copper");
     public static final ITag.INamedTag<Block> IRON_CHESTS = tag("chests/iron");
     public static final ITag.INamedTag<Block> SILVER_CHESTS = tag("chests/silver");
