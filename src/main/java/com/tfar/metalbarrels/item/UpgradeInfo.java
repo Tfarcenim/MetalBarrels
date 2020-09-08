@@ -2,7 +2,6 @@ package com.tfar.metalbarrels.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.tags.ITag;
-import net.minecraft.tags.Tag;
 import net.minecraftforge.fml.ModList;
 
 import java.util.List;

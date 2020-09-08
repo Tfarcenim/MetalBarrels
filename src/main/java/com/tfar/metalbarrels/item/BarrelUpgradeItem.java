@@ -1,6 +1,5 @@
 package com.tfar.metalbarrels.item;
 
-import com.tfar.metalbarrels.tile.MetalBarrelBlockEntity;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
