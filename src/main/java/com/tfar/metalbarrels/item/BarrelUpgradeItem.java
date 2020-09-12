@@ -90,11 +90,11 @@ public class BarrelUpgradeItem extends Item {
     Direction facing = Direction.NORTH;
     if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)){
       facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
-    }else if (state.hasProperty(BlockStateProperties.FACING)){
+    } else if (state.hasProperty(BlockStateProperties.FACING)) {
       facing = state.get(BlockStateProperties.FACING);
     }
 
-    else if (oldBarrel instanceof ChestTileEntity) {
+    if (oldBarrel instanceof ChestTileEntity) {
       try {
         oldBarrelContents.addAll((Collection<? extends ItemStack>) method.invoke(oldBarrel));
       } catch (IllegalAccessException | InvocationTargetException e) {
