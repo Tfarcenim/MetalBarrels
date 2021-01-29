@@ -1,0 +1,52 @@
+{
+  "block.metalbarrels.copper_barrel": "Медная бочка",
+  "block.metalbarrels.iron_barrel": "Железная бочка",
+  "block.metalbarrels.gold_barrel": "Золотая бочка",
+  "block.metalbarrels.diamond_barrel": "Алмазная бочка",
+  "block.metalbarrels.obsidian_barrel": "Обсидиановая бочка",
+  "block.metalbarrels.silver_barrel": "Серебряная бочка",
+  "block.metalbarrels.crystal_barrel": "Кристальная бочка",
+  "block.metalbarrels.netherite_barrel": "Незеритовая бочка",
+
+  "item.metalbarrels.wood_to_copper": "Улучшение из деревянной в медную бочку",
+  "item.metalbarrels.wood_to_iron": "Улучшение из деревянной в железную бочку",
+  "item.metalbarrels.wood_to_silver": "Улучшение из деревянной в серебряную бочку",
+  "item.metalbarrels.wood_to_gold": "Улучшение из деревянной в золотую бочку",
+  "item.metalbarrels.wood_to_diamond": "Улучшение из деревянной в алмазную бочку",
+  "item.metalbarrels.wood_to_obsidian": "Улучшение из деревянной в обсидиановую бочку",
+  "item.metalbarrels.wood_to_crystal": "Улучшение из деревянной в кристальную бочку",
+  "item.metalbarrels.wood_to_netherite": "Улучшение из деревянной в незеритовую бочку",
+
+  "item.metalbarrels.copper_to_iron": "Улучшение из медной в железную бочку",
+  "item.metalbarrels.copper_to_silver": "Улучшение из медной в серебряную бочку",
+  "item.metalbarrels.copper_to_gold": "Улучшение из медной в золотую бочку",
+  "item.metalbarrels.copper_to_diamond": "Улучшение из медной в алмазную бочку",
+  "item.metalbarrels.copper_to_obsidian": "Улучшение из медной в обсидиановую бочку",
+  "item.metalbarrels.copper_to_crystal": "Улучшение из медной в кристальную бочку",
+  "item.metalbarrels.copper_to_netherite": "Улучшение из медной в незеритовую бочку",
+
+  "item.metalbarrels.iron_to_silver": "Улучшение из железной в серебряную бочку",
+  "item.metalbarrels.iron_to_gold": "Улучшение из железной в золотую бочку",
+  "item.metalbarrels.iron_to_diamond": "Улучшение из железной в алмазную бочку",
+  "item.metalbarrels.iron_to_obsidian": "Улучшение из железной в обсидиановую бочку",
+  "item.metalbarrels.iron_to_crystal": "Улучшение из железной в кристальную бочку",
+
+  "item.metalbarrels.silver_to_gold": "Улучшение из серебряной в золотую бочку",
+  "item.metalbarrels.silver_to_diamond": "Улучшение из серебряной в алмазную бочку",
+  "item.metalbarrels.silver_to_obsidian": "Улучшение из серебряной в обсидиановую бочку",
+  "item.metalbarrels.silver_to_crystal": "Улучшение из серебряной в кристальную бочку",
+
+  "item.metalbarrels.gold_to_diamond": "Улучшение из золотой в алмазную бочку",
+  "item.metalbarrels.gold_to_obsidian": "Улучшение из золотой в обсидиановую бочку",
+  "item.metalbarrels.gold_to_crystal": "Улучшение из золотой в кристальную бочку",
+
+  "item.metalbarrels.diamond_to_obsidian": "Улучшение из алмазной в обсидиановую бочку",
+  "item.metalbarrels.diamond_to_crystal": "Улучшение из алмазной в кристальную бочку",
+
+  "itemGroup.metalbarrels": "Металлические бочки",
+
+  "tooltip.metalbarrels.ironchest": "Также можно улучшить блоки IronChest!",
+
+  "metalbarrels.upgrade_successful": "улучшение успешно завершено",
+  "metalbarrels.in_use": "Barrel is in Use"
+}
