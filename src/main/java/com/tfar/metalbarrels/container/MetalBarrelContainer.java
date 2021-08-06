@@ -153,6 +153,7 @@ public class MetalBarrelContainer extends Container {
    * Called when the container is closed.
    */
   public void onContainerClosed(PlayerEntity playerIn) {
+  	super.onContainerClosed(playerIn);
 		this.callable.consume((world, pos) -> {
 			TileEntity tileEntity = world.getTileEntity(pos);
 			if (tileEntity == null) {

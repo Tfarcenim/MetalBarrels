@@ -73,12 +73,6 @@ public class MetalBarrelBlock extends BarrelBlock {
     return ActionResultType.SUCCESS;
   }
 
-  @Nullable
-  @Override
-  public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
-    return (INamedContainerProvider)worldIn.getTileEntity(pos);
-  }
-
   @Override
   public boolean hasTileEntity(BlockState state) {
     return true;
