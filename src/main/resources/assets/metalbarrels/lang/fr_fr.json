@@ -1,0 +1,51 @@
+{
+  "block.metalbarrels.copper_barrel": "Baril en cuivre",
+  "block.metalbarrels.iron_barrel": "Baril en fer",
+  "block.metalbarrels.gold_barrel": "Baril en or",
+  "block.metalbarrels.diamond_barrel": "Baril en diamant",
+  "block.metalbarrels.obsidian_barrel": "Baril en obsidienne",
+  "block.metalbarrels.silver_barrel": "Baril en argent",
+  "block.metalbarrels.crystal_barrel": "Baril en crystal",
+  "block.metalbarrels.netherite_barrel": "Baril en Netherite",
+
+  "item.metalbarrels.wood_to_copper": "Amélioration en cuivre pour baril",
+  "item.metalbarrels.wood_to_iron": "Amélioration en fer pour baril",
+  "item.metalbarrels.wood_to_silver": "Amélioration en argent pour baril",
+  "item.metalbarrels.wood_to_gold": "Amélioration en or pour baril",
+  "item.metalbarrels.wood_to_diamond": "Amélioration en diamant pour baril",
+  "item.metalbarrels.wood_to_obsidian": "Amélioration en obsidienne pour baril",
+  "item.metalbarrels.wood_to_crystal": "Amélioration en crystal pour baril",
+  "item.metalbarrels.wood_to_netherite": "Amélioration en Netherite pour baril",
+
+  "item.metalbarrels.copper_to_iron": "Amélioration pour baril en cuivre vers fer",
+  "item.metalbarrels.copper_to_silver": "Amélioration pour baril en cuivre vers argent",
+  "item.metalbarrels.copper_to_gold": "Amélioration pour baril en cuivre vers or",
+  "item.metalbarrels.copper_to_diamond": "Amélioration pour baril en cuivre vers diamant",
+  "item.metalbarrels.copper_to_obsidian": "Amélioration pour baril en cuivre vers obsidienne",
+  "item.metalbarrels.copper_to_crystal": "Amélioration pour baril en cuivre vers crystal",
+
+  "item.metalbarrels.iron_to_silver": "Amélioration pour baril en fer vers argent",
+  "item.metalbarrels.iron_to_gold": "Amélioration pour baril en fer vers or",
+  "item.metalbarrels.iron_to_diamond": "Amélioration pour baril en fer vers diamant",
+  "item.metalbarrels.iron_to_obsidian": "Amélioration pour baril en fer vers obsidienne",
+  "item.metalbarrels.iron_to_crystal": "Amélioration pour baril en fer vers crystal",
+
+  "item.metalbarrels.silver_to_gold": "Amélioration pour baril en argent vers or",
+  "item.metalbarrels.silver_to_diamond": "Amélioration pour baril en argent vers diamant",
+  "item.metalbarrels.silver_to_obsidian": "Amélioration pour baril en argent vers obsidienne",
+  "item.metalbarrels.silver_to_crystal": "Amélioration pour baril en argent vers crystal",
+
+  "item.metalbarrels.gold_to_diamond": "Amélioration pour baril en or vers diamant",
+  "item.metalbarrels.gold_to_obsidian": "Amélioration pour baril en or vers obsidienne",
+  "item.metalbarrels.gold_to_crystal": "Amélioration pour baril en or vers crystal",
+
+  "item.metalbarrels.diamond_to_obsidian": "Amélioration pour baril en diamant vers obsidienne",
+  "item.metalbarrels.diamond_to_crystal": "Amélioration pour baril en diamant vers crystal",
+
+  "itemGroup.metalbarrels": "Metal Barrels",
+
+  "tooltip.metalbarrels.ironchest": "Peut aussi améliorer un item d'Iron Chest !",
+
+  "metalbarrels.upgrade_successful": "Amélioration réussie",
+  "metalbarrels.in_use": "La baril est en cours d'utilisation"
+}
