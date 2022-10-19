@@ -1,0 +1,51 @@
+{
+  "block.metalbarrels.copper_barrel": "Kupfer Fass",
+  "block.metalbarrels.iron_barrel": "Eisen Fass",
+  "block.metalbarrels.gold_barrel": "Gold Fass",
+  "block.metalbarrels.diamond_barrel": "Diamont Fass",
+  "block.metalbarrels.obsidian_barrel": "Obsidian Fass",
+  "block.metalbarrels.silver_barrel": "Silber Fass",
+  "block.metalbarrels.crystal_barrel": "Kristall Fass",
+  "block.metalbarrels.netherite_barrel": "Netherit Fass",
+
+  "item.metalbarrels.wood_to_copper": "Fass zu Kupfer Fass Verbesserung",
+  "item.metalbarrels.wood_to_iron": "Fass zu Eisen Fass Verbesserung",
+  "item.metalbarrels.wood_to_silver": "Fass zu Silber Fass Verbesserung",
+  "item.metalbarrels.wood_to_gold": "Fass zu Gold Fass Verbesserung",
+  "item.metalbarrels.wood_to_diamond": "Fass zu Diamant Fass Verbesserung",
+  "item.metalbarrels.wood_to_obsidian": "Fass zu Obsidian Fass Verbesserung",
+  "item.metalbarrels.wood_to_crystal": "Fass zu Kristall Fass Verbesserung",
+  "item.metalbarrels.wood_to_netherite": "Fass zu Netherit Fass Verbesserung",
+
+  "item.metalbarrels.copper_to_iron": "Kupfer zu Eisen Fass Verbesserung",
+  "item.metalbarrels.copper_to_silver": "Kupfer zu Silber Fass Verbesserung",
+  "item.metalbarrels.copper_to_gold": "Kupfer zu Gold Fass Verbesserung",
+  "item.metalbarrels.copper_to_diamond": "Kupfer zu Diamant Fass Verbesserung",
+  "item.metalbarrels.copper_to_obsidian": "Kupfer zu Obsidian Fass Verbesserung",
+  "item.metalbarrels.copper_to_crystal": "Kupfer zu Kristall Fass Verbesserung",
+
+  "item.metalbarrels.iron_to_silver": "Eisen zu Silber Fass Verbesserung",
+  "item.metalbarrels.iron_to_gold": "Eisen zu Gold Fass Verbesserung",
+  "item.metalbarrels.iron_to_diamond": "Eisen zu Diamant Fass Verbesserung",
+  "item.metalbarrels.iron_to_obsidian": "Eisen zu Obsidian Fass Verbesserung",
+  "item.metalbarrels.iron_to_crystal": "Eisen zu Kristall Fass Verbesserung",
+
+  "item.metalbarrels.silver_to_gold": "Silber zu Gold Fass Verbesserung",
+  "item.metalbarrels.silver_to_diamond": "Silber zu Diamant Fass Verbesserung",
+  "item.metalbarrels.silver_to_obsidian": "Silber zu Obsidian Fass Verbesserung",
+  "item.metalbarrels.silver_to_crystal": "Silber zu Kristall Fass Verbesserung",
+
+  "item.metalbarrels.gold_to_diamond": "Gold zu Diamant Fass Verbesserung",
+  "item.metalbarrels.gold_to_obsidian": "Gold zu Obsidian Fass Verbesserung",
+  "item.metalbarrels.gold_to_crystal": "Gold zu Kristall Fass Verbesserung",
+
+  "item.metalbarrels.diamond_to_obsidian": "Diamant zu Obsidian Fass Verbesserung",
+  "item.metalbarrels.diamond_to_crystal": "Diamant zu Kristall Fass Verbesserung",
+
+  "itemGroup.metalbarrels": "Metal Fass",
+
+  "tooltip.metalbarrels.ironchest": "Kann auch Eisenkisten verbessern!",
+
+  "metalbarrels.upgrade_successful": "Verbesserung erfolgreif",
+  "metalbarrels.in_use": "Fass wird benutzt"
+}
