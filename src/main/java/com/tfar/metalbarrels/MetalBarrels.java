@@ -271,6 +271,11 @@ public class MetalBarrels {
       ).add(ModTags.Blocks.DIAMOND_CHESTS,IronChestObjectHolders.CRYSTAL_CHEST,"ironchest"))
               ,"diamond_to_crystal",registry);
 
+      //obsidian to netherite
+      registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.OBSIDIAN_BARRELS)),
+                      new ArrayList<>(Collections.singleton(ObjectHolders.NETHERITE_BARREL))
+              ))
+              ,"obsidian_to_netherite",registry);
     }
 
     private static void registerItem(Item item, String name, IForgeRegistry<Item> registry) {

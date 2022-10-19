@@ -42,6 +42,8 @@
   "item.metalbarrels.diamond_to_obsidian": "Diamond to Obsidian Barrel Upgrade",
   "item.metalbarrels.diamond_to_crystal": "Diamond to Crystal Barrel Upgrade",
 
+  "item.metalbarrels.obsidian_to_netherite": "Obsidian to Netherite Barrel Upgrade",
+
   "itemGroup.metalbarrels": "Metal Barrels",
 
   "tooltip.metalbarrels.ironchest": "Can also upgrade Iron Chest blocks!",

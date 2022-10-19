@@ -8,9 +8,7 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-plugins {
-    id "com.wynprice.cursemaven" version "2.1.0"
-}
+
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
@@ -91,7 +89,7 @@ dependencies {
     // at runtime, use the full JEI jar
     //runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 
-    compile fg.deobf("curse.maven:iron-chests:3043892")
+    //compile fg.deobf("curse.maven:iron-chests:3043892")
 
     //compile fg.deobf("curse.maven:i-like-wood:2785492")
 

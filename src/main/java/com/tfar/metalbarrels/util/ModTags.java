@@ -13,7 +13,7 @@ public class ModTags {
     public static final ITag.INamedTag<Block> SILVER_BARRELS = tag("barrels/silver");
     public static final ITag.INamedTag<Block> GOLD_BARRELS = tag("barrels/gold");
     public static final ITag.INamedTag<Block> DIAMOND_BARRELS = tag("barrels/diamond");
-
+    public static final ITag.INamedTag<Block> OBSIDIAN_BARRELS = tag("barrels/obsidian");
     public static final ITag.INamedTag<Block> COPPER_CHESTS = tag("chests/copper");
     public static final ITag.INamedTag<Block> IRON_CHESTS = tag("chests/iron");
     public static final ITag.INamedTag<Block> SILVER_CHESTS = tag("chests/silver");
