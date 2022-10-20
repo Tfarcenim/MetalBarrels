@@ -19,7 +19,7 @@ public class UpgradeInfo {
 
   public int getIndex(Block barrel){
     for (int i = 0; i < start_blocks.size() ; i++){
-      if (barrel.isIn(start_blocks.get(i)))return i;
+      if (barrel.is(start_blocks.get(i)))return i;
     }
     throw new IllegalArgumentException(barrel +" is not valid for upgrading!");
   }
@@ -37,6 +37,6 @@ public class UpgradeInfo {
   }
 
   public boolean canUpgrade(Block barrel){
-    return IntStream.range(0, start_blocks.size()).anyMatch(i -> barrel.isIn(start_blocks.get(i)));
+    return IntStream.range(0, start_blocks.size()).anyMatch(i -> barrel.is(start_blocks.get(i)));
   }
 }

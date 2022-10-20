@@ -9,13 +9,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.function.Supplier;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class CrystalBarrelBlock extends MetalBarrelBlock {
 	public CrystalBarrelBlock(Properties properties, Supplier<TileEntity> tileEntitySupplier) {
 		super(properties, tileEntitySupplier);
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return 1.0F;
 	}
 

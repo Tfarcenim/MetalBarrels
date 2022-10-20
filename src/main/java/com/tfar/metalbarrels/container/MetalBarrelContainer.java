@@ -28,7 +28,7 @@ public class MetalBarrelContainer extends Container {
   public MetalBarrelContainer(ContainerType<?> containerType,
 															int id, PlayerInventory playerInventory,
 															int width, int height, int containerX, int containerY, int playerX, int playerY) {this
-          (containerType,id, playerInventory, width,height,containerX,containerY,playerY,playerX,IWorldPosCallable.DUMMY);}
+          (containerType,id, playerInventory, width,height,containerX,containerY,playerY,playerX,IWorldPosCallable.NULL);}
 
   public MetalBarrelContainer(ContainerType<?> containerType,
 															int id, PlayerInventory playerInventory,
@@ -39,7 +39,7 @@ public class MetalBarrelContainer extends Container {
 		this.playerEntity = playerInventory.player;
 		this.callable = callable;
 
-		ItemStackHandler stackHandler = callable.apply(World::getTileEntity).map(MetalBarrelBlockEntity.class::cast)
+		ItemStackHandler stackHandler = callable.evaluate(World::getBlockEntity).map(MetalBarrelBlockEntity.class::cast)
 						.map(metalBarrelBlockEntity -> metalBarrelBlockEntity.handler)
 						.orElse(new ItemStackHandler(width * height));
 
@@ -120,30 +120,30 @@ public class MetalBarrelContainer extends Container {
 	}
 
   @Override
-  public boolean canInteractWith(@Nonnull PlayerEntity playerIn) {
+  public boolean stillValid(@Nonnull PlayerEntity playerIn) {
     return true;
   }
 
   @Nonnull
   @Override
-  public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+  public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
     ItemStack itemstack = ItemStack.EMPTY;
-    Slot slot = this.inventorySlots.get(index);
-    if (slot != null && slot.getHasStack()) {
-      ItemStack itemstack1 = slot.getStack();
+    Slot slot = this.slots.get(index);
+    if (slot != null && slot.hasItem()) {
+      ItemStack itemstack1 = slot.getItem();
       itemstack = itemstack1.copy();
       if (index < this.height * this.width) {
-        if (!this.mergeItemStack(itemstack1, this.height * this.width, this.inventorySlots.size(), true)) {
+        if (!this.moveItemStackTo(itemstack1, this.height * this.width, this.slots.size(), true)) {
           return ItemStack.EMPTY;
         }
-      } else if (!this.mergeItemStack(itemstack1, 0, this.height * this.width, false)) {
+      } else if (!this.moveItemStackTo(itemstack1, 0, this.height * this.width, false)) {
         return ItemStack.EMPTY;
       }
 
       if (itemstack1.isEmpty()) {
-        slot.putStack(ItemStack.EMPTY);
+        slot.set(ItemStack.EMPTY);
       } else {
-        slot.onSlotChanged();
+        slot.setChanged();
       }
     }
     return itemstack;
@@ -152,10 +152,10 @@ public class MetalBarrelContainer extends Container {
   /**
    * Called when the container is closed.
    */
-  public void onContainerClosed(PlayerEntity playerIn) {
-  	super.onContainerClosed(playerIn);
-		this.callable.consume((world, pos) -> {
-			TileEntity tileEntity = world.getTileEntity(pos);
+  public void removed(PlayerEntity playerIn) {
+  	super.removed(playerIn);
+		this.callable.execute((world, pos) -> {
+			TileEntity tileEntity = world.getBlockEntity(pos);
 			if (tileEntity == null) {
 				MetalBarrels.logger.warn("unexpected null on container close");
 				return;
@@ -165,8 +165,8 @@ public class MetalBarrelContainer extends Container {
 				--metalBarrelBlockEntity.players;
 			}
 			if (metalBarrelBlockEntity.players <= 0) {
-				metalBarrelBlockEntity.soundStuff(tileEntity.getBlockState(), SoundEvents.BLOCK_BARREL_CLOSE);
-				metalBarrelBlockEntity.changeState(playerIn.world.getBlockState(tileEntity.getPos()), false);
+				metalBarrelBlockEntity.soundStuff(tileEntity.getBlockState(), SoundEvents.BARREL_CLOSE);
+				metalBarrelBlockEntity.changeState(playerIn.level.getBlockState(tileEntity.getBlockPos()), false);
 			}
 		});
 	}

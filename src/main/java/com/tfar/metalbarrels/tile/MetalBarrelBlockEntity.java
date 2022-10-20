@@ -41,7 +41,7 @@ public class MetalBarrelBlockEntity extends TileEntity implements INamedContaine
       @Override
       protected void onContentsChanged(int slot) {
         super.onContentsChanged(slot);
-        markDirty();
+        setChanged();
       }
     };
     optional = LazyOptional.of(() -> handler);
@@ -54,18 +54,18 @@ public class MetalBarrelBlockEntity extends TileEntity implements INamedContaine
 
   @Nonnull
   @Override
-  public CompoundNBT write(CompoundNBT tag) {
+  public CompoundNBT save(CompoundNBT tag) {
     CompoundNBT compound = this.handler.serializeNBT();
     tag.put("inv", compound);
     if (this.customName != null) {
       tag.putString("CustomName", ITextComponent.Serializer.toJson(this.customName));
     }
-    return super.write(tag);
+    return super.save(tag);
   }
 
   public void changeState(BlockState p_213963_1_, boolean p_213963_2_) {
     if (p_213963_1_.getBlock() instanceof MetalBarrelBlock)
-    this.world.setBlockState(this.getPos(), p_213963_1_.with(BarrelBlock.PROPERTY_OPEN, p_213963_2_), 3);
+    this.level.setBlock(this.getBlockPos(), p_213963_1_.setValue(BarrelBlock.OPEN, p_213963_2_), 3);
     //else MetalBarrels.logger.warn("Attempted to set invalid property of {}",p_213963_1_.toString());
   }
 
@@ -74,21 +74,21 @@ public class MetalBarrelBlockEntity extends TileEntity implements INamedContaine
       //MetalBarrels.logger.warn("Attempted to set invalid property of {}",p_213965_1_.toString());
       return;
     }
-    Vector3i lvt_3_1_ = p_213965_1_.get(BarrelBlock.PROPERTY_FACING).getDirectionVec();
-    double lvt_4_1_ = this.pos.getX() + 0.5D + lvt_3_1_.getX() / 2.0D;
-    double lvt_6_1_ = this.pos.getY() + 0.5D + lvt_3_1_.getY() / 2.0D;
-    double lvt_8_1_ = this.pos.getZ() + 0.5D + lvt_3_1_.getZ() / 2.0D;
-    this.world.playSound(null, lvt_4_1_, lvt_6_1_, lvt_8_1_, p_213965_2_, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+    Vector3i lvt_3_1_ = p_213965_1_.getValue(BarrelBlock.FACING).getNormal();
+    double lvt_4_1_ = this.worldPosition.getX() + 0.5D + lvt_3_1_.getX() / 2.0D;
+    double lvt_6_1_ = this.worldPosition.getY() + 0.5D + lvt_3_1_.getY() / 2.0D;
+    double lvt_8_1_ = this.worldPosition.getZ() + 0.5D + lvt_3_1_.getZ() / 2.0D;
+    this.level.playSound(null, lvt_4_1_, lvt_6_1_, lvt_8_1_, p_213965_2_, SoundCategory.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
   }
 
   @Override//read
-  public void read(BlockState state,CompoundNBT tag) {
+  public void load(BlockState state,CompoundNBT tag) {
     CompoundNBT invTag = tag.getCompound("inv");
     handler.deserializeNBT(invTag);
     if (tag.contains("CustomName", 8)) {
-      this.customName = ITextComponent.Serializer.func_240643_a_(tag.getString("CustomName"));
+      this.customName = ITextComponent.Serializer.fromJson(tag.getString("CustomName"));
     }
-    super.read(state,tag);
+    super.load(state,tag);
   }
 
   @Nonnull
@@ -98,8 +98,8 @@ public class MetalBarrelBlockEntity extends TileEntity implements INamedContaine
   }
 
   @Override
-  public void remove() {
-    super.remove();
+  public void setRemoved() {
+    super.setRemoved();
     optional.invalidate();
   }
 
@@ -121,12 +121,12 @@ public class MetalBarrelBlockEntity extends TileEntity implements INamedContaine
   }
 
   protected ITextComponent getDefaultName() {
-    return new TranslationTextComponent(getBlockState().getBlock().getTranslationKey());
+    return new TranslationTextComponent(getBlockState().getBlock().getDescriptionId());
   }
 
   @Nullable
   @Override
   public Container createMenu(int id, PlayerInventory inv, PlayerEntity player) {
-    return containerFactory.apply(id, inv,IWorldPosCallable.of(world,pos));
+    return containerFactory.apply(id, inv,IWorldPosCallable.create(level,worldPosition));
   }
 }

@@ -21,7 +21,7 @@ public class ModTags {
     public static final ITag.INamedTag<Block> DIAMOND_CHESTS = tag("chests/diamond");
 
     private static ITag.INamedTag<Block> tag(String name) {
-      return BlockTags.makeWrapperTag("forge:"+name);
+      return BlockTags.bind("forge:"+name);
     }
   }
 }

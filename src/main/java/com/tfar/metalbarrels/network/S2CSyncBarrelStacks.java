@@ -37,7 +37,7 @@ public class S2CSyncBarrelStacks {
     buf.writeInt(msg.topStacks.size());
 
     for (ItemStack stack : msg.topStacks) {
-      buf.writeItemStack(stack);
+      buf.writeItem(stack);
     }
   }
 
@@ -49,7 +49,7 @@ public class S2CSyncBarrelStacks {
     NonNullList<ItemStack> topStacks = NonNullList.withSize(size, ItemStack.EMPTY);
 
     for (int item = 0; item < size; item++) {
-      ItemStack itemStack = buf.readItemStack();
+      ItemStack itemStack = buf.readItem();
 
       topStacks.set(item, itemStack);
     }
@@ -61,10 +61,10 @@ public class S2CSyncBarrelStacks {
     public static void handle(final S2CSyncBarrelStacks message, Supplier<NetworkEvent.Context> ctx) {
       ctx.get().enqueueWork(() -> {
 
-      World world = DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().world);
+      World world = DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().level);
 
         if (world != null) {
-          TileEntity tile = world.getTileEntity(message.pos);
+          TileEntity tile = world.getBlockEntity(message.pos);
 
           /*if (tile instanceof CrystalBarrelTile) {
             ((CrystalBarrelTile) tile).receiveMessageFromServer(message.topStacks);

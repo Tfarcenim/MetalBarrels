@@ -26,6 +26,8 @@ import java.util.stream.IntStream;
 
 import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 @SuppressWarnings("deprecation")
 public class MetalBarrelBlock extends BarrelBlock {
 
@@ -37,37 +39,37 @@ public class MetalBarrelBlock extends BarrelBlock {
   }
 
   @Override
-  public void onReplaced(BlockState state, @Nonnull World worldIn,@Nonnull BlockPos pos,@Nonnull BlockState newState, boolean isMoving) {
+  public void onRemove(BlockState state, @Nonnull World worldIn,@Nonnull BlockPos pos,@Nonnull BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-      TileEntity tileentity = worldIn.getTileEntity(pos);
+      TileEntity tileentity = worldIn.getBlockEntity(pos);
       if (tileentity instanceof MetalBarrelBlockEntity) {
         dropItems((MetalBarrelBlockEntity)tileentity,worldIn, pos);
-        worldIn.updateComparatorOutputLevel(pos, this);
+        worldIn.updateNeighbourForOutputSignal(pos, this);
       }
-      super.onReplaced(state, worldIn, pos, newState, isMoving);
+      super.onRemove(state, worldIn, pos, newState, isMoving);
     }
   }
 
   public static void dropItems(MetalBarrelBlockEntity barrel, World world, BlockPos pos) {
     IntStream.range(0, barrel.handler.getSlots()).mapToObj(barrel.handler::getStackInSlot)
-            .filter(stack -> !stack.isEmpty()).forEach(stack -> spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+            .filter(stack -> !stack.isEmpty()).forEach(stack -> dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos,
+  public ActionResultType use(BlockState state, World world, BlockPos pos,
                                          PlayerEntity player, Hand hand, BlockRayTraceResult result) {
-    if (!world.isRemote) {
-      INamedContainerProvider tileEntity = getContainer(state,world,pos);
+    if (!world.isClientSide) {
+      INamedContainerProvider tileEntity = getMenuProvider(state,world,pos);
       if (tileEntity != null) {
         MetalBarrelBlockEntity metalBarrelBlockEntity = (MetalBarrelBlockEntity)tileEntity;
-        world.setBlockState(pos, state.with(BarrelBlock.PROPERTY_OPEN, true), 3);
+        world.setBlock(pos, state.setValue(BarrelBlock.OPEN, true), 3);
         if (metalBarrelBlockEntity.players == 0) {
-          metalBarrelBlockEntity.soundStuff(state, SoundEvents.BLOCK_BARREL_OPEN);
+          metalBarrelBlockEntity.soundStuff(state, SoundEvents.BARREL_OPEN);
           metalBarrelBlockEntity.changeState(state, true);
         }
         metalBarrelBlockEntity.players++;
-        player.openContainer(tileEntity);
-        player.addStat(Stats.OPEN_BARREL);
+        player.openMenu(tileEntity);
+        player.awardStat(Stats.OPEN_BARREL);
       }
     }
     return ActionResultType.SUCCESS;
@@ -89,7 +91,7 @@ public class MetalBarrelBlock extends BarrelBlock {
    * is fine.
    */
   @Override
-  public boolean hasComparatorInputOverride(BlockState state) {
+  public boolean hasAnalogOutputSignal(BlockState state) {
     return true;
   }
 
@@ -98,17 +100,17 @@ public class MetalBarrelBlock extends BarrelBlock {
    * Implementing/overriding is fine.
    */
   @Override
-  public int getComparatorInputOverride(BlockState blockState, World world, BlockPos pos) {
-    TileEntity barrel = world.getTileEntity(pos);
+  public int getAnalogOutputSignal(BlockState blockState, World world, BlockPos pos) {
+    TileEntity barrel = world.getBlockEntity(pos);
     return barrel instanceof MetalBarrelBlockEntity ? ItemHandlerHelper.calcRedstoneFromInventory(((MetalBarrelBlockEntity) barrel).handler) : 0;
   }
 
   @Override
-  public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-    if (stack.hasDisplayName()) {
-      TileEntity tileentity = worldIn.getTileEntity(pos);
+  public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+    if (stack.hasCustomHoverName()) {
+      TileEntity tileentity = worldIn.getBlockEntity(pos);
       if (tileentity instanceof MetalBarrelBlockEntity) {
-        ((MetalBarrelBlockEntity)tileentity).setCustomName(stack.getDisplayName());
+        ((MetalBarrelBlockEntity)tileentity).setCustomName(stack.getHoverName());
       }
     }
   }

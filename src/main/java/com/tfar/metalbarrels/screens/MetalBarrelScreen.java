@@ -19,10 +19,10 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
   public MetalBarrelScreen(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component,
                            ResourceLocation texture, int xSize, int ySize) {
     super(barrelContainer, playerInventory, component);
-    this.xSize = xSize;
-    this.ySize = ySize;
+    this.imageWidth = xSize;
+    this.imageHeight = ySize;
     this.texture = texture;
-    this.playerInventoryTitleY = this.ySize - 94;
+    this.inventoryLabelY = this.imageHeight - 94;
     isTall = barrelContainer.height > 6;
     isWide = barrelContainer.width > 12;
   }
@@ -31,7 +31,7 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
   public void render(MatrixStack stack,int x, int y, float p_render_3_) {
     this.renderBackground(stack);
     super.render(stack,x, y, p_render_3_);
-    this.func_230459_a_(stack,x,y);
+    this.renderTooltip(stack,x,y);
   }
 
   /**
@@ -42,16 +42,16 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
    * @param mouseY
    */
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack stack,float partialTicks, int mouseX, int mouseY) {
-    this.minecraft.getTextureManager().bindTexture(texture);
-    int i = (this.width - this.xSize) / 2;
-    int j = (this.height - this.ySize) / 2;
+  protected void renderBg(MatrixStack stack,float partialTicks, int mouseX, int mouseY) {
+    this.minecraft.getTextureManager().bind(texture);
+    int i = (this.width - this.imageWidth) / 2;
+    int j = (this.height - this.imageHeight) / 2;
     if (!isTall) {
-      this.blit(stack,i, j, 0, 0, this.xSize, this.ySize);
+      this.blit(stack,i, j, 0, 0, this.imageWidth, this.imageHeight);
     } else if (!isWide) {
-      blit(stack,i, j, 0, 0,getBlitOffset(), this.xSize, this.ySize,512,256);
+      blit(stack,i, j, 0, 0,getBlitOffset(), this.imageWidth, this.imageHeight,512,256);
     } else {
-      blit(stack,i, j, 0, 0,getBlitOffset(), this.xSize, this.ySize,512,512);
+      blit(stack,i, j, 0, 0,getBlitOffset(), this.imageWidth, this.imageHeight,512,512);
     }
   }
 

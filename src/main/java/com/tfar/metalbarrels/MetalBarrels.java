@@ -48,7 +48,7 @@ public class MetalBarrels {
 
   public static final ItemGroup tab = new ItemGroup(MODID) {
     @Override
-    public ItemStack createIcon() {
+    public ItemStack makeIcon() {
       return new ItemStack(ObjectHolders.DIAMOND_BARREL);
     }
   };
@@ -67,12 +67,12 @@ public class MetalBarrels {
 
   private void doClientStuff(final FMLClientSetupEvent event) {
     // do something that can only be done on the client
-    ScreenManager.registerFactory(ObjectHolders.COPPER_CONTAINER, MetalBarrelScreen::copper);
-    ScreenManager.registerFactory(ObjectHolders.IRON_CONTAINER, MetalBarrelScreen::iron);
-    ScreenManager.registerFactory(ObjectHolders.SILVER_CONTAINER, MetalBarrelScreen::silver);
-    ScreenManager.registerFactory(ObjectHolders.GOLD_CONTAINER, MetalBarrelScreen::gold);
-    ScreenManager.registerFactory(ObjectHolders.DIAMOND_CONTAINER, MetalBarrelScreen::diamond);
-    ScreenManager.registerFactory(ObjectHolders.NETHERITE_CONTAINER, MetalBarrelScreen::netherite);
+    ScreenManager.register(ObjectHolders.COPPER_CONTAINER, MetalBarrelScreen::copper);
+    ScreenManager.register(ObjectHolders.IRON_CONTAINER, MetalBarrelScreen::iron);
+    ScreenManager.register(ObjectHolders.SILVER_CONTAINER, MetalBarrelScreen::silver);
+    ScreenManager.register(ObjectHolders.GOLD_CONTAINER, MetalBarrelScreen::gold);
+    ScreenManager.register(ObjectHolders.DIAMOND_CONTAINER, MetalBarrelScreen::diamond);
+    ScreenManager.register(ObjectHolders.NETHERITE_CONTAINER, MetalBarrelScreen::netherite);
   }
 
   // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
@@ -83,10 +83,10 @@ public class MetalBarrels {
 
     @SubscribeEvent
     public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-      Block.Properties metal = Block.Properties.create(Material.IRON).hardnessAndResistance(2.5f,6).sound(SoundType.METAL);
+      Block.Properties metal = Block.Properties.of(Material.METAL).strength(2.5f,6).sound(SoundType.METAL);
       Block.Properties softmetal = metal.harvestLevel(1);
       Block.Properties hardmetal = metal.harvestLevel(2);
-      Block.Properties obsidian = Block.Properties.create(Material.ROCK).hardnessAndResistance(15,6000);
+      Block.Properties obsidian = Block.Properties.of(Material.STONE).strength(15,6000);
       registerBlock(new MetalBarrelBlock(softmetal, () -> new MetalBarrelBlockEntity(ObjectHolders.COPPER_TILE)),"copper_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new MetalBarrelBlock(softmetal,() -> new MetalBarrelBlockEntity(ObjectHolders.IRON_TILE)),"iron_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new MetalBarrelBlock(hardmetal,() -> new MetalBarrelBlockEntity(ObjectHolders.SILVER_TILE)),"silver_barrel",blockRegistryEvent.getRegistry());
@@ -94,7 +94,7 @@ public class MetalBarrels {
       registerBlock(new MetalBarrelBlock(hardmetal,() -> new MetalBarrelBlockEntity(ObjectHolders.DIAMOND_TILE)),"diamond_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new MetalBarrelBlock(obsidian,() -> new MetalBarrelBlockEntity(ObjectHolders.DIAMOND_TILE)),"obsidian_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new MetalBarrelBlock(obsidian,() -> new MetalBarrelBlockEntity(ObjectHolders.NETHERITE_TILE)),"netherite_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new CrystalBarrelBlock(hardmetal.notSolid(),() -> new MetalBarrelBlockEntity(ObjectHolders.DIAMOND_TILE)),"crystal_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new CrystalBarrelBlock(hardmetal.noOcclusion(),() -> new MetalBarrelBlockEntity(ObjectHolders.DIAMOND_TILE)),"crystal_barrel",blockRegistryEvent.getRegistry());
     }
     private static void registerBlock(Block block, String name, IForgeRegistry<Block> registry) {
       registry.register(block.setRegistryName(name));
@@ -106,16 +106,16 @@ public class MetalBarrels {
 
       IForgeRegistry<Item> registry = itemRegistryEvent.getRegistry();
       for (Block block : MOD_BLOCKS) {
-        Item.Properties properties = new Item.Properties().group(tab);
+        Item.Properties properties = new Item.Properties().tab(tab);
         if (block == ObjectHolders.NETHERITE_BARREL) {
-          properties.isBurnable();
+          properties.fireResistant();
         }
         Item item = new BlockItem(block, properties);
         registerItem(item, block.getRegistryName().toString(), registry);
       }
 
       //wood to x
-      Item.Properties properties = new Item.Properties().group(tab);
+      Item.Properties properties = new Item.Properties().tab(tab);
 
       registerItem(new BarrelUpgradeItem(properties,  new UpgradeInfo(new ArrayList<>(Collections.singleton(ModTags.Blocks.WOODEN_BARRELS)),
               new ArrayList<>(Collections.singleton(ObjectHolders.COPPER_BARREL))

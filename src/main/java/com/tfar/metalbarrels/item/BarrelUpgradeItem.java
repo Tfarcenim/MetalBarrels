@@ -34,6 +34,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import net.minecraft.item.Item.Properties;
+
 public class BarrelUpgradeItem extends Item {
 
   protected final UpgradeInfo upgradeInfo;
@@ -46,16 +48,16 @@ public class BarrelUpgradeItem extends Item {
   public static final Method method;
 
   static {
-    method = ObfuscationReflectionHelper.findMethod(ChestTileEntity.class,"func_190576_q");//getItems
+    method = ObfuscationReflectionHelper.findMethod(ChestTileEntity.class,"getItems");//getItems
   }
 
-  private static final ITextComponent s = new TranslationTextComponent("tooltip.metalbarrels.ironchest").mergeStyle(TextFormatting.GREEN);
+  private static final ITextComponent s = new TranslationTextComponent("tooltip.metalbarrels.ironchest").withStyle(TextFormatting.GREEN);
 
   public static boolean IRON_CHESTS_LOADED;
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     if (IRON_CHESTS_LOADED) {
       tooltip.add(s);
     }
@@ -63,34 +65,34 @@ public class BarrelUpgradeItem extends Item {
 
   @Nonnull
   @Override
-  public ActionResultType onItemUse(ItemUseContext context) {
+  public ActionResultType useOn(ItemUseContext context) {
     PlayerEntity player = context.getPlayer();
-    BlockPos pos = context.getPos();
-    World world = context.getWorld();
-    ItemStack heldStack = context.getItem();
+    BlockPos pos = context.getClickedPos();
+    World world = context.getLevel();
+    ItemStack heldStack = context.getItemInHand();
     BlockState state = world.getBlockState(pos);
 
     if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos).getBlock())) {
       return ActionResultType.FAIL;
     }
-    if (world.isRemote || player.getPose() != Pose.CROUCHING)
+    if (world.isClientSide || player.getPose() != Pose.CROUCHING)
       return ActionResultType.PASS;
 
     if (state.getBlock() instanceof BarrelBlock)
-    if (state.get(BlockStateProperties.OPEN)) {
-      player.sendStatusMessage(new TranslationTextComponent("metalbarrels.in_use")
-              .mergeStyle(Style.EMPTY.applyFormatting(TextFormatting.RED)), true);
+    if (state.getValue(BlockStateProperties.OPEN)) {
+      player.displayClientMessage(new TranslationTextComponent("metalbarrels.in_use")
+              .withStyle(Style.EMPTY.applyFormat(TextFormatting.RED)), true);
       return ActionResultType.PASS;
     }
 
-    TileEntity oldBarrel = world.getTileEntity(pos);
+    TileEntity oldBarrel = world.getBlockEntity(pos);
     final List<ItemStack> oldBarrelContents = new ArrayList<>();
 
     Direction facing = Direction.NORTH;
     if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)){
-      facing = state.get(BlockStateProperties.HORIZONTAL_FACING);
+      facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
     } else if (state.hasProperty(BlockStateProperties.FACING)) {
-      facing = state.get(BlockStateProperties.FACING);
+      facing = state.getValue(BlockStateProperties.FACING);
     }
 
     if (oldBarrel instanceof ChestTileEntity) {
@@ -102,28 +104,28 @@ public class BarrelUpgradeItem extends Item {
     } else oldBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
                     .mapToObj(itemHandler::getStackInSlot).forEach(oldBarrelContents::add));
-    oldBarrel.remove();
+    oldBarrel.setRemoved();
 
     Block newBlock = upgradeInfo.getBlock(state.getBlock());
 
-    BlockState newState = newBlock.getDefaultState();
+    BlockState newState = newBlock.defaultBlockState();
 
     if (newState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)){
-      newState = newState.with(BlockStateProperties.HORIZONTAL_FACING,facing);
+      newState = newState.setValue(BlockStateProperties.HORIZONTAL_FACING,facing);
     } else if (newState.hasProperty(BlockStateProperties.FACING)){
-      newState = newState.with(BlockStateProperties.FACING,facing);
+      newState = newState.setValue(BlockStateProperties.FACING,facing);
     }
 
-    world.setBlockState(pos, newState, 3);
-    TileEntity newBarrel = world.getTileEntity(pos);
+    world.setBlock(pos, newState, 3);
+    TileEntity newBarrel = world.getBlockEntity(pos);
 
     newBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent((itemHandler) -> IntStream.range(0, oldBarrelContents.size()).forEach(i -> itemHandler.insertItem(i, oldBarrelContents.get(i), false)));
 
-    if (!player.abilities.isCreativeMode)
+    if (!player.abilities.instabuild)
       heldStack.shrink(1);
 
-    player.sendStatusMessage(new TranslationTextComponent("metalbarrels.upgrade_successful")
-            .mergeStyle(Style.EMPTY.applyFormatting(TextFormatting.GREEN)), true);
+    player.displayClientMessage(new TranslationTextComponent("metalbarrels.upgrade_successful")
+            .withStyle(Style.EMPTY.applyFormat(TextFormatting.GREEN)), true);
     return ActionResultType.SUCCESS;
   }
 }
