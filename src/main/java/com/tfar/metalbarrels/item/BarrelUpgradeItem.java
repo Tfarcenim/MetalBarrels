@@ -22,7 +22,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
@@ -72,7 +72,7 @@ public class BarrelUpgradeItem extends Item {
     ItemStack heldStack = context.getItemInHand();
     BlockState state = world.getBlockState(pos);
 
-    if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos).getBlock())) {
+    if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos))) {
       return InteractionResult.FAIL;
     }
     if (world.isClientSide || player.getPose() != Pose.CROUCHING)
@@ -97,7 +97,7 @@ public class BarrelUpgradeItem extends Item {
 
     if (oldBarrel instanceof ChestBlockEntity) {
       try {
-        oldBarrelContents.addAll((Collection<? extends ItemStack>) method.invoke(oldBarrel));
+        oldBarrelContents.addAll((Collection<ItemStack>) method.invoke(oldBarrel));
       } catch (IllegalAccessException | InvocationTargetException e) {
         e.printStackTrace();
       }
@@ -106,7 +106,7 @@ public class BarrelUpgradeItem extends Item {
                     .mapToObj(itemHandler::getStackInSlot).forEach(oldBarrelContents::add));
     oldBarrel.setRemoved();
 
-    Block newBlock = upgradeInfo.getBlock(state.getBlock());
+    Block newBlock = upgradeInfo.getBlock(state);
 
     BlockState newState = newBlock.defaultBlockState();
 
@@ -121,7 +121,7 @@ public class BarrelUpgradeItem extends Item {
 
     newBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent((itemHandler) -> IntStream.range(0, oldBarrelContents.size()).forEach(i -> itemHandler.insertItem(i, oldBarrelContents.get(i), false)));
 
-    if (!player.abilities.instabuild)
+    if (!player.getAbilities().instabuild)
       heldStack.shrink(1);
 
     player.displayClientMessage(new TranslatableComponent("metalbarrels.upgrade_successful")

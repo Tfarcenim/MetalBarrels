@@ -1,41 +1,36 @@
 package com.tfar.metalbarrels.block;
 
 import com.tfar.metalbarrels.tile.MetalBarrelBlockEntity;
-import net.minecraft.world.level.block.BarrelBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.function.Supplier;
 import java.util.stream.IntStream;
-
-import static net.minecraft.inventory.InventoryHelper.spawnItemSimport net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
-tack;
-
-import net.net.minecraft.world.Containerss;
 
 @SuppressWarnings("deprecation")
 public class MetalBarrelBlock extends BarrelBlock {
 
-  protected final Supplier<BlockEntity> tileEntitySupplier;
+  protected final BlockEntityType.BlockEntitySupplier<BlockEntity> tileEntitySupplier;
 
-  public MetalBarrelBlock(Properties properties, Supplier<BlockEntity> tileEntitySupplier) {
+  public MetalBarrelBlock(Properties properties, BlockEntityType.BlockEntitySupplier<BlockEntity> tileEntitySupplier) {
     super(properties);
     this.tileEntitySupplier = tileEntitySupplier;
   }
@@ -54,14 +49,14 @@ public class MetalBarrelBlock extends BarrelBlock {
 
   public static void dropItems(MetalBarrelBlockEntity barrel, Level world, BlockPos pos) {
     IntStream.range(0, barrel.handler.getSlots()).mapToObj(barrel.handler::getStackInSlot)
-            .filter(stack -> !stack.isEmpty()).forEach(stack -> dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+            .filter(stack -> !stack.isEmpty()).forEach(stack -> Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
   }
 
   @Override
-  public ActionResultType use(BlockState state, World world, BlockPos pos,
-                                         PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+  public InteractionResult use(BlockState state, Level world, BlockPos pos,
+                               Player player, InteractionHand hand, BlockHitResult result) {
     if (!world.isClientSide) {
-      INamedContainerProvider tileEntity = getMenuProvider(state,world,pos);
+      MenuProvider tileEntity = getMenuProvider(state,world,pos);
       if (tileEntity != null) {
         MetalBarrelBlockEntity metalBarrelBlockEntity = (MetalBarrelBlockEntity)tileEntity;
         world.setBlock(pos, state.setValue(BarrelBlock.OPEN, true), 3);
@@ -72,20 +67,18 @@ public class MetalBarrelBlock extends BarrelBlock {
         metalBarrelBlockEntity.players++;
         player.openMenu(tileEntity);
         player.awardStat(Stats.OPEN_BARREL);
+        PiglinAi.angerNearbyPiglins(player, true);
       }
+      return InteractionResult.CONSUME;
+
+    } else {
+      return InteractionResult.SUCCESS;
     }
-    return ActionResultType.SUCCESS;
   }
-
-  @Override
-  public boolean hasTileEntity(BlockState state) {
-    return true;
-  }
-
   @Nullable
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return tileEntitySupplier.get();
+  public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
+    return tileEntitySupplier.create(pos, state);
   }
 
   /**
@@ -102,24 +95,17 @@ public class MetalBarrelBlock extends BarrelBlock {
    * Implementing/overriding is fine.
    */
   @Override
-  public int getAnalogOutputSignal(BlockState blockState, World world, BlockPos pos) {
-    TileEntity barrel = world.getBlockEntity(pos);
+  public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
+    BlockEntity barrel = world.getBlockEntity(pos);
     return barrel instanceof MetalBarrelBlockEntity ? ItemHandlerHelper.calcRedstoneFromInventory(((MetalBarrelBlockEntity) barrel).handler) : 0;
   }
 
-  @Override
-  public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-    if (stack.hasCustomHoverName()) {
-      TileEntity tileentity = worldIn.getBlockEntity(pos);
-      if (tileentity instanceof MetalBarrelBlockEntity) {
-        ((MetalBarrelBlockEntity)tileentity).setCustomName(stack.getHoverName());
+  public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
+    if (pStack.hasCustomHoverName()) {
+      BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+      if (blockentity instanceof ChestBlockEntity) {
+        ((ChestBlockEntity)blockentity).setCustomName(pStack.getHoverName());
       }
     }
-  }
-
-  @Nullable
-  @Override
-  public ToolType getHarvestTool(BlockState state) {
-    return ToolType.PICKAXE;
   }
 }

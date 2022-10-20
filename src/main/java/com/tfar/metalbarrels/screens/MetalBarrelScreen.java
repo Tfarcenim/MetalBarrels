@@ -1,5 +1,6 @@
 package com.tfar.metalbarrels.screens;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tfar.metalbarrels.MetalBarrels;
 import com.tfar.metalbarrels.container.MetalBarrelContainer;
@@ -43,7 +44,7 @@ public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelContai
    */
   @Override
   protected void renderBg(PoseStack stack,float partialTicks, int mouseX, int mouseY) {
-    this.minecraft.getTextureManager().bind(texture);
+    RenderSystem.setShaderTexture(0,texture);
     int i = (this.width - this.imageWidth) / 2;
     int j = (this.height - this.imageHeight) / 2;
     if (!isTall) {

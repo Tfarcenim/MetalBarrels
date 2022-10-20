@@ -1,18 +1,15 @@
 package com.tfar.metalbarrels.block;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.function.Supplier;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class CrystalBarrelBlock extends MetalBarrelBlock {
-	public CrystalBarrelBlock(Properties properties, Supplier<BlockEntity> tileEntitySupplier) {
+	public CrystalBarrelBlock(Properties properties, BlockEntityType.BlockEntitySupplier<BlockEntity> tileEntitySupplier) {
 		super(properties, tileEntitySupplier);
 	}
 

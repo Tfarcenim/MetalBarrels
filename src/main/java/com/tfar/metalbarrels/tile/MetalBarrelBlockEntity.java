@@ -2,6 +2,7 @@ package com.tfar.metalbarrels.tile;
 
 import com.tfar.metalbarrels.util.MetalBarrelBlockEntityType;
 import com.tfar.metalbarrels.block.MetalBarrelBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.data.models.blockstates.PropertyDispatch.TriFunction;
@@ -12,7 +13,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.util.*;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -38,11 +38,11 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
   protected final TriFunction<Integer, Inventory, ContainerLevelAccess,AbstractContainerMenu> containerFactory;
   protected Component customName;
 
-  public MetalBarrelBlockEntity(BlockEntityType<?> tileEntityType) {
-    super(tileEntityType);
-    this.width = ((MetalBarrelBlockEntityType)tileEntityType).width;
-    this.height = ((MetalBarrelBlockEntityType)tileEntityType).height;
-    this.containerFactory = ((MetalBarrelBlockEntityType)tileEntityType).containerFactory;
+  public MetalBarrelBlockEntity(BlockEntityType<?> tileEntityType, BlockPos pos,BlockState state) {
+    super(tileEntityType, pos, state);
+    this.width = ((MetalBarrelBlockEntityType<?>)tileEntityType).width;
+    this.height = ((MetalBarrelBlockEntityType<?>)tileEntityType).height;
+    this.containerFactory = ((MetalBarrelBlockEntityType<?>)tileEntityType).containerFactory;
     handler = new ItemStackHandler(width * height) {
       @Override
       protected void onContentsChanged(int slot) {
@@ -58,15 +58,14 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
 
   public int players = 0;
 
-  @Nonnull
   @Override
-  public CompoundTag save(CompoundTag tag) {
+  public void saveAdditional(CompoundTag tag) {
     CompoundTag compound = this.handler.serializeNBT();
     tag.put("inv", compound);
     if (this.customName != null) {
       tag.putString("CustomName", Component.Serializer.toJson(this.customName));
     }
-    return super.save(tag);
+    super.saveAdditional(tag);
   }
 
   public void changeState(BlockState p_213963_1_, boolean p_213963_2_) {
@@ -88,13 +87,13 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
   }
 
   @Override//read
-  public void load(BlockState state,CompoundTag tag) {
+  public void load(CompoundTag tag) {
     CompoundTag invTag = tag.getCompound("inv");
     handler.deserializeNBT(invTag);
     if (tag.contains("CustomName", 8)) {
       this.customName = Component.Serializer.fromJson(tag.getString("CustomName"));
     }
-    super.load(state,tag);
+    super.load(tag);
   }
 
   @Nonnull

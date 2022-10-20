@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "metalbarrels:copper_barrel",
+    "metalbarrels:iron_barrel",
+    "metalbarrels:silver_barrel",
+    "metalbarrels:gold_barrel",
+
+    "metalbarrels:diamond_barrel",
+    "metalbarrels:obsidian_barrel",
+    "metalbarrels:crystal_barrel",
+    "metalbarrels:netherite_barrel"
+  ]
+}
