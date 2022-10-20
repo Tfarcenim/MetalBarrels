@@ -4,12 +4,12 @@ borrowed from iron chests
 package com.tfar.metalbarrels.network;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -29,7 +29,7 @@ public class S2CSyncBarrelStacks {
     this.topStacks = topStacks;
   }
 
-  public static void encode(S2CSyncBarrelStacks msg, PacketBuffer buf) {
+  public static void encode(S2CSyncBarrelStacks msg, FriendlyByteBuf buf) {
     buf.writeInt(msg.dimension);
     buf.writeInt(msg.pos.getX());
     buf.writeInt(msg.pos.getY());
@@ -41,7 +41,7 @@ public class S2CSyncBarrelStacks {
     }
   }
 
-  public static S2CSyncBarrelStacks decode(PacketBuffer buf) {
+  public static S2CSyncBarrelStacks decode(FriendlyByteBuf buf) {
     int dimension = buf.readInt();
     BlockPos pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
 
@@ -61,10 +61,10 @@ public class S2CSyncBarrelStacks {
     public static void handle(final S2CSyncBarrelStacks message, Supplier<NetworkEvent.Context> ctx) {
       ctx.get().enqueueWork(() -> {
 
-      World world = DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().level);
+      Level world = DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().level);
 
         if (world != null) {
-          TileEntity tile = world.getBlockEntity(message.pos);
+          BlockEntity tile = world.getBlockEntity(message.pos);
 
           /*if (tile instanceof CrystalBarrelTile) {
             ((CrystalBarrelTile) tile).receiveMessageFromServer(message.topStacks);

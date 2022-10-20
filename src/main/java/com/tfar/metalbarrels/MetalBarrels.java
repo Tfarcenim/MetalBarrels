@@ -10,16 +10,16 @@ import com.tfar.metalbarrels.screens.*;
 import com.tfar.metalbarrels.tile.*;
 import com.tfar.metalbarrels.util.MetalBarrelBlockEntityType;
 import com.tfar.metalbarrels.util.ModTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,7 +46,7 @@ public class MetalBarrels {
 
   public static final Logger logger = LogManager.getLogger();
 
-  public static final ItemGroup tab = new ItemGroup(MODID) {
+  public static final CreativeModeTab tab = new CreativeModeTab(MODID) {
     @Override
     public ItemStack makeIcon() {
       return new ItemStack(ObjectHolders.DIAMOND_BARREL);
@@ -67,12 +67,12 @@ public class MetalBarrels {
 
   private void doClientStuff(final FMLClientSetupEvent event) {
     // do something that can only be done on the client
-    ScreenManager.register(ObjectHolders.COPPER_CONTAINER, MetalBarrelScreen::copper);
-    ScreenManager.register(ObjectHolders.IRON_CONTAINER, MetalBarrelScreen::iron);
-    ScreenManager.register(ObjectHolders.SILVER_CONTAINER, MetalBarrelScreen::silver);
-    ScreenManager.register(ObjectHolders.GOLD_CONTAINER, MetalBarrelScreen::gold);
-    ScreenManager.register(ObjectHolders.DIAMOND_CONTAINER, MetalBarrelScreen::diamond);
-    ScreenManager.register(ObjectHolders.NETHERITE_CONTAINER, MetalBarrelScreen::netherite);
+    MenuScreens.register(ObjectHolders.COPPER_CONTAINER, MetalBarrelScreen::copper);
+    MenuScreens.register(ObjectHolders.IRON_CONTAINER, MetalBarrelScreen::iron);
+    MenuScreens.register(ObjectHolders.SILVER_CONTAINER, MetalBarrelScreen::silver);
+    MenuScreens.register(ObjectHolders.GOLD_CONTAINER, MetalBarrelScreen::gold);
+    MenuScreens.register(ObjectHolders.DIAMOND_CONTAINER, MetalBarrelScreen::diamond);
+    MenuScreens.register(ObjectHolders.NETHERITE_CONTAINER, MetalBarrelScreen::netherite);
   }
 
   // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
@@ -283,19 +283,19 @@ public class MetalBarrels {
     }
 
     @SubscribeEvent
-    public static void registerContainers(RegistryEvent.Register<ContainerType<?>> event) {
+    public static void registerContainers(RegistryEvent.Register<MenuType<?>> event) {
 
-      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::copper).setRegistryName("copper_container"));
-      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::iron).setRegistryName("iron_container"));
-      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::silver).setRegistryName("silver_container"));
-      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::gold).setRegistryName("gold_container"));
-      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::diamond).setRegistryName("diamond_container"));
-      event.getRegistry().register(new ContainerType<>(MetalBarrelContainer::netherite).setRegistryName("netherite_container"));
+      event.getRegistry().register(new MenuType<>(MetalBarrelContainer::copper).setRegistryName("copper_container"));
+      event.getRegistry().register(new MenuType<>(MetalBarrelContainer::iron).setRegistryName("iron_container"));
+      event.getRegistry().register(new MenuType<>(MetalBarrelContainer::silver).setRegistryName("silver_container"));
+      event.getRegistry().register(new MenuType<>(MetalBarrelContainer::gold).setRegistryName("gold_container"));
+      event.getRegistry().register(new MenuType<>(MetalBarrelContainer::diamond).setRegistryName("diamond_container"));
+      event.getRegistry().register(new MenuType<>(MetalBarrelContainer::netherite).setRegistryName("netherite_container"));
 
     }
 
     @SubscribeEvent
-    public static void registerTiles(RegistryEvent.Register<TileEntityType<?>> event) {
+    public static void registerTiles(RegistryEvent.Register<BlockEntityType<?>> event) {
       event.getRegistry().register(new MetalBarrelBlockEntityType<>(() -> new MetalBarrelBlockEntity(ObjectHolders.COPPER_TILE),
               Sets.newHashSet(ObjectHolders.COPPER_BARREL),
               null, 9, 5, MetalBarrelContainer::copperS)
@@ -348,32 +348,32 @@ public class MetalBarrels {
   public static class ObjectHolders {
 
     public static final Block COPPER_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> COPPER_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelBlockEntity> COPPER_TILE = null;
+    public static final MenuType<MetalBarrelContainer> COPPER_CONTAINER = null;
+    public static final BlockEntityType<MetalBarrelBlockEntity> COPPER_TILE = null;
 
     public static final Block IRON_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> IRON_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelBlockEntity> IRON_TILE = null;
+    public static final MenuType<MetalBarrelContainer> IRON_CONTAINER = null;
+    public static final BlockEntityType<MetalBarrelBlockEntity> IRON_TILE = null;
 
     public static final Block GOLD_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> GOLD_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelBlockEntity> GOLD_TILE = null;
+    public static final MenuType<MetalBarrelContainer> GOLD_CONTAINER = null;
+    public static final BlockEntityType<MetalBarrelBlockEntity> GOLD_TILE = null;
 
     public static final Block DIAMOND_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> DIAMOND_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelBlockEntity> DIAMOND_TILE = null;
+    public static final MenuType<MetalBarrelContainer> DIAMOND_CONTAINER = null;
+    public static final BlockEntityType<MetalBarrelBlockEntity> DIAMOND_TILE = null;
 
     public static final Block NETHERITE_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> NETHERITE_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelBlockEntity> NETHERITE_TILE = null;
+    public static final MenuType<MetalBarrelContainer> NETHERITE_CONTAINER = null;
+    public static final BlockEntityType<MetalBarrelBlockEntity> NETHERITE_TILE = null;
 
     public static final Block OBSIDIAN_BARREL = null;
 
     public static final Block SILVER_BARREL = null;
-    public static final ContainerType<MetalBarrelContainer> SILVER_CONTAINER = null;
-    public static final TileEntityType<MetalBarrelBlockEntity> SILVER_TILE = null;
+    public static final MenuType<MetalBarrelContainer> SILVER_CONTAINER = null;
+    public static final BlockEntityType<MetalBarrelBlockEntity> SILVER_TILE = null;
 
     public static final Block CRYSTAL_BARREL = null;
-    public static final TileEntityType<MetalBarrelBlockEntity> CRYSTAL_TILE = null;
+    public static final BlockEntityType<MetalBarrelBlockEntity> CRYSTAL_TILE = null;
   }
 }

@@ -4,7 +4,7 @@
 package com.tfar.metalbarrels.network;
 
 import com.tfar.metalbarrels.MetalBarrels;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;

@@ -1,14 +1,14 @@
 package com.tfar.metalbarrels.screens;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.tfar.metalbarrels.MetalBarrels;
 import com.tfar.metalbarrels.container.MetalBarrelContainer;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 
-public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
+public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelContainer> {
 
   private final ResourceLocation texture;
 
@@ -16,7 +16,7 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
 
   private final boolean isWide;
 
-  public MetalBarrelScreen(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component,
+  public MetalBarrelScreen(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component,
                            ResourceLocation texture, int xSize, int ySize) {
     super(barrelContainer, playerInventory, component);
     this.imageWidth = xSize;
@@ -28,7 +28,7 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
   }
 
   @Override
-  public void render(MatrixStack stack,int x, int y, float p_render_3_) {
+  public void render(PoseStack stack,int x, int y, float p_render_3_) {
     this.renderBackground(stack);
     super.render(stack,x, y, p_render_3_);
     this.renderTooltip(stack,x,y);
@@ -42,7 +42,7 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
    * @param mouseY
    */
   @Override
-  protected void renderBg(MatrixStack stack,float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(PoseStack stack,float partialTicks, int mouseX, int mouseY) {
     this.minecraft.getTextureManager().bind(texture);
     int i = (this.width - this.imageWidth) / 2;
     int j = (this.height - this.imageHeight) / 2;
@@ -63,27 +63,27 @@ public class MetalBarrelScreen extends ContainerScreen<MetalBarrelContainer> {
   private static final ResourceLocation NETHERITE = new ResourceLocation(MetalBarrels.MODID,"textures/gui/container/netherite.png");
 
 
-  public static MetalBarrelScreen copper(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public static MetalBarrelScreen copper(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
     return new MetalBarrelScreen(barrelContainer,playerInventory,component,COPPER,176,204);
   }
 
-  public static MetalBarrelScreen iron(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public static MetalBarrelScreen iron(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
     return new MetalBarrelScreen(barrelContainer,playerInventory,component,IRON,176,222);
   }
 
-  public static MetalBarrelScreen silver(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public static MetalBarrelScreen silver(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
     return new MetalBarrelScreen(barrelContainer,playerInventory,component,SILVER,176,258);
   }
 
-  public static MetalBarrelScreen gold(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public static MetalBarrelScreen gold(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
     return new MetalBarrelScreen(barrelContainer,playerInventory,component,GOLD,176,276);
   }
 
-  public static MetalBarrelScreen diamond(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public static MetalBarrelScreen diamond(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
     return new MetalBarrelScreen(barrelContainer,playerInventory,component,DIAMOND,230,276);
   }
 
-  public static MetalBarrelScreen netherite(MetalBarrelContainer barrelContainer, PlayerInventory playerInventory, ITextComponent component) {
+  public static MetalBarrelScreen netherite(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
     return new MetalBarrelScreen(barrelContainer,playerInventory,component,NETHERITE,284,276);
   }
 

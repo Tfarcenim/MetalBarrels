@@ -1,25 +1,25 @@
 package com.tfar.metalbarrels.item;
 
-import net.minecraft.block.BarrelBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -34,7 +34,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class BarrelUpgradeItem extends Item {
 
@@ -48,16 +48,16 @@ public class BarrelUpgradeItem extends Item {
   public static final Method method;
 
   static {
-    method = ObfuscationReflectionHelper.findMethod(ChestTileEntity.class,"getItems");//getItems
+    method = ObfuscationReflectionHelper.findMethod(ChestBlockEntity.class,"getItems");//getItems
   }
 
-  private static final ITextComponent s = new TranslationTextComponent("tooltip.metalbarrels.ironchest").withStyle(TextFormatting.GREEN);
+  private static final Component s = new TranslatableComponent("tooltip.metalbarrels.ironchest").withStyle(ChatFormatting.GREEN);
 
   public static boolean IRON_CHESTS_LOADED;
 
   @Override
   @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
     if (IRON_CHESTS_LOADED) {
       tooltip.add(s);
     }
@@ -65,27 +65,27 @@ public class BarrelUpgradeItem extends Item {
 
   @Nonnull
   @Override
-  public ActionResultType useOn(ItemUseContext context) {
-    PlayerEntity player = context.getPlayer();
+  public InteractionResult useOn(UseOnContext context) {
+    Player player = context.getPlayer();
     BlockPos pos = context.getClickedPos();
-    World world = context.getLevel();
+    Level world = context.getLevel();
     ItemStack heldStack = context.getItemInHand();
     BlockState state = world.getBlockState(pos);
 
     if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos).getBlock())) {
-      return ActionResultType.FAIL;
+      return InteractionResult.FAIL;
     }
     if (world.isClientSide || player.getPose() != Pose.CROUCHING)
-      return ActionResultType.PASS;
+      return InteractionResult.PASS;
 
     if (state.getBlock() instanceof BarrelBlock)
     if (state.getValue(BlockStateProperties.OPEN)) {
-      player.displayClientMessage(new TranslationTextComponent("metalbarrels.in_use")
-              .withStyle(Style.EMPTY.applyFormat(TextFormatting.RED)), true);
-      return ActionResultType.PASS;
+      player.displayClientMessage(new TranslatableComponent("metalbarrels.in_use")
+              .withStyle(Style.EMPTY.applyFormat(ChatFormatting.RED)), true);
+      return InteractionResult.PASS;
     }
 
-    TileEntity oldBarrel = world.getBlockEntity(pos);
+    BlockEntity oldBarrel = world.getBlockEntity(pos);
     final List<ItemStack> oldBarrelContents = new ArrayList<>();
 
     Direction facing = Direction.NORTH;
@@ -95,7 +95,7 @@ public class BarrelUpgradeItem extends Item {
       facing = state.getValue(BlockStateProperties.FACING);
     }
 
-    if (oldBarrel instanceof ChestTileEntity) {
+    if (oldBarrel instanceof ChestBlockEntity) {
       try {
         oldBarrelContents.addAll((Collection<? extends ItemStack>) method.invoke(oldBarrel));
       } catch (IllegalAccessException | InvocationTargetException e) {
@@ -117,15 +117,15 @@ public class BarrelUpgradeItem extends Item {
     }
 
     world.setBlock(pos, newState, 3);
-    TileEntity newBarrel = world.getBlockEntity(pos);
+    BlockEntity newBarrel = world.getBlockEntity(pos);
 
     newBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent((itemHandler) -> IntStream.range(0, oldBarrelContents.size()).forEach(i -> itemHandler.insertItem(i, oldBarrelContents.get(i), false)));
 
     if (!player.abilities.instabuild)
       heldStack.shrink(1);
 
-    player.displayClientMessage(new TranslationTextComponent("metalbarrels.upgrade_successful")
-            .withStyle(Style.EMPTY.applyFormat(TextFormatting.GREEN)), true);
-    return ActionResultType.SUCCESS;
+    player.displayClientMessage(new TranslatableComponent("metalbarrels.upgrade_successful")
+            .withStyle(Style.EMPTY.applyFormat(ChatFormatting.GREEN)), true);
+    return InteractionResult.SUCCESS;
   }
 }

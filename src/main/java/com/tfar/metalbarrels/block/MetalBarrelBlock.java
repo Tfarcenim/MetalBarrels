@@ -1,21 +1,21 @@
 package com.tfar.metalbarrels.block;
 
 import com.tfar.metalbarrels.tile.MetalBarrelBlockEntity;
-import net.minecraft.block.BarrelBlock;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -24,24 +24,26 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
-import static net.minecraft.inventory.InventoryHelper.spawnItemStack;
+import static net.minecraft.inventory.InventoryHelper.spawnItemSimport net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-import net.minecraft.block.AbstractBlock.Properties;
+tack;
+
+import net.net.minecraft.world.Containerss;
 
 @SuppressWarnings("deprecation")
 public class MetalBarrelBlock extends BarrelBlock {
 
-  protected final Supplier<TileEntity> tileEntitySupplier;
+  protected final Supplier<BlockEntity> tileEntitySupplier;
 
-  public MetalBarrelBlock(Properties properties, Supplier<TileEntity> tileEntitySupplier) {
+  public MetalBarrelBlock(Properties properties, Supplier<BlockEntity> tileEntitySupplier) {
     super(properties);
     this.tileEntitySupplier = tileEntitySupplier;
   }
 
   @Override
-  public void onRemove(BlockState state, @Nonnull World worldIn,@Nonnull BlockPos pos,@Nonnull BlockState newState, boolean isMoving) {
+  public void onRemove(BlockState state, @Nonnull Level worldIn,@Nonnull BlockPos pos,@Nonnull BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
-      TileEntity tileentity = worldIn.getBlockEntity(pos);
+      BlockEntity tileentity = worldIn.getBlockEntity(pos);
       if (tileentity instanceof MetalBarrelBlockEntity) {
         dropItems((MetalBarrelBlockEntity)tileentity,worldIn, pos);
         worldIn.updateNeighbourForOutputSignal(pos, this);
@@ -50,7 +52,7 @@ public class MetalBarrelBlock extends BarrelBlock {
     }
   }
 
-  public static void dropItems(MetalBarrelBlockEntity barrel, World world, BlockPos pos) {
+  public static void dropItems(MetalBarrelBlockEntity barrel, Level world, BlockPos pos) {
     IntStream.range(0, barrel.handler.getSlots()).mapToObj(barrel.handler::getStackInSlot)
             .filter(stack -> !stack.isEmpty()).forEach(stack -> dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
   }
