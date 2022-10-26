@@ -82,7 +82,7 @@ public class MetalBarrelBlock extends BarrelBlock {
   }
 
   /**
-   * @deprecated call via {@link BlockState#hasComparatorInputOverride()} whenever possible. Implementing/overriding
+   * @deprecated call via {@link BlockState#hasAnalogOutputSignal()} ()} whenever possible. Implementing/overriding
    * is fine.
    */
   @Override
@@ -91,7 +91,7 @@ public class MetalBarrelBlock extends BarrelBlock {
   }
 
   /**
-   * @deprecated call via {@link BlockState#getComparatorInputOverride(World,BlockPos)} whenever possible.
+   * @deprecated call via {@link BlockState#getAnalogOutputSignal(Level, BlockPos)} (World,BlockPos)} whenever possible.
    * Implementing/overriding is fine.
    */
   @Override
@@ -103,8 +103,8 @@ public class MetalBarrelBlock extends BarrelBlock {
   public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
     if (pStack.hasCustomHoverName()) {
       BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-      if (blockentity instanceof ChestBlockEntity) {
-        ((ChestBlockEntity)blockentity).setCustomName(pStack.getHoverName());
+      if (blockentity instanceof MetalBarrelBlockEntity metalBarrelBlock) {
+        metalBarrelBlock.setCustomName(pStack.getHoverName());
       }
     }
   }
