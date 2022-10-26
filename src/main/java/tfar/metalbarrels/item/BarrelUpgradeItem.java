@@ -48,18 +48,6 @@ public class BarrelUpgradeItem extends Item {
     method = ObfuscationReflectionHelper.findMethod(ChestBlockEntity.class,"getItems");//getItems
   }
 
-  private static final Component s = Component.translatable("tooltip.metalbarrels.ironchest").withStyle(ChatFormatting.GREEN);
-
-  public static boolean IRON_CHESTS_LOADED;
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (IRON_CHESTS_LOADED) {
-      tooltip.add(s);
-    }
-  }
-
   @Nonnull
   @Override
   public InteractionResult useOn(UseOnContext context) {

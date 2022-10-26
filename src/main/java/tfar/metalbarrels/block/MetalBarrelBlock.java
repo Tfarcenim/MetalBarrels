@@ -103,8 +103,8 @@ public class MetalBarrelBlock extends BarrelBlock {
   public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
     if (pStack.hasCustomHoverName()) {
       BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-      if (blockentity instanceof ChestBlockEntity) {
-        ((ChestBlockEntity)blockentity).setCustomName(pStack.getHoverName());
+      if (blockentity instanceof MetalBarrelBlockEntity metalBarrelBlock) {
+        metalBarrelBlock.setCustomName(pStack.getHoverName());
       }
     }
   }
