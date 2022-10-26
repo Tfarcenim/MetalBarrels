@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:barrels/obsidian"
+    },
+    {
+      "item": "metalbarrels:obsidian_to_netherite"
+    }
+  ],
+  "result": {
+    "item": "metalbarrels:netherite_barrel"
+  }
+}

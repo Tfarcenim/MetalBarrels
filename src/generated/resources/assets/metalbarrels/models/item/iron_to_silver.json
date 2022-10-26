@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "metalbarrels:item/from_iron",
+    "layer1": "metalbarrels:item/to_silver"
+  }
+}

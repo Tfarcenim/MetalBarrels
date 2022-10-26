@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:barrels/iron"
+    },
+    {
+      "item": "metalbarrels:iron_to_silver"
+    }
+  ],
+  "result": {
+    "item": "metalbarrels:silver_barrel"
+  }
+}

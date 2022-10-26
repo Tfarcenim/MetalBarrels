@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:barrels/diamond"
+    },
+    {
+      "item": "metalbarrels:diamond_to_netherite"
+    }
+  ],
+  "result": {
+    "item": "metalbarrels:netherite_barrel"
+  }
+}

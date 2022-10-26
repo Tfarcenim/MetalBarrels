@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:barrels/wood"
+    },
+    {
+      "item": "metalbarrels:wood_to_copper"
+    }
+  ],
+  "result": {
+    "item": "metalbarrels:copper_barrel"
+  }
+}

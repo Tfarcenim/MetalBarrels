@@ -1,0 +1,8 @@
+// 1.19.2	2022-10-26T00:03:03.0166149	Tags for minecraft:block
+beed1386a30c45521f2e9290e2df02ac5bbc57bc data/forge/tags/blocks/barrels/copper.json
+0919d40c41b0e40dad6d455fa6852f315d82f063 data/forge/tags/blocks/barrels/diamond.json
+9178bc49a9e447f5d06f2bbf40a2a18969b8030c data/forge/tags/blocks/barrels/gold.json
+4c13205be95c46b1845819f07fde264d02d4cef3 data/forge/tags/blocks/barrels/iron.json
+f88f05b8c38ac2cd82efd7d073af2149fa24d526 data/forge/tags/blocks/barrels/obsidian.json
+3bbd5363d58e659c8fd6e3f5411c8291b7987512 data/forge/tags/blocks/barrels/silver.json
+c7ec0dbc18e9c1b58e568ed925287b89df11a136 data/forge/tags/blocks/barrels/wood.json

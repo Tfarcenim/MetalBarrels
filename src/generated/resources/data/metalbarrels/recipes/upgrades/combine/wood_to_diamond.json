@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:barrels/wood"
+    },
+    {
+      "item": "metalbarrels:wood_to_diamond"
+    }
+  ],
+  "result": {
+    "item": "metalbarrels:diamond_barrel"
+  }
+}
