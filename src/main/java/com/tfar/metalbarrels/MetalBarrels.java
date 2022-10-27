@@ -61,7 +61,6 @@ public class MetalBarrels {
   }
 
   private void commonSetup(final FMLCommonSetupEvent event){
-    BarrelUpgradeItem.IRON_CHESTS_LOADED = ModList.get().isLoaded("ironchest");
     PacketHandler.register();
   }
 
