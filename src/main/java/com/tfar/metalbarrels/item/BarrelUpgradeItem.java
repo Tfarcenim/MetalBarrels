@@ -45,24 +45,6 @@ public class BarrelUpgradeItem extends Item {
     this.upgradeInfo = info;
   }
 
-  public static final Method method;
-
-  static {
-    method = ObfuscationReflectionHelper.findMethod(ChestBlockEntity.class,"getItems");//getItems
-  }
-
-  private static final Component s = new TranslatableComponent("tooltip.metalbarrels.ironchest").withStyle(ChatFormatting.GREEN);
-
-  public static boolean IRON_CHESTS_LOADED;
-
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-    if (IRON_CHESTS_LOADED) {
-      tooltip.add(s);
-    }
-  }
-
   @Nonnull
   @Override
   public InteractionResult useOn(UseOnContext context) {
@@ -95,13 +77,7 @@ public class BarrelUpgradeItem extends Item {
       facing = state.getValue(BlockStateProperties.FACING);
     }
 
-    if (oldBarrel instanceof ChestBlockEntity) {
-      try {
-        oldBarrelContents.addAll((Collection<ItemStack>) method.invoke(oldBarrel));
-      } catch (IllegalAccessException | InvocationTargetException e) {
-        e.printStackTrace();
-      }
-    } else oldBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+    oldBarrel.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
                     .mapToObj(itemHandler::getStackInSlot).forEach(oldBarrelContents::add));
     oldBarrel.setRemoved();
