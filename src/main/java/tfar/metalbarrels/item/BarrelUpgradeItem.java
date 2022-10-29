@@ -35,86 +35,74 @@ import java.util.stream.IntStream;
 
 public class BarrelUpgradeItem extends Item {
 
-  protected final UpgradeInfo upgradeInfo;
+    protected final UpgradeInfo upgradeInfo;
 
-  public BarrelUpgradeItem(Properties properties, UpgradeInfo info) {
-    super(properties);
-    this.upgradeInfo = info;
-  }
-
-  public static final Method method;
-
-  static {
-    method = ObfuscationReflectionHelper.findMethod(ChestBlockEntity.class,"getItems");//getItems
-  }
-
-  @Nonnull
-  @Override
-  public InteractionResult useOn(UseOnContext context) {
-    Player player = context.getPlayer();
-    BlockPos pos = context.getClickedPos();
-    Level world = context.getLevel();
-    ItemStack heldStack = context.getItemInHand();
-    BlockState state = world.getBlockState(pos);
-
-    if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos))) {
-      return InteractionResult.FAIL;
-    }
-    if (world.isClientSide || player.getPose() != Pose.CROUCHING)
-      return InteractionResult.PASS;
-
-    if (state.getBlock() instanceof BarrelBlock)
-    if (state.getValue(BlockStateProperties.OPEN)) {
-      player.displayClientMessage(Component.translatable("metalbarrels.in_use")
-              .withStyle(Style.EMPTY.applyFormat(ChatFormatting.RED)), true);
-      return InteractionResult.PASS;
+    public BarrelUpgradeItem(Properties properties, UpgradeInfo info) {
+        super(properties);
+        this.upgradeInfo = info;
     }
 
-    BlockEntity oldBarrel = world.getBlockEntity(pos);
-    final List<ItemStack> oldBarrelContents = new ArrayList<>();
+    @Nonnull
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
+        BlockPos pos = context.getClickedPos();
+        Level world = context.getLevel();
+        ItemStack heldStack = context.getItemInHand();
+        BlockState state = world.getBlockState(pos);
 
-    Direction facing = Direction.NORTH;
-    if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)){
-      facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
-    } else if (state.hasProperty(BlockStateProperties.FACING)) {
-      facing = state.getValue(BlockStateProperties.FACING);
+        if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos))) {
+            return InteractionResult.FAIL;
+        }
+        if (world.isClientSide || player.getPose() != Pose.CROUCHING)
+            return InteractionResult.PASS;
+
+        if (state.getBlock() instanceof BarrelBlock)
+            if (state.getValue(BlockStateProperties.OPEN)) {
+                player.displayClientMessage(Component.translatable("metalbarrels.in_use")
+                        .withStyle(Style.EMPTY.applyFormat(ChatFormatting.RED)), true);
+                return InteractionResult.PASS;
+            }
+
+        BlockEntity oldBarrel = world.getBlockEntity(pos);
+        final List<ItemStack> oldBarrelContents = new ArrayList<>();
+
+        Direction facing = Direction.NORTH;
+        if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+            facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        } else if (state.hasProperty(BlockStateProperties.FACING)) {
+            facing = state.getValue(BlockStateProperties.FACING);
+        }
+
+        oldBarrel.getCapability(ForgeCapabilities.ITEM_HANDLER)
+                .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
+                        .mapToObj(itemHandler::getStackInSlot).forEach(oldBarrelContents::add));
+        oldBarrel.setRemoved();
+
+        Block newBlock = upgradeInfo.getBlock(state);
+
+        BlockState newState = newBlock.defaultBlockState();
+
+        if (newState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+            newState = newState.setValue(BlockStateProperties.HORIZONTAL_FACING, facing);
+        } else if (newState.hasProperty(BlockStateProperties.FACING)) {
+            newState = newState.setValue(BlockStateProperties.FACING, facing);
+        }
+
+        world.setBlock(pos, newState, 3);
+        BlockEntity newBarrel = world.getBlockEntity(pos);
+
+        newBarrel.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent((itemHandler) -> IntStream.range(0, oldBarrelContents.size()).forEach(i -> itemHandler.insertItem(i, oldBarrelContents.get(i), false)));
+
+        if (!player.getAbilities().instabuild)
+            heldStack.shrink(1);
+
+        player.displayClientMessage(Component.translatable("metalbarrels.upgrade_successful")
+                .withStyle(Style.EMPTY.applyFormat(ChatFormatting.GREEN)), true);
+        return InteractionResult.SUCCESS;
     }
 
-    if (oldBarrel instanceof ChestBlockEntity) {
-      try {
-        oldBarrelContents.addAll((Collection<ItemStack>) method.invoke(oldBarrel));
-      } catch (IllegalAccessException | InvocationTargetException e) {
-        e.printStackTrace();
-      }
-    } else oldBarrel.getCapability(ForgeCapabilities.ITEM_HANDLER)
-            .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
-                    .mapToObj(itemHandler::getStackInSlot).forEach(oldBarrelContents::add));
-    oldBarrel.setRemoved();
-
-    Block newBlock = upgradeInfo.getBlock(state);
-
-    BlockState newState = newBlock.defaultBlockState();
-
-    if (newState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)){
-      newState = newState.setValue(BlockStateProperties.HORIZONTAL_FACING,facing);
-    } else if (newState.hasProperty(BlockStateProperties.FACING)){
-      newState = newState.setValue(BlockStateProperties.FACING,facing);
+    public UpgradeInfo getUpgradeInfo() {
+        return upgradeInfo;
     }
-
-    world.setBlock(pos, newState, 3);
-    BlockEntity newBarrel = world.getBlockEntity(pos);
-
-    newBarrel.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent((itemHandler) -> IntStream.range(0, oldBarrelContents.size()).forEach(i -> itemHandler.insertItem(i, oldBarrelContents.get(i), false)));
-
-    if (!player.getAbilities().instabuild)
-      heldStack.shrink(1);
-
-    player.displayClientMessage(Component.translatable("metalbarrels.upgrade_successful")
-            .withStyle(Style.EMPTY.applyFormat(ChatFormatting.GREEN)), true);
-    return InteractionResult.SUCCESS;
-  }
-
-  public UpgradeInfo getUpgradeInfo() {
-    return upgradeInfo;
-  }
 }
