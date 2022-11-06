@@ -89,9 +89,9 @@ public class MetalBarrels {
       registerBlock(new MetalBarrelBlock(metal,MetalBarrelBlockEntityType.silver()),"silver_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new MetalBarrelBlock(metal,MetalBarrelBlockEntityType.gold()),"gold_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new MetalBarrelBlock(metal,MetalBarrelBlockEntityType.diamond()),"diamond_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(obsidian,MetalBarrelBlockEntityType.diamond()),"obsidian_barrel",blockRegistryEvent.getRegistry());
+      registerBlock(new MetalBarrelBlock(obsidian,MetalBarrelBlockEntityType.netherite()),"netherite_barrel",blockRegistryEvent.getRegistry());
       registerBlock(new CrystalBarrelBlock(metal.noOcclusion(),MetalBarrelBlockEntityType.diamond()),"crystal_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new MetalBarrelBlock(obsidian,MetalBarrelBlockEntityType.copper()),"obsidian_barrel",blockRegistryEvent.getRegistry());
-      registerBlock(new MetalBarrelBlock(obsidian,MetalBarrelBlockEntityType.copper()),"netherite_barrel",blockRegistryEvent.getRegistry());
     }
     private static void registerBlock(Block block, String name, IForgeRegistry<Block> registry) {
       registry.register(block.setRegistryName(name));

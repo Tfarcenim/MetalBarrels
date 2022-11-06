@@ -18,14 +18,14 @@ public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelContai
   private final boolean isWide;
 
   public MetalBarrelScreen(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component,
-                           ResourceLocation texture, int xSize, int ySize) {
+                           ResourceLocation texture) {
     super(barrelContainer, playerInventory, component);
-    this.imageWidth = xSize;
-    this.imageHeight = ySize;
+    this.imageWidth = 14 + 18 * Math.max(barrelContainer.width, 9);
+    this.imageHeight = 114 + 18 * barrelContainer.height;
     this.texture = texture;
     this.inventoryLabelY = this.imageHeight - 94;
-    isTall = barrelContainer.height > 6;
-    isWide = barrelContainer.width > 12;
+    isTall = imageHeight > 256;
+    isWide = imageWidth > 256;
   }
 
   @Override
@@ -50,9 +50,9 @@ public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelContai
     if (!isTall) {
       this.blit(stack,i, j, 0, 0, this.imageWidth, this.imageHeight);
     } else if (!isWide) {
-      blit(stack,i, j, 0, 0,getBlitOffset(), this.imageWidth, this.imageHeight,512,256);
+      blit(stack,i, j, getBlitOffset(),0, 0, this.imageWidth, this.imageHeight,256,512);
     } else {
-      blit(stack,i, j, 0, 0,getBlitOffset(), this.imageWidth, this.imageHeight,512,512);
+      blit(stack,i, j, getBlitOffset(), 0, 0,this.imageWidth, this.imageHeight,512,512);
     }
   }
 
@@ -65,27 +65,26 @@ public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelContai
 
 
   public static MetalBarrelScreen copper(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
-    return new MetalBarrelScreen(barrelContainer,playerInventory,component,COPPER,176,204);
+    return new MetalBarrelScreen(barrelContainer,playerInventory,component,COPPER);
   }
 
   public static MetalBarrelScreen iron(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
-    return new MetalBarrelScreen(barrelContainer,playerInventory,component,IRON,176,222);
+    return new MetalBarrelScreen(barrelContainer,playerInventory,component,IRON);
   }
 
   public static MetalBarrelScreen silver(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
-    return new MetalBarrelScreen(barrelContainer,playerInventory,component,SILVER,176,258);
+    return new MetalBarrelScreen(barrelContainer,playerInventory,component,SILVER);
   }
 
   public static MetalBarrelScreen gold(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
-    return new MetalBarrelScreen(barrelContainer,playerInventory,component,GOLD,176,276);
+    return new MetalBarrelScreen(barrelContainer,playerInventory,component,GOLD);
   }
 
   public static MetalBarrelScreen diamond(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
-    return new MetalBarrelScreen(barrelContainer,playerInventory,component,DIAMOND,230,276);
+    return new MetalBarrelScreen(barrelContainer,playerInventory,component,DIAMOND);
   }
 
   public static MetalBarrelScreen netherite(MetalBarrelContainer barrelContainer, Inventory playerInventory, Component component) {
-    return new MetalBarrelScreen(barrelContainer,playerInventory,component,NETHERITE,284,276);
+    return new MetalBarrelScreen(barrelContainer,playerInventory,component,NETHERITE);
   }
-
 }

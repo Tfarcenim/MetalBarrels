@@ -33,7 +33,7 @@ public class MetalBarrelBlockEntityType<T extends BlockEntity> extends BlockEnti
 	}
 
 	public static BlockEntityType.BlockEntitySupplier<BlockEntity> iron() {
-		return ((pPos, pState) -> new MetalBarrelBlockEntity(MetalBarrels.ObjectHolders.COPPER_TILE,pPos,pState));
+		return ((pPos, pState) -> new MetalBarrelBlockEntity(MetalBarrels.ObjectHolders.IRON_TILE,pPos,pState));
 	}
 
 	public static BlockEntityType.BlockEntitySupplier<BlockEntity> silver() {

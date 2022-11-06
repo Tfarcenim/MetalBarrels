@@ -24,15 +24,9 @@ public class MetalBarrelContainer extends AbstractContainerMenu {
 	public int width;
   public int height;
 
-  //client
   public MetalBarrelContainer(MenuType<?> containerType,
 															int id, Inventory playerInventory,
-															int width, int height, int containerX, int containerY, int playerX, int playerY) {this
-          (containerType,id, playerInventory, width,height,containerX,containerY,playerY,playerX,ContainerLevelAccess.NULL);}
-
-  public MetalBarrelContainer(MenuType<?> containerType,
-															int id, Inventory playerInventory,
-															int width, int height, int containerX, int containerY, int playerY, int playerX,ContainerLevelAccess callable) {
+															int width, int height, int containerX, int containerY, int playerX, int playerY,ContainerLevelAccess callable) {
     super(containerType, id);
     this.width = width;
     this.height = height;
@@ -60,32 +54,27 @@ public class MetalBarrelContainer extends AbstractContainerMenu {
   }
 
   public static MetalBarrelContainer copper(int id, Inventory playerInventory) {
-  	return new MetalBarrelContainer(MetalBarrels.ObjectHolders.COPPER_CONTAINER,id,playerInventory, 9,5,8,18, 8,122);
+  	return copperS(id,playerInventory, ContainerLevelAccess.NULL);
 	}
 
 	public static MetalBarrelContainer iron(int id, Inventory playerInventory) {
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.IRON_CONTAINER,id,playerInventory,
-						9,6,8,18, 8,140);
+		return ironS(id,playerInventory, ContainerLevelAccess.NULL);
 	}
 
 	public static MetalBarrelContainer silver(int id, Inventory playerInventory) {
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.SILVER_CONTAINER,id,playerInventory,
-						9,8,8,18, 8,176);
+		return silverS(id,playerInventory, ContainerLevelAccess.NULL);
 	}
 
 	public static MetalBarrelContainer gold(int id, Inventory playerInventory) {
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.GOLD_CONTAINER,id,playerInventory,
-						9,9,8,18, 8,194);
+		return goldS(id,playerInventory, ContainerLevelAccess.NULL);
 	}
 
 	public static MetalBarrelContainer diamond(int id, Inventory playerInventory) {
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.DIAMOND_CONTAINER,id, playerInventory,
-						12,9,8,18, 35,194);
+		return diamondS(id,playerInventory, ContainerLevelAccess.NULL);
 	}
 
 	public static MetalBarrelContainer netherite(int id, Inventory playerInventory) {
-		return new MetalBarrelContainer(MetalBarrels.ObjectHolders.NETHERITE_CONTAINER,id, playerInventory,
-						15,9,8,18, 62, 194);
+		return netheriteS(id,playerInventory, ContainerLevelAccess.NULL);
 	}
 
 	//////////////////////////
