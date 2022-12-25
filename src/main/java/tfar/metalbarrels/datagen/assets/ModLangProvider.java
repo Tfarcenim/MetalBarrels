@@ -1,6 +1,7 @@
 package tfar.metalbarrels.datagen.assets;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -8,8 +9,8 @@ import org.codehaus.plexus.util.StringUtils;
 import tfar.metalbarrels.MetalBarrels;
 
 public class ModLangProvider extends LanguageProvider {
-    public ModLangProvider(DataGenerator gen) {
-        super(gen, MetalBarrels.MODID, "en_us");
+    public ModLangProvider(PackOutput output) {
+        super(output, MetalBarrels.MODID, "en_us");
     }
 
     @Override

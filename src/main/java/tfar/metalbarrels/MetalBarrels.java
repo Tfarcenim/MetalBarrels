@@ -1,7 +1,9 @@
 package tfar.metalbarrels;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import tfar.metalbarrels.datagen.ModDatagen;
 import tfar.metalbarrels.init.ModBlockEntityTypes;
 import tfar.metalbarrels.init.ModBlocks;
@@ -39,12 +41,6 @@ public class MetalBarrels {
 
   public static final Logger logger = LogManager.getLogger();
 
-  public static final CreativeModeTab tab = new CreativeModeTab(MODID) {
-    @Override
-    public ItemStack makeIcon() {
-      return new ItemStack(ModBlocks.DIAMOND_BARREL);
-    }
-  };
   public static final String[] tiers = new String[]{"wood","copper","iron","silver","gold","diamond","obsidian","netherite"};
 
   public MetalBarrels() {
@@ -52,6 +48,7 @@ public class MetalBarrels {
     bus.addListener(this::doClientStuff);
     bus.addListener(this::commonSetup);
     bus.addListener(this::register);
+    bus.addListener(this::tab);
     bus.addListener(ModDatagen::start);
   }
 
@@ -69,14 +66,24 @@ public class MetalBarrels {
   }
 
   private void register(final RegisterEvent event) {
-    superRegister(event,ModBlocks.class,Registry.BLOCK_REGISTRY,Block.class);
-    superRegister(event, ModItems.class,Registry.ITEM_REGISTRY, Item.class);
+    superRegister(event,ModBlocks.class, Registries.BLOCK,Block.class);
+    superRegister(event, ModItems.class,Registries.ITEM, Item.class);
     for (Map.Entry<String,BarrelUpgradeItem> entry : ModItems.upgrade_items.entrySet()) {
-      event.register(Registry.ITEM_REGISTRY,new ResourceLocation(MODID,entry.getKey()), entry::getValue);
+      event.register(Registries.ITEM,new ResourceLocation(MODID,entry.getKey()), entry::getValue);
     }
-    superRegister(event, ModBlockEntityTypes.class,Registry.BLOCK_ENTITY_TYPE_REGISTRY, BlockEntityType.class);
-    superRegister(event, ModMenuTypes.class,Registry.MENU_REGISTRY, MenuType.class);
+    superRegister(event, ModBlockEntityTypes.class,Registries.BLOCK_ENTITY_TYPE, BlockEntityType.class);
+    superRegister(event, ModMenuTypes.class,Registries.MENU, MenuType.class);
   }
+
+  private void tab(CreativeModeTabEvent.Register event) {
+    event.registerCreativeModeTab(new ResourceLocation(MetalBarrels.MODID,"items"),
+            con -> con.icon(() -> new ItemStack(ModBlocks.DIAMOND_BARREL)).displayItems(((pEnabledFeatures, pOutput, pDisplayOperatorCreativeTab) -> {
+              for (Item item : ModItems.getItems()){
+                pOutput.accept(item);
+              }
+            })).build());
+  }
+
   private void commonSetup(final FMLCommonSetupEvent event){
     PacketHandler.register();
   }

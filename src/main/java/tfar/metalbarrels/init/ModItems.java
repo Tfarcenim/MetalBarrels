@@ -1,6 +1,7 @@
 package tfar.metalbarrels.init;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -10,10 +11,11 @@ import tfar.metalbarrels.item.BarrelUpgradeItem;
 import tfar.metalbarrels.item.UpgradeInfo;
 import tfar.metalbarrels.util.ModTags;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 public class ModItems {   //wood to x
-    private static final Item.Properties properties = new Item.Properties().tab(MetalBarrels.tab);
+    private static final Item.Properties properties = new Item.Properties();
     public static final Map<String,BarrelUpgradeItem> upgrade_items;
 
     public static Map<String, Pair<TagKey<Block>,Block>> map = new HashMap<>();
@@ -69,4 +71,22 @@ public class ModItems {   //wood to x
     public static final Item SILVER_BARREL = new BlockItem(ModBlocks.SILVER_BARREL, properties);
     public static final Item CRYSTAL_BARREL = new BlockItem(ModBlocks.CRYSTAL_BARREL, properties);
     public static final Item NETHERITE_BARREL = new BlockItem(ModBlocks.NETHERITE_BARREL, properties.fireResistant());
+
+    private static final List<Item> ITEMS = new ArrayList<>();
+    public static List<Item> getItems() {
+        if (ITEMS.isEmpty()) {
+            for (Field field : ModItems.class.getFields()) {
+                try {
+                    Object o = field.get(null);
+                    if (o instanceof Item item) {
+                        ITEMS.add(item);
+                    }
+                } catch (IllegalAccessException illegalAccessException) {
+                    illegalAccessException.printStackTrace();
+                }
+            }
+            ITEMS.addAll(upgrade_items.values());
+        }
+        return ITEMS;
+    }
 }

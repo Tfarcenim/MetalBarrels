@@ -1,15 +1,17 @@
 package tfar.metalbarrels.datagen.assets;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import tfar.metalbarrels.MetalBarrels;
 
 public class ModItemModelProvider extends ItemModelProvider {
-    public ModItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, MetalBarrels.MODID, existingFileHelper);
+    public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, MetalBarrels.MODID, existingFileHelper);
     }
 
 
@@ -23,7 +25,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     protected void registerUpgrade(Item item) {
-        String name = Registry.ITEM.getKey(item).getPath();
+        String name = BuiltInRegistries.ITEM.getKey(item).getPath();
         registerUpgrade(name);
     }
     protected void registerUpgrade(String name) {
