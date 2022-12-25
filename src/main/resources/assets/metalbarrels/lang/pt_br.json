@@ -1,0 +1,53 @@
+{
+    "block.metalbarrels.copper_barrel": "Barril de Cobre",
+    "block.metalbarrels.iron_barrel": "Barril de Ferro",
+    "block.metalbarrels.gold_barrel": "Barril de Ouro",
+    "block.metalbarrels.diamond_barrel": "Barril de Diamante",
+    "block.metalbarrels.obsidian_barrel": "Barril de Obsidiana",
+    "block.metalbarrels.silver_barrel": "Barril de Prata",
+    "block.metalbarrels.crystal_barrel": "Barril de Cristal",
+    "block.metalbarrels.netherite_barrel": "Barril de Netherita",
+  
+    "item.metalbarrels.wood_to_copper": "Atualização de Barril para Barril de Cobre",
+    "item.metalbarrels.wood_to_iron": "Atualização de Barril para Barril de Ferro",
+    "item.metalbarrels.wood_to_silver": "Atualização de Barril para Barril de Prata",
+    "item.metalbarrels.wood_to_gold": "Atualização de Barril para Barril de Ouro",
+    "item.metalbarrels.wood_to_diamond": "Atualização de Barril para Barril de Diamante",
+    "item.metalbarrels.wood_to_obsidian": "Atualização de Barril para Barril de Obsidiana",
+    "item.metalbarrels.wood_to_crystal": "Atualização de Barril para Barril de Cristal",
+    "item.metalbarrels.wood_to_netherite": "Atualização de Barril para Barril de Netherita",
+  
+    "item.metalbarrels.copper_to_iron": "Atualização de Barril de Cobre para Ferro",
+    "item.metalbarrels.copper_to_silver": "Atualização do Barril de Cobre para Prata",
+    "item.metalbarrels.copper_to_gold": "Atualização de Barril de Cobre para Ouro",
+    "item.metalbarrels.copper_to_diamond": "Atualização de Barril de Cobre para Diamante",
+    "item.metalbarrels.copper_to_obsidian": "Atualização de Barril de Cobre para Obsidiana",
+    "item.metalbarrels.copper_to_crystal": "Atualização de Cobre para Barril de Cristal",
+  
+    "item.metalbarrels.iron_to_silver": "Atualização do Barril de Ferro para Prata",
+    "item.metalbarrels.iron_to_gold": "Atualização de Barril de Ferro para Ouro",
+    "item.metalbarrels.iron_to_diamond": "Atualização de Barril de Ferro para Diamante",
+    "item.metalbarrels.iron_to_obsidian": "Atualização de Barril de Ferro para Obsidiana",
+    "item.metalbarrels.iron_to_crystal": "Atualização de Ferro para Barril de Cristal",
+  
+    "item.metalbarrels.silver_to_gold": "Atualização de Barril de Prata para Ouro",
+    "item.metalbarrels.silver_to_diamond": "Atualização de Barril de Prata para Diamante",
+    "item.metalbarrels.silver_to_obsidian": "Atualização de Barril de Prata para Obsidiana",
+    "item.metalbarrels.silver_to_crystal": "Atualização de Prata para Barril de Cristal",
+  
+    "item.metalbarrels.gold_to_diamond": "Atualização de Barril de Ouro para Diamante",
+    "item.metalbarrels.gold_to_obsidian": "Atualização de Ouro para Barril de Obsidiana",
+    "item.metalbarrels.gold_to_crystal": "Atualização de Ouro para Barril de Cristal",
+  
+    "item.metalbarrels.diamond_to_obsidian": "Atualização de Diamante para Barril de Obsidiana",
+    "item.metalbarrels.diamond_to_crystal": "Atualização de Diamante para Barril de Cristal",
+  
+    "item.metalbarrels.obsidian_to_netherite": "Atualização de Obsidiana para Barril de Netherita",
+  
+    "itemGroup.metalbarrels": "barris de metal",
+  
+    "tooltip.metalbarrels.ironchest": "Também pode atualizar os blocos do Baú de Ferro!",
+  
+    "metalbarrels.upgrade_successful": "Atualização bem-sucedida",
+    "metalbarrels.in_use": "O Barril está em uso"
+}
