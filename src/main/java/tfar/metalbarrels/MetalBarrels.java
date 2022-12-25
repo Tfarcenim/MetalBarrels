@@ -1,6 +1,7 @@
 package tfar.metalbarrels;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -77,7 +78,9 @@ public class MetalBarrels {
 
   private void tab(CreativeModeTabEvent.Register event) {
     event.registerCreativeModeTab(new ResourceLocation(MetalBarrels.MODID,"items"),
-            con -> con.icon(() -> new ItemStack(ModBlocks.DIAMOND_BARREL)).displayItems(((pEnabledFeatures, pOutput, pDisplayOperatorCreativeTab) -> {
+            con -> con.icon(() -> new ItemStack(ModBlocks.DIAMOND_BARREL))
+                    .title(Component.translatable("itemGroup."+MODID))
+                    .displayItems(((pEnabledFeatures, pOutput, pDisplayOperatorCreativeTab) -> {
               for (Item item : ModItems.getItems()){
                 pOutput.accept(item);
               }
