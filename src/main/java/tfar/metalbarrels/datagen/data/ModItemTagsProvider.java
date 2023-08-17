@@ -16,7 +16,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
 
     public ModItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider pBlockTagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output,lookupProvider, pBlockTagsProvider, MetalBarrels.MODID, existingFileHelper);
+        super(output,lookupProvider, pBlockTagsProvider.contentsGetter(), MetalBarrels.MODID, existingFileHelper);
     }
 
     @Override

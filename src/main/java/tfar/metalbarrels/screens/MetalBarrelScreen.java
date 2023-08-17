@@ -2,6 +2,7 @@ package tfar.metalbarrels.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.container.MetalBarrelContainer;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -29,7 +30,7 @@ public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelContai
   }
 
   @Override
-  public void render(PoseStack stack,int x, int y, float p_render_3_) {
+  public void render(GuiGraphics stack,int x, int y, float p_render_3_) {
     this.renderBackground(stack);
     super.render(stack,x, y, p_render_3_);
     this.renderTooltip(stack,x,y);
@@ -43,16 +44,16 @@ public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelContai
    * @param mouseY
    */
   @Override
-  protected void renderBg(PoseStack stack,float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(GuiGraphics stack, float partialTicks, int mouseX, int mouseY) {
     RenderSystem.setShaderTexture(0,texture);
     int i = (this.width - this.imageWidth) / 2;
     int j = (this.height - this.imageHeight) / 2;
     if (!isTall) {
-      this.blit(stack,i, j, 0, 0, this.imageWidth, this.imageHeight);
+      stack.blit(texture,i, j, 0, 0, this.imageWidth, this.imageHeight);
     } else if (!isWide) {
-      blit(stack,i, j,getBlitOffset(), 0, 0, this.imageWidth, this.imageHeight,256,512);
+      stack.blit(texture,i, j, 0,0, 0, this.imageWidth, this.imageHeight,256,512);
     } else {
-      blit(stack,i, j,getBlitOffset(), 0, 0, this.imageWidth, this.imageHeight,512,512);
+      stack.blit(texture,i, j,0, 0, 0, this.imageWidth, this.imageHeight,512,512);
     }
   }
 

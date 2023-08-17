@@ -6,7 +6,7 @@ plugins {
 }
 //apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
-version = "${mc_version}-${mod_version}"
+version = "$mc_version-$mod_version"
 group = 'com.tfar.metalbarrels' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = modid
 
@@ -85,7 +85,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}" //21
+    minecraft "net.minecraftforge:forge:$mc_version-$forge_version" //21
 
     // compile against the JEI API but do not include it at runtime
     //compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")

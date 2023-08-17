@@ -156,7 +156,7 @@ public class MetalBarrelContainer extends AbstractContainerMenu {
 			}
 			if (metalBarrelBlockEntity.players <= 0) {
 				metalBarrelBlockEntity.soundStuff(tileEntity.getBlockState(), SoundEvents.BARREL_CLOSE);
-				metalBarrelBlockEntity.changeState(playerIn.level.getBlockState(tileEntity.getBlockPos()), false);
+				metalBarrelBlockEntity.changeState(playerIn.level().getBlockState(tileEntity.getBlockPos()), false);
 			}
 		});
 	}

@@ -1,6 +1,5 @@
 package tfar.metalbarrels.datagen;
 
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;

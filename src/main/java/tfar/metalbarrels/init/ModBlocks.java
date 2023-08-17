@@ -4,12 +4,11 @@ import tfar.metalbarrels.block.MetalBarrelBlock;
 import tfar.metalbarrels.util.MetalBarrelBlockEntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
 
 public class ModBlocks {
 
-    static Block.Properties metal = Block.Properties.of(Material.METAL).strength(1,6).sound(SoundType.METAL);
-    static Block.Properties obsidian = Block.Properties.of(Material.STONE).strength(2.5f,6000);
+    static Block.Properties metal = Block.Properties.of().strength(1,6).sound(SoundType.METAL);
+    static Block.Properties obsidian = Block.Properties.of().strength(2.5f,6000);
     
     public static final Block COPPER_BARREL = new MetalBarrelBlock(metal, MetalBarrelBlockEntityType.copper());
     public static final Block IRON_BARREL = new MetalBarrelBlock(metal, MetalBarrelBlockEntityType.iron());

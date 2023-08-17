@@ -1,27 +1,18 @@
 package tfar.metalbarrels;
 
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.event.CreativeModeTabEvent;
-import tfar.metalbarrels.datagen.ModDatagen;
-import tfar.metalbarrels.init.ModBlockEntityTypes;
-import tfar.metalbarrels.init.ModBlocks;
-import tfar.metalbarrels.init.ModItems;
-import tfar.metalbarrels.init.ModMenuTypes;
-import tfar.metalbarrels.item.BarrelUpgradeItem;
-import tfar.metalbarrels.network.PacketHandler;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -29,10 +20,18 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tfar.metalbarrels.datagen.ModDatagen;
+import tfar.metalbarrels.init.ModBlockEntityTypes;
+import tfar.metalbarrels.init.ModBlocks;
+import tfar.metalbarrels.init.ModItems;
+import tfar.metalbarrels.init.ModMenuTypes;
+import tfar.metalbarrels.item.BarrelUpgradeItem;
+import tfar.metalbarrels.network.PacketHandler;
 import tfar.metalbarrels.screens.MetalBarrelScreen;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(MetalBarrels.MODID)
@@ -49,7 +48,6 @@ public class MetalBarrels {
     bus.addListener(this::doClientStuff);
     bus.addListener(this::commonSetup);
     bus.addListener(this::register);
-    bus.addListener(this::tab);
     bus.addListener(ModDatagen::start);
   }
 
@@ -74,20 +72,13 @@ public class MetalBarrels {
     }
     superRegister(event, ModBlockEntityTypes.class,Registries.BLOCK_ENTITY_TYPE, BlockEntityType.class);
     superRegister(event, ModMenuTypes.class,Registries.MENU, MenuType.class);
+    event.register(Registries.CREATIVE_MODE_TAB,new ResourceLocation(MODID,"tab"),() -> tab);
   }
 
-  private void tab(CreativeModeTabEvent.Register event) {
-    event.registerCreativeModeTab(new ResourceLocation(MetalBarrels.MODID,"items"),
-            con -> con.icon(() -> new ItemStack(ModBlocks.DIAMOND_BARREL))
-                    .title(Component.translatable("itemGroup."+MODID))
-                    .displayItems(((pEnabledFeatures, pOutput, pDisplayOperatorCreativeTab) -> {
-              for (Item item : ModItems.getItems()){
-                pOutput.accept(item);
-              }
-            })).build());
-  }
+  public static final CreativeModeTab tab = CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.DIAMOND_BARREL))
+          .displayItems((pEnabledFeatures, pOutput) -> ModItems.getItems().forEach(pOutput::accept)).title(Component.translatable("itemGroup."+MODID)).build();
 
-  private void commonSetup(final FMLCommonSetupEvent event){
+  private void commonSetup(final FMLCommonSetupEvent event) {
     PacketHandler.register();
   }
 
