@@ -1,15 +1,19 @@
 package tfar.metalbarrels.datagen.data;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import tfar.metalbarrels.MetalBarrels;
-import tfar.metalbarrels.MetalBarrelsForge;
+import tfar.metalbarrels.datagen.ModDatagen;
 import tfar.metalbarrels.util.ModTags;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ModItemTagsProvider extends ItemTagsProvider {
@@ -27,6 +31,11 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         copy(ModTags.Blocks.SILVER_BARRELS,ModTags.Items.SILVER_BARRELS);
         copy(ModTags.Blocks.GOLD_BARRELS,ModTags.Items.GOLD_BARRELS);
         copy(ModTags.Blocks.DIAMOND_BARRELS,ModTags.Items.DIAMOND_BARRELS);
+        copy(ModTags.Blocks.CRYSTAL_BARRELS,ModTags.Items.CRYSTAL_BARRELS);
         copy(ModTags.Blocks.OBSIDIAN_BARRELS,ModTags.Items.OBSIDIAN_BARRELS);
+        copy(ModTags.Blocks.NETHERITE_BARRELS,ModTags.Items.NETHERITE_BARRELS);
+
+        Item[] gold = ModDatagen.getKnownItems().filter(item -> BuiltInRegistries.ITEM.getKey(item).getPath().contains("gold")).toArray(Item[]::new);
+        tag(ItemTags.PIGLIN_LOVED).add(gold);
     }
 }

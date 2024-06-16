@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#forge:barrels/copper",
+    "#forge:barrels/iron",
+    "#forge:barrels/silver",
+    "#forge:barrels/gold",
+    "#forge:barrels/diamond",
+    "#forge:barrels/crystal",
+    "#forge:barrels/obsidian",
+    "#forge:barrels/netherite"
+  ]
+}

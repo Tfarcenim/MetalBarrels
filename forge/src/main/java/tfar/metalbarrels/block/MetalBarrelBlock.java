@@ -1,8 +1,9 @@
 package tfar.metalbarrels.block;
 
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import tfar.metalbarrels.tile.MetalBarrelBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -58,19 +58,11 @@ public class MetalBarrelBlock extends BarrelBlock {
     if (!world.isClientSide) {
       MenuProvider tileEntity = getMenuProvider(state,world,pos);
       if (tileEntity != null) {
-        MetalBarrelBlockEntity metalBarrelBlockEntity = (MetalBarrelBlockEntity)tileEntity;
-        world.setBlock(pos, state.setValue(BarrelBlock.OPEN, true), 3);
-        if (metalBarrelBlockEntity.players == 0) {
-          metalBarrelBlockEntity.soundStuff(state, SoundEvents.BARREL_OPEN);
-          metalBarrelBlockEntity.changeState(state, true);
-        }
-        metalBarrelBlockEntity.players++;
         player.openMenu(tileEntity);
         player.awardStat(Stats.OPEN_BARREL);
         PiglinAi.angerNearbyPiglins(player, true);
       }
       return InteractionResult.CONSUME;
-
     } else {
       return InteractionResult.SUCCESS;
     }
@@ -97,15 +89,24 @@ public class MetalBarrelBlock extends BarrelBlock {
   @Override
   public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
     BlockEntity barrel = world.getBlockEntity(pos);
-    return barrel instanceof MetalBarrelBlockEntity ? ItemHandlerHelper.calcRedstoneFromInventory(((MetalBarrelBlockEntity) barrel).handler) : 0;
+    return barrel instanceof MetalBarrelBlockEntity metalBarrelBlockEntity? ItemHandlerHelper.calcRedstoneFromInventory(metalBarrelBlockEntity.handler) : 0;
   }
 
+  @Override
   public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
     if (pStack.hasCustomHoverName()) {
       BlockEntity blockentity = pLevel.getBlockEntity(pPos);
       if (blockentity instanceof MetalBarrelBlockEntity metalBarrelBlock) {
         metalBarrelBlock.setCustomName(pStack.getHoverName());
       }
+    }
+  }
+
+  @Override
+  public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+    BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+    if (blockentity instanceof MetalBarrelBlockEntity metalBarrelBlockEntity) {
+      metalBarrelBlockEntity.recheckOpen();
     }
   }
 }

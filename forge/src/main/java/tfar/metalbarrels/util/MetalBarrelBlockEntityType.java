@@ -1,6 +1,7 @@
 package tfar.metalbarrels.util;
 
 import com.mojang.datafixers.types.Type;
+import net.minecraftforge.items.ItemStackHandler;
 import tfar.metalbarrels.init.ModBlockEntityTypes;
 import tfar.metalbarrels.tile.MetalBarrelBlockEntity;
 import net.minecraft.world.level.block.Block;
@@ -17,10 +18,10 @@ public class MetalBarrelBlockEntityType<T extends BlockEntity> extends BlockEnti
 
 	public final int width;
 	public final int height;
-	public final TriFunction<Integer,  Inventory, ContainerLevelAccess,AbstractContainerMenu> containerFactory;
+	public final TriFunction<Integer,  Inventory, BarrelHandler,AbstractContainerMenu> containerFactory;
 
 	public MetalBarrelBlockEntityType(BlockEntityType.BlockEntitySupplier<T> factoryIn, Set<Block> validBlocksIn, Type dataFixerType, int width, int height,
-																		TriFunction<Integer, Inventory, ContainerLevelAccess, AbstractContainerMenu> containerFactory) {
+																		TriFunction<Integer, Inventory, BarrelHandler, AbstractContainerMenu> containerFactory) {
 		super(factoryIn, validBlocksIn, dataFixerType);
 		this.width = width;
 		this.height = height;

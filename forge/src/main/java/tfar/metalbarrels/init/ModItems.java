@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import tfar.metalbarrels.MetalBarrelsForge;
 import tfar.metalbarrels.item.BarrelUpgradeItem;
-import tfar.metalbarrels.item.UpgradeInfo;
+import tfar.metalbarrels.util.UpgradeInfo;
 import tfar.metalbarrels.util.ModTags;
 
 import java.lang.reflect.Field;

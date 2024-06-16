@@ -1,0 +1,13 @@
+{
+  "values": [
+    "metalbarrels:gold_to_crystal",
+    "metalbarrels:gold_barrel",
+    "metalbarrels:iron_to_gold",
+    "metalbarrels:silver_to_gold",
+    "metalbarrels:gold_to_obsidian",
+    "metalbarrels:wood_to_gold",
+    "metalbarrels:gold_to_netherite",
+    "metalbarrels:gold_to_diamond",
+    "metalbarrels:copper_to_gold"
+  ]
+}

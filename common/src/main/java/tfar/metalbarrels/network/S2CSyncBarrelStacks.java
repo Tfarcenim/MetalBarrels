@@ -3,21 +3,8 @@ borrowed from iron chests
  ********************* */
 package tfar.metalbarrels.network;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
-
-import java.util.function.Supplier;
-
 public class S2CSyncBarrelStacks {
-  private final int dimension;
+ /* private final int dimension;
 
   private final BlockPos pos;
 
@@ -68,12 +55,12 @@ public class S2CSyncBarrelStacks {
 
           /*if (tile instanceof CrystalBarrelTile) {
             ((CrystalBarrelTile) tile).receiveMessageFromServer(message.topStacks);
-          }*/
+          }
         }
       });
       ctx.get().setPacketHandled(true);
     }
-  }
+  }*/
 
 }
 

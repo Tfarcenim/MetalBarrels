@@ -1,4 +1,4 @@
-package tfar.metalbarrels.screens;
+package tfar.metalbarrels.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;

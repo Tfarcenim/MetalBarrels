@@ -29,7 +29,7 @@ import tfar.metalbarrels.init.ModMenuTypes;
 import tfar.metalbarrels.item.BarrelUpgradeItem;
 import tfar.metalbarrels.network.PacketHandler;
 import tfar.metalbarrels.client.MetalBarrelsClientForge;
-import tfar.metalbarrels.screens.MetalBarrelScreen;
+import tfar.metalbarrels.client.screens.MetalBarrelScreen;
 
 import java.lang.reflect.Field;
 import java.util.Locale;

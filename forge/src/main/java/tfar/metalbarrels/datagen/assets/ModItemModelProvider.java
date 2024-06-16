@@ -21,6 +21,10 @@ public class ModItemModelProvider extends ItemModelProvider {
                 registerUpgrade(MetalBarrelsForge.tiers[i] + "_to_" + MetalBarrelsForge.tiers[j]);
             }
         }
+
+        for (int i = 0; i < 6;i++) {
+            registerUpgrade(MetalBarrelsForge.tiers[i]+"_to_crystal");
+        }
     }
 
     protected void registerUpgrade(Item item) {
