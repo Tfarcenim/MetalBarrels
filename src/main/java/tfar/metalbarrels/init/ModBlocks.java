@@ -8,8 +8,8 @@ import net.minecraft.world.level.material.Material;
 
 public class ModBlocks {
 
-    static Block.Properties metal = Block.Properties.of(Material.METAL).strength(1,6).sound(SoundType.METAL);
-    static Block.Properties obsidian = Block.Properties.of(Material.STONE).strength(2.5f,6000);
+    static Block.Properties metal = Block.Properties.of(Material.METAL).strength(1,6).sound(SoundType.METAL).requiresCorrectToolForDrops();
+    static Block.Properties obsidian = Block.Properties.of(Material.STONE).strength(2.5f,6000).requiresCorrectToolForDrops();
     
     public static final Block COPPER_BARREL = new MetalBarrelBlock(metal, MetalBarrelBlockEntityType.copper());
     public static final Block IRON_BARREL = new MetalBarrelBlock(metal, MetalBarrelBlockEntityType.iron());
