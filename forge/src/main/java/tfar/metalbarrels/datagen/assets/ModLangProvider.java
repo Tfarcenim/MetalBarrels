@@ -10,6 +10,7 @@ import org.codehaus.plexus.util.StringUtils;
 import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.MetalBarrelsForge;
 import tfar.metalbarrels.datagen.ModDatagen;
+import tfar.metalbarrels.init.ModCreativeTabs;
 
 import java.util.function.Supplier;
 
@@ -30,7 +31,7 @@ public class ModLangProvider extends LanguageProvider {
             }
         }
 
-        addGroup(MetalBarrelsForge.tab,"Metal Barrels");
+        addGroup(ModCreativeTabs.tab,"Metal Barrels");
 
         add("metalbarrels.upgrade_successful", "Upgrade Successful");
         add("metalbarrels.in_use", "Barrel is in Use");

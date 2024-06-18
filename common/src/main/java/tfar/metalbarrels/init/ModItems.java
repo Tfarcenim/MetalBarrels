@@ -5,7 +5,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import tfar.metalbarrels.MetalBarrelsForge;
+import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.item.BarrelUpgradeItem;
 import tfar.metalbarrels.util.UpgradeInfo;
 import tfar.metalbarrels.util.ModTags;
@@ -31,11 +31,11 @@ public class ModItems {   //wood to x
         map.put("netherite",Pair.of(null,ModBlocks.NETHERITE_BARREL));
 
         upgrade_items = new HashMap<>();
-        for (int i = 0; i < MetalBarrelsForge.tiers.length; i++) {
-            for (int j = i +1; j < MetalBarrelsForge.tiers.length; j++) {
+        for (int i = 0; i < MetalBarrels.tiers.length; i++) {
+            for (int j = i +1; j < MetalBarrels.tiers.length; j++) {
                 
-                String s1 = MetalBarrelsForge.tiers[i];
-                String s2 = MetalBarrelsForge.tiers[j];
+                String s1 = MetalBarrels.tiers[i];
+                String s2 = MetalBarrels.tiers[j];
 
                 String s = s1 +"_to_"+ s2;
                 BarrelUpgradeItem item = new BarrelUpgradeItem(properties,new UpgradeInfo(map.get(s1).getFirst(),map.get(s2).getSecond()));

@@ -1,16 +1,14 @@
 package tfar.metalbarrels.util;
 
 import com.mojang.datafixers.types.Type;
-import net.minecraftforge.items.ItemStackHandler;
 import tfar.metalbarrels.init.ModBlockEntityTypes;
-import tfar.metalbarrels.tile.MetalBarrelBlockEntity;
+import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.data.models.blockstates.PropertyDispatch.TriFunction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 
 import java.util.Set;
 

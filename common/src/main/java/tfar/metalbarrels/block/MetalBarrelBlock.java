@@ -2,7 +2,7 @@ package tfar.metalbarrels.block;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import tfar.metalbarrels.tile.MetalBarrelBlockEntity;
+import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.Containers;

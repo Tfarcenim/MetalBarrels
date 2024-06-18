@@ -2,7 +2,7 @@ package tfar.metalbarrels.util;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.items.ItemStackHandler;
-import tfar.metalbarrels.tile.MetalBarrelBlockEntity;
+import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 
 public class BarrelHandler extends ItemStackHandler {
 

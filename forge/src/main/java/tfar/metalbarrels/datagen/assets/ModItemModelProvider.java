@@ -6,7 +6,6 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import tfar.metalbarrels.MetalBarrels;
-import tfar.metalbarrels.MetalBarrelsForge;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -16,14 +15,14 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        for (int i = 0; i < MetalBarrelsForge.tiers.length; i++){
-            for (int j = i + 1; j < MetalBarrelsForge.tiers.length; j++) {
-                registerUpgrade(MetalBarrelsForge.tiers[i] + "_to_" + MetalBarrelsForge.tiers[j]);
+        for (int i = 0; i < MetalBarrels.tiers.length; i++){
+            for (int j = i + 1; j < MetalBarrels.tiers.length; j++) {
+                registerUpgrade(MetalBarrels.tiers[i] + "_to_" + MetalBarrels.tiers[j]);
             }
         }
 
         for (int i = 0; i < 6;i++) {
-            registerUpgrade(MetalBarrelsForge.tiers[i]+"_to_crystal");
+            registerUpgrade(MetalBarrels.tiers[i]+"_to_crystal");
         }
     }
 

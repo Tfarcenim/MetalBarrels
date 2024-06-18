@@ -1,5 +1,8 @@
 package tfar.metalbarrels.platform.services;
 
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+
 public interface IPlatformHelper {
 
     /**
@@ -33,4 +36,10 @@ public interface IPlatformHelper {
 
         return isDevelopmentEnvironment() ? "development" : "production";
     }
+
+    <F> void registerAll(Class<?> clazz, Registry<? extends F> registry, Class<F> filter);
+
+    <F> F register(Registry<? extends F> registry, F f, ResourceLocation name);
+
+
 }
