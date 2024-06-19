@@ -17,15 +17,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import tfar.metalbarrels.util.UpgradeInfo;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
-public class BarrelUpgradeItem extends Item {
+public abstract class BarrelUpgradeItem extends Item {
 
     protected final UpgradeInfo upgradeInfo;
 
@@ -66,13 +64,12 @@ public class BarrelUpgradeItem extends Item {
             facing = state.getValue(BlockStateProperties.FACING);
         }
 
-        oldBarrel.getCapability(ForgeCapabilities.ITEM_HANDLER)
-                .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
-                        .mapToObj(itemHandler::getStackInSlot).forEach(oldBarrelContents::add));
-        oldBarrel.setRemoved();
+        if (oldBarrel != null) {
+            copyOldItems(oldBarrel, oldBarrelContents);
+            oldBarrel.setRemoved();
+        }
 
         Block newBlock = upgradeInfo.end_block();
-
         BlockState newState = newBlock.defaultBlockState();
 
         if (newState.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
@@ -83,8 +80,9 @@ public class BarrelUpgradeItem extends Item {
 
         world.setBlock(pos, newState, 3);
         BlockEntity newBarrel = world.getBlockEntity(pos);
-
-        newBarrel.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent((itemHandler) -> IntStream.range(0, oldBarrelContents.size()).forEach(i -> itemHandler.insertItem(i, oldBarrelContents.get(i), false)));
+        if (newBarrel != null) {
+            setNewItems(newBarrel, oldBarrelContents);
+        }
 
         if (!player.getAbilities().instabuild)
             heldStack.shrink(1);
@@ -93,6 +91,9 @@ public class BarrelUpgradeItem extends Item {
                 .withStyle(Style.EMPTY.applyFormat(ChatFormatting.GREEN)), true);
         return InteractionResult.SUCCESS;
     }
+
+    protected abstract void copyOldItems(BlockEntity barrelHandler,List<ItemStack> list);
+    protected abstract void setNewItems(BlockEntity barrelHandler,List<ItemStack> list);
 
     public UpgradeInfo getUpgradeInfo() {
         return upgradeInfo;

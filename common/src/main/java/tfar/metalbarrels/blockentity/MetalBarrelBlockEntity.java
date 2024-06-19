@@ -2,12 +2,12 @@ package tfar.metalbarrels.blockentity;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
-import tfar.metalbarrels.container.MetalBarrelContainer;
+import tfar.metalbarrels.block.MetalBarrelBlock;
+import tfar.metalbarrels.menu.MetalBarrelMenu;
 import tfar.metalbarrels.util.BarrelHandler;
-import tfar.metalbarrels.util.MetalBarrelBlockEntityType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,18 +21,16 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import tfar.metalbarrels.util.BarrelProperties;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider, Nameable {
+public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends BlockEntity implements MenuProvider, Nameable {
 
+  protected final BarrelProperties barrelProperties;
   protected Component customName;
+
+  public H barrelHandler;
 
   public final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
     protected void onOpen(Level level, BlockPos pos, BlockState state) {
@@ -49,9 +47,9 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     protected boolean isOwnContainer(Player player) {
-      if (player.containerMenu instanceof MetalBarrelContainer metalBarrelContainer) {
-        ItemStackHandler handler1 = metalBarrelContainer.handler;
-        return handler1 == MetalBarrelBlockEntity.this.handler;
+      if (player.containerMenu instanceof MetalBarrelMenu<?> metalBarrelMenu) {
+          BarrelHandler handler1 = metalBarrelMenu.handler;
+        return handler1 == MetalBarrelBlockEntity.this.barrelHandler;
       } else {
         return false;
       }
@@ -59,20 +57,15 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
   };
 
 
-  public MetalBarrelBlockEntity(MetalBarrelBlockEntityType<?> tileEntityType, BlockPos pos,BlockState state) {
+  public MetalBarrelBlockEntity(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
     super(tileEntityType, pos, state);
-    int width = tileEntityType.width;
-    int height = tileEntityType.height;
-    handler = new BarrelHandler(width * height,this);
-    optional = LazyOptional.of(() -> handler);
+   barrelProperties = getPropertiesFromState(state);
   }
 
-  public LazyOptional<IItemHandler> optional;
-  public final BarrelHandler handler;
 
   @Override
   public void saveAdditional(CompoundTag tag) {
-    CompoundTag compound = this.handler.serializeNBT();
+    CompoundTag compound = this.barrelHandler.$serialize();
     tag.put("inv", compound);
     if (this.customName != null) {
       tag.putString("CustomName", Component.Serializer.toJson(this.customName));
@@ -83,30 +76,13 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
   @Override//read
   public void load(CompoundTag tag) {
     CompoundTag invTag = tag.getCompound("inv");
-    handler.deserializeNBT(invTag);
+    barrelHandler.$deserialize(invTag);
     if (tag.contains("CustomName", 8)) {
       this.customName = Component.Serializer.fromJson(tag.getString("CustomName"));
     }
     super.load(tag);
   }
 
-  @Nonnull
-  @Override
-  public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-    return cap == ForgeCapabilities.ITEM_HANDLER ? optional.cast() : super.getCapability(cap, side);
-  }
-
-  @Override
-  public void setRemoved() {
-    super.setRemoved();
-    optional.invalidate();
-  }
-
-  @Override
-  public void reviveCaps() {
-    super.reviveCaps();
-    optional = LazyOptional.of(() -> handler);
-  }
 
   public void setCustomName(Component name) {
     this.customName = name;
@@ -150,7 +126,6 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
     if (!isRemoved() && !pPlayer.isSpectator()) {
       openersCounter.decrementOpeners(pPlayer, this.getLevel(), this.getBlockPos(), this.getBlockState());
     }
-
   }
 
   public void recheckOpen() {
@@ -159,7 +134,7 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
     }
   }
 
-
+  public abstract int calculateRedstone();
 
   protected Component getDefaultName() {
     return Component.translatable(getBlockState().getBlock().getDescriptionId());
@@ -168,6 +143,14 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
   @Nullable
   @Override
   public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
-    return ((MetalBarrelBlockEntityType<?>)getType()).containerFactory.apply(id, inv,handler);
+    return barrelProperties.barrelMenuFactory().create(id,inv,barrelHandler);
   }
+
+  public BarrelProperties getPropertiesFromState(BlockState state) {
+    if (state.getBlock() instanceof MetalBarrelBlock metalBarrelBlock) {
+      return metalBarrelBlock.getBarrelProperties();
+    }
+    return null;
+  }
+
 }

@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.ItemHandlerHelper;
+import tfar.metalbarrels.util.BarrelProperties;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,11 +28,13 @@ import java.util.stream.IntStream;
 @SuppressWarnings("deprecation")
 public class MetalBarrelBlock extends BarrelBlock {
 
-  protected final BlockEntityType.BlockEntitySupplier<BlockEntity> tileEntitySupplier;
+  protected final BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> tileEntitySupplier;
+  private final BarrelProperties barrelProperties;
 
-  public MetalBarrelBlock(Properties properties, BlockEntityType.BlockEntitySupplier<BlockEntity> tileEntitySupplier) {
+  public MetalBarrelBlock(Properties properties, BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> tileEntitySupplier, BarrelProperties barrelProperties) {
     super(properties);
     this.tileEntitySupplier = tileEntitySupplier;
+    this.barrelProperties = barrelProperties;
   }
 
   @Override
@@ -48,7 +50,7 @@ public class MetalBarrelBlock extends BarrelBlock {
   }
 
   public static void dropItems(MetalBarrelBlockEntity barrel, Level world, BlockPos pos) {
-    IntStream.range(0, barrel.handler.getSlots()).mapToObj(barrel.handler::getStackInSlot)
+    IntStream.range(0, barrel.barrelHandler.$getSlotCount()).mapToObj(barrel.barrelHandler::$getStack)
             .filter(stack -> !stack.isEmpty()).forEach(stack -> Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
   }
 
@@ -67,6 +69,11 @@ public class MetalBarrelBlock extends BarrelBlock {
       return InteractionResult.SUCCESS;
     }
   }
+
+  public BarrelProperties getBarrelProperties() {
+    return barrelProperties;
+  }
+
   @Nullable
   @Override
   public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
@@ -89,7 +96,7 @@ public class MetalBarrelBlock extends BarrelBlock {
   @Override
   public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
     BlockEntity barrel = world.getBlockEntity(pos);
-    return barrel instanceof MetalBarrelBlockEntity metalBarrelBlockEntity? ItemHandlerHelper.calcRedstoneFromInventory(metalBarrelBlockEntity.handler) : 0;
+    return barrel instanceof MetalBarrelBlockEntity metalBarrelBlockEntity? metalBarrelBlockEntity.calculateRedstone() : 0;
   }
 
   @Override

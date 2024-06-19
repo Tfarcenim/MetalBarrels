@@ -1,7 +1,15 @@
 package tfar.metalbarrels.platform.services;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
+import tfar.metalbarrels.item.BarrelUpgradeItem;
+import tfar.metalbarrels.util.BarrelHandler;
+import tfar.metalbarrels.util.UpgradeInfo;
 
 public interface IPlatformHelper {
 
@@ -41,5 +49,9 @@ public interface IPlatformHelper {
 
     <F> F register(Registry<? extends F> registry, F f, ResourceLocation name);
 
+    MetalBarrelBlockEntity<?> createUpgrade(BlockEntityType<MetalBarrelBlockEntity<?>> type, BlockPos pos, BlockState state);
+
+    <H extends BarrelHandler> H makeDummy(int slots);
+    BarrelUpgradeItem createUpgrade(Item.Properties properties, UpgradeInfo info);
 
 }

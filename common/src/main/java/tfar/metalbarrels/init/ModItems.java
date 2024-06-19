@@ -7,6 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.item.BarrelUpgradeItem;
+import tfar.metalbarrels.platform.Services;
 import tfar.metalbarrels.util.UpgradeInfo;
 import tfar.metalbarrels.util.ModTags;
 
@@ -38,28 +39,28 @@ public class ModItems {   //wood to x
                 String s2 = MetalBarrels.tiers[j];
 
                 String s = s1 +"_to_"+ s2;
-                BarrelUpgradeItem item = new BarrelUpgradeItem(properties,new UpgradeInfo(map.get(s1).getFirst(),map.get(s2).getSecond()));
+                BarrelUpgradeItem item = Services.PLATFORM.createUpgrade(properties,new UpgradeInfo(map.get(s1).getFirst(),map.get(s2).getSecond()));
                 upgrade_items.put(s,item);
             }
         }
     }
     //crystal
-    public static final Item wood_to_crystal = new BarrelUpgradeItem(properties, new UpgradeInfo(ModTags.Blocks.WOOD_BARRELS,
+    public static final Item wood_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.WOOD_BARRELS,
             ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item copper_to_crystal = new BarrelUpgradeItem(properties, new UpgradeInfo(ModTags.Blocks.COPPER_BARRELS,
+    public static final Item copper_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.COPPER_BARRELS,
             ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item iron_to_crystal = new BarrelUpgradeItem(properties, new UpgradeInfo(ModTags.Blocks.IRON_BARRELS,
+    public static final Item iron_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.IRON_BARRELS,
             ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item silver_to_crystal = new BarrelUpgradeItem(properties, new UpgradeInfo(ModTags.Blocks.SILVER_BARRELS,
+    public static final Item silver_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.SILVER_BARRELS,
             ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item gold_to_crystal = new BarrelUpgradeItem(properties, new UpgradeInfo(ModTags.Blocks.GOLD_BARRELS,
+    public static final Item gold_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.GOLD_BARRELS,
             ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item diamond_to_crystal = new BarrelUpgradeItem(properties, new UpgradeInfo(ModTags.Blocks.DIAMOND_BARRELS,
+    public static final Item diamond_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.DIAMOND_BARRELS,
             ModBlocks.CRYSTAL_BARREL));
 
     public static final Item COPPER_BARREL = new BlockItem(ModBlocks.COPPER_BARREL, properties);
