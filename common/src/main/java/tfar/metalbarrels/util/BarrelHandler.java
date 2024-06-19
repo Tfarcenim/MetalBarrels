@@ -8,11 +8,12 @@ import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 public interface BarrelHandler extends CommonHandler {
 
 
-    MetalBarrelBlockEntity getBlockEntity();
+    MetalBarrelBlockEntity<?> getBlockEntity();
 
     int $getSlotCount();
 
     ItemStack $getStack(int slot);
+    void $setStack(int slot,ItemStack stack);
 
     default void $onContentsChanged(int slot) {
         if (getBlockEntity() != null) {

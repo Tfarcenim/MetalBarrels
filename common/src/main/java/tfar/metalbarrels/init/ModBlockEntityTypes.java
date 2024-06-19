@@ -16,26 +16,26 @@ public class ModBlockEntityTypes {
 
 
     public static BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> copper() {
-        return (pPos, pState) -> Services.PLATFORM.createUpgrade(COPPER,pPos,pState);
+        return (pPos, pState) -> Services.PLATFORM.blockEntity(COPPER,pPos,pState);
     }
 
     public static BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> iron() {
-        return (pPos, pState) -> Services.PLATFORM.createUpgrade(IRON,pPos,pState);
+        return (pPos, pState) -> Services.PLATFORM.blockEntity(IRON,pPos,pState);
     }
 
     public static BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> silver() {
-        return (pPos, pState) -> Services.PLATFORM.createUpgrade(SILVER,pPos,pState);
+        return (pPos, pState) -> Services.PLATFORM.blockEntity(SILVER,pPos,pState);
     }
 
     public static BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> gold() {
-        return (pPos, pState) -> Services.PLATFORM.createUpgrade(GOLD,pPos,pState);
+        return (pPos, pState) -> Services.PLATFORM.blockEntity(GOLD,pPos,pState);
     }
 
     public static BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> diamond() {
-        return (pPos, pState) -> Services.PLATFORM.createUpgrade(DIAMOND,pPos,pState);
+        return (pPos, pState) -> Services.PLATFORM.blockEntity(DIAMOND,pPos,pState);
     }
 
     public static BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> netherite() {
-        return (pPos, pState) -> Services.PLATFORM.createUpgrade(NETHERITE,pPos,pState);
+        return (pPos, pState) -> Services.PLATFORM.blockEntity(NETHERITE,pPos,pState);
     }
 }

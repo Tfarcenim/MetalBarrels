@@ -45,11 +45,11 @@ public interface IPlatformHelper {
         return isDevelopmentEnvironment() ? "development" : "production";
     }
 
-    <F> void registerAll(Class<?> clazz, Registry<? extends F> registry, Class<F> filter);
+    <F> void registerAll(Class<?> clazz, Registry<? super F> registry, Class<? super F> filter);
 
-    <F> F register(Registry<? extends F> registry, F f, ResourceLocation name);
+    <F> F register(Registry<F> registry, F f, ResourceLocation name);
 
-    MetalBarrelBlockEntity<?> createUpgrade(BlockEntityType<MetalBarrelBlockEntity<?>> type, BlockPos pos, BlockState state);
+    MetalBarrelBlockEntity<?> blockEntity(BlockEntityType<MetalBarrelBlockEntity<?>> type, BlockPos pos, BlockState state);
 
     <H extends BarrelHandler> H makeDummy(int slots);
     BarrelUpgradeItem createUpgrade(Item.Properties properties, UpgradeInfo info);

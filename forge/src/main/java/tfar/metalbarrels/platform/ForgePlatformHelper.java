@@ -48,7 +48,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <F> void registerAll(Class<?> clazz, Registry<? extends F> registry, Class<F> filter) {
+    public <F> void registerAll(Class<?> clazz, Registry<? super F> registry, Class<? super F> filter) {
         List<Pair<ResourceLocation, Supplier<?>>> list = MetalBarrelsForge.registerLater.computeIfAbsent(registry, k -> new ArrayList<>());
         for (Field field : clazz.getFields()) {
             MappedRegistry<?> mappedRegistry = (MappedRegistry<?>) registry;
@@ -65,7 +65,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <F> F register(Registry<? extends F> registry, F f,ResourceLocation name) {
+    public <F> F register(Registry<F> registry, F f, ResourceLocation name) {
         List<Pair<ResourceLocation, Supplier<?>>> list = MetalBarrelsForge.registerLater.computeIfAbsent(registry, k -> new ArrayList<>());
         MappedRegistry<?> mappedRegistry = (MappedRegistry<?>) registry;
         mappedRegistry.unfreeze();
@@ -74,7 +74,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public MetalBarrelBlockEntity<?> createUpgrade(BlockEntityType<MetalBarrelBlockEntity<?>> type, BlockPos pos, BlockState state) {
+    public MetalBarrelBlockEntity<?> blockEntity(BlockEntityType<MetalBarrelBlockEntity<?>> type, BlockPos pos, BlockState state) {
         return new MetalBarrelBlockEntityForge(type, pos, state);
     }
 

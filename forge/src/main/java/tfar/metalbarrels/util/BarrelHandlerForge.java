@@ -9,9 +9,9 @@ import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 
 public class BarrelHandlerForge extends ItemStackHandler implements BarrelHandler {
 
-    private final MetalBarrelBlockEntity metalBarrelBlockEntity;
+    private final MetalBarrelBlockEntity<?> metalBarrelBlockEntity;
 
-    public BarrelHandlerForge(int slots, MetalBarrelBlockEntity metalBarrelBlockEntity) {
+    public BarrelHandlerForge(int slots, MetalBarrelBlockEntity<?> metalBarrelBlockEntity) {
         super(slots);
         this.metalBarrelBlockEntity = metalBarrelBlockEntity;
     }
@@ -22,12 +22,17 @@ public class BarrelHandlerForge extends ItemStackHandler implements BarrelHandle
     }
 
     @Override
+    public void $setStack(int slot, ItemStack stack) {
+        setStackInSlot(slot, stack);
+    }
+
+    @Override
     public int $getSlotCount() {
         return getSlots();
     }
 
     @Override
-    public MetalBarrelBlockEntity getBlockEntity() {
+    public MetalBarrelBlockEntity<?> getBlockEntity() {
         return metalBarrelBlockEntity;
     }
 

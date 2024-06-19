@@ -17,7 +17,13 @@ import javax.annotation.Nullable;
 public class MetalBarrelBlockEntityForge extends MetalBarrelBlockEntity<BarrelHandlerForge> {
     public MetalBarrelBlockEntityForge(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
         super(tileEntityType, pos, state);
-        barrelHandler = new BarrelHandlerForge(this.barrelProperties.width() * this.barrelProperties.height(),this);
+        barrelHandler = new BarrelHandlerForge(this.barrelProperties.width() * this.barrelProperties.height(),this) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                super.onContentsChanged(slot);
+                setChanged();
+            }
+        };
     }
 
     protected LazyOptional<IItemHandler> optional;

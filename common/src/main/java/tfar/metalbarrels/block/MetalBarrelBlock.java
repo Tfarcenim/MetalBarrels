@@ -42,14 +42,14 @@ public class MetalBarrelBlock extends BarrelBlock {
     if (state.getBlock() != newState.getBlock()) {
       BlockEntity tileentity = worldIn.getBlockEntity(pos);
       if (tileentity instanceof MetalBarrelBlockEntity) {
-        dropItems((MetalBarrelBlockEntity)tileentity,worldIn, pos);
+        dropItems((MetalBarrelBlockEntity<?>)tileentity,worldIn, pos);
         worldIn.updateNeighbourForOutputSignal(pos, this);
       }
       super.onRemove(state, worldIn, pos, newState, isMoving);
     }
   }
 
-  public static void dropItems(MetalBarrelBlockEntity barrel, Level world, BlockPos pos) {
+  public static void dropItems(MetalBarrelBlockEntity<?> barrel, Level world, BlockPos pos) {
     IntStream.range(0, barrel.barrelHandler.$getSlotCount()).mapToObj(barrel.barrelHandler::$getStack)
             .filter(stack -> !stack.isEmpty()).forEach(stack -> Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
   }

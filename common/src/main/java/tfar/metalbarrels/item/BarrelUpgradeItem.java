@@ -65,7 +65,7 @@ public abstract class BarrelUpgradeItem extends Item {
         }
 
         if (oldBarrel != null) {
-            copyOldItems(oldBarrel, oldBarrelContents);
+            copyOldItems(world,pos,state, oldBarrel, oldBarrelContents);
             oldBarrel.setRemoved();
         }
 
@@ -81,7 +81,7 @@ public abstract class BarrelUpgradeItem extends Item {
         world.setBlock(pos, newState, 3);
         BlockEntity newBarrel = world.getBlockEntity(pos);
         if (newBarrel != null) {
-            setNewItems(newBarrel, oldBarrelContents);
+            setNewItems(world, pos, newState, newBarrel, oldBarrelContents);
         }
 
         if (!player.getAbilities().instabuild)
@@ -92,8 +92,8 @@ public abstract class BarrelUpgradeItem extends Item {
         return InteractionResult.SUCCESS;
     }
 
-    protected abstract void copyOldItems(BlockEntity barrelHandler,List<ItemStack> list);
-    protected abstract void setNewItems(BlockEntity barrelHandler,List<ItemStack> list);
+    protected abstract void copyOldItems(Level level,BlockPos pos,BlockState state,BlockEntity blockEntity,List<ItemStack> list);
+    protected abstract void setNewItems(Level level,BlockPos pos,BlockState state,BlockEntity blockEntity,List<ItemStack> list);
 
     public UpgradeInfo getUpgradeInfo() {
         return upgradeInfo;

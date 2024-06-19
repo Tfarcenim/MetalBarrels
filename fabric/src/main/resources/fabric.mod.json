@@ -17,10 +17,10 @@
     "entrypoints": {
         "main": [
             "tfar.metalbarrels.MetalBarrelsFabric"
-        ]
+        ],
+        "client": ["tfar.metalbarrels.client.ModClientFabric"]
     },
     "mixins": [
-        "${mod_id}.mixins.json",
         "${mod_id}.fabric.mixins.json"
     ],
     "depends": {

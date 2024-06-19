@@ -138,6 +138,7 @@ public class MetalBarrelMenu<H extends BarrelHandler> extends AbstractContainerM
      */
     public void removed(Player playerIn) {
         super.removed(playerIn);
+        this.handler.$stopOpen(playerIn);
     }
 }
 

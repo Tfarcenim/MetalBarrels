@@ -30,8 +30,9 @@ public class MetalBarrelsForge {
     bus.addListener(ModDatagen::start);
 
     if (FMLEnvironment.dist.isClient()) {
-      bus.addListener(ModClientForge::init);
+      ModClientForge.init(bus);
     }
+    MetalBarrels.init();
   }
 
   public static Map<Registry<?>, List<Pair<ResourceLocation, Supplier<?>>>> registerLater = new HashMap<>();
