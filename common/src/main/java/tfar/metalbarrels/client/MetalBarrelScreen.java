@@ -30,7 +30,7 @@ public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelMenu> 
 
   @Override
   public void render(GuiGraphics stack,int x, int y, float p_render_3_) {
-    this.renderBackground(stack);
+    this.renderTransparentBackground(stack);
     super.render(stack,x, y, p_render_3_);
     this.renderTooltip(stack,x,y);
   }

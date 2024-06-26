@@ -10,8 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import tfar.metalbarrels.platform.Services;
 import tfar.metalbarrels.util.BarrelHandler;
 
-import javax.annotation.Nonnull;
-
 public class MetalBarrelMenu<H extends BarrelHandler> extends AbstractContainerMenu {
 
     public int width;
@@ -104,11 +102,10 @@ public class MetalBarrelMenu<H extends BarrelHandler> extends AbstractContainerM
     }
 
     @Override
-    public boolean stillValid(@Nonnull Player playerIn) {
+    public boolean stillValid(Player playerIn) {
         return true;
     }
 
-    @Nonnull
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;

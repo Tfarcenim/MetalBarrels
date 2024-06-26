@@ -6,13 +6,10 @@ import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,8 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import tfar.metalbarrels.util.BarrelProperties;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("deprecation")
@@ -38,7 +33,7 @@ public class MetalBarrelBlock extends BarrelBlock {
   }
 
   @Override
-  public void onRemove(BlockState state, @Nonnull Level worldIn,@Nonnull BlockPos pos,@Nonnull BlockState newState, boolean isMoving) {
+  public void onRemove(BlockState state,Level worldIn, BlockPos pos,BlockState newState, boolean isMoving) {
     if (state.getBlock() != newState.getBlock()) {
       BlockEntity tileentity = worldIn.getBlockEntity(pos);
       if (tileentity instanceof MetalBarrelBlockEntity) {
@@ -55,10 +50,9 @@ public class MetalBarrelBlock extends BarrelBlock {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level world, BlockPos pos,
-                               Player player, InteractionHand hand, BlockHitResult result) {
-    if (!world.isClientSide) {
-      MenuProvider tileEntity = getMenuProvider(state,world,pos);
+  protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    if (!level.isClientSide) {
+      MenuProvider tileEntity = getMenuProvider(state,level,pos);
       if (tileEntity != null) {
         player.openMenu(tileEntity);
         player.awardStat(Stats.OPEN_BARREL);
@@ -74,7 +68,6 @@ public class MetalBarrelBlock extends BarrelBlock {
     return barrelProperties;
   }
 
-  @Nullable
   @Override
   public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
     return tileEntitySupplier.create(pos, state);
@@ -94,19 +87,9 @@ public class MetalBarrelBlock extends BarrelBlock {
    * Implementing/overriding is fine.
    */
   @Override
-  public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
-    BlockEntity barrel = world.getBlockEntity(pos);
+  public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+    BlockEntity barrel = level.getBlockEntity(pos);
     return barrel instanceof MetalBarrelBlockEntity metalBarrelBlockEntity? metalBarrelBlockEntity.calculateRedstone() : 0;
-  }
-
-  @Override
-  public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
-    if (pStack.hasCustomHoverName()) {
-      BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-      if (blockentity instanceof MetalBarrelBlockEntity metalBarrelBlock) {
-        metalBarrelBlock.setCustomName(pStack.getHoverName());
-      }
-    }
   }
 
   @Override

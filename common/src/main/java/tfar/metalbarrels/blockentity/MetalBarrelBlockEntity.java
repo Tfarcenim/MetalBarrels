@@ -1,5 +1,6 @@
 package tfar.metalbarrels.blockentity;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import tfar.metalbarrels.util.BarrelProperties;
 
-import javax.annotation.Nullable;
 
 public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends BlockEntity implements MenuProvider, Nameable {
 
@@ -64,23 +64,23 @@ public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends Bl
 
 
   @Override
-  public void saveAdditional(CompoundTag tag) {
-    CompoundTag compound = this.barrelHandler.$serialize();
+  public void saveAdditional(CompoundTag tag, HolderLookup.Provider levelRegistry) {
+    CompoundTag compound = this.barrelHandler.$serialize(levelRegistry);
     tag.put("inv", compound);
     if (this.customName != null) {
-      tag.putString("CustomName", Component.Serializer.toJson(this.customName));
+      tag.putString("CustomName", Component.Serializer.toJson(this.customName,levelRegistry));
     }
-    super.saveAdditional(tag);
+    super.saveAdditional(tag,levelRegistry);
   }
 
   @Override//read
-  public void load(CompoundTag tag) {
+  public void loadAdditional(CompoundTag tag, HolderLookup.Provider levelRegistry) {
     CompoundTag invTag = tag.getCompound("inv");
-    barrelHandler.$deserialize(invTag);
+    barrelHandler.$deserialize(invTag,levelRegistry);
     if (tag.contains("CustomName", 8)) {
-      this.customName = Component.Serializer.fromJson(tag.getString("CustomName"));
+      this.customName = Component.Serializer.fromJson(tag.getString("CustomName"),levelRegistry);
     }
-    super.load(tag);
+    super.loadAdditional(tag,levelRegistry);
   }
 
 
@@ -96,7 +96,6 @@ public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends Bl
     return this.getName();
   }
 
-  @Nullable
   public Component getCustomName() {
     return this.customName;
   }
@@ -140,7 +139,6 @@ public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends Bl
     return Component.translatable(getBlockState().getBlock().getDescriptionId());
   }
 
-  @Nullable
   @Override
   public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
     return barrelProperties.barrelMenuFactory().create(id,inv,barrelHandler);

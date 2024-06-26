@@ -1,5 +1,6 @@
 package tfar.metalbarrels.util;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -19,17 +20,17 @@ public class BarrelHandlerFabric extends SimpleContainer implements BarrelHandle
 
 
     @Override
-    public CompoundTag $serialize() {
-        ListTag listTag = createTag();
+    public CompoundTag $serialize(HolderLookup.Provider levelRegistry) {
+        ListTag listTag = createTag(levelRegistry);
         CompoundTag tag = new CompoundTag();
         tag.put("dummy",listTag);
         return tag;
     }
 
     @Override
-    public void $deserialize(CompoundTag invTag) {
+    public void $deserialize(CompoundTag invTag, HolderLookup.Provider levelRegistry) {
         ListTag listTag = invTag.getList("dummy", Tag.TAG_COMPOUND);
-        fromTag(listTag);
+        fromTag(listTag,levelRegistry);
     }
 
     @Override

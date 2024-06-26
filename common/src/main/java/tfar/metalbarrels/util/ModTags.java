@@ -20,7 +20,7 @@ public class ModTags {
     public static final TagKey<Item> OBSIDIAN_BARRELS = tag("barrels/obsidian");
     public static final TagKey<Item> NETHERITE_BARRELS = tag("barrels/netherite");
     public static TagKey<Item> tag(String name) {
-      return TagKey.create(Registries.ITEM, new ResourceLocation("forge",name));
+      return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c",name));
     }
   }
 
@@ -36,7 +36,7 @@ public class ModTags {
     public static final TagKey<Block> NETHERITE_BARRELS = tag("barrels/netherite");
 
     private static TagKey<Block> tag(String name) {
-      return TagKey.create(Registries.BLOCK, new ResourceLocation("forge",name));
+      return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c",name));
     }
   }
 }

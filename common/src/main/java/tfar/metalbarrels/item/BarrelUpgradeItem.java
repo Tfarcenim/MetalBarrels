@@ -19,7 +19,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import tfar.metalbarrels.util.UpgradeInfo;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,6 @@ public abstract class BarrelUpgradeItem extends Item {
         this.upgradeInfo = info;
     }
 
-    @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
