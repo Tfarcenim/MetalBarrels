@@ -7,9 +7,9 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.datagen.assets.ModItemModelProvider;
 import tfar.metalbarrels.datagen.assets.ModLangProvider;
@@ -35,7 +35,7 @@ public class ModDatagen {
         generator.addProvider(client, new ModLangProvider(output));
         generator.addProvider(client, new ModItemModelProvider(output, helper));
 
-        generator.addProvider(server, new ModRecipeProvider(output));
+        generator.addProvider(server, new ModRecipeProvider(output,provider));
         BlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(output,provider, helper);
         generator.addProvider(server, blockTagsProvider);
         generator.addProvider(server, new ModItemTagsProvider(output,provider, blockTagsProvider,helper));

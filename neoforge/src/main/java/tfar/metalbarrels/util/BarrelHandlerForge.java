@@ -1,10 +1,11 @@
 package tfar.metalbarrels.util;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 
 public class BarrelHandlerForge extends ItemStackHandler implements BarrelHandler {
@@ -37,13 +38,13 @@ public class BarrelHandlerForge extends ItemStackHandler implements BarrelHandle
     }
 
     @Override
-    public CompoundTag $serialize() {
-        return this.serializeNBT();
+    public CompoundTag $serialize(HolderLookup.Provider levelRegistry) {
+        return this.serializeNBT(levelRegistry);
     }
 
     @Override
-    public void $deserialize(CompoundTag invTag) {
-        deserializeNBT(invTag);
+    public void $deserialize(CompoundTag invTag,HolderLookup.Provider levelRegistry) {
+        deserializeNBT(levelRegistry, invTag);
     }
 
     @Override

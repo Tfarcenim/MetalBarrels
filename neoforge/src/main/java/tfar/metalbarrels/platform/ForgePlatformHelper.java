@@ -3,10 +3,13 @@ package tfar.metalbarrels.platform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLLoader;
 import org.apache.commons.lang3.tuple.Pair;
 import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.MetalBarrelsForge;
@@ -15,8 +18,6 @@ import tfar.metalbarrels.blockentity.MetalBarrelBlockEntityForge;
 import tfar.metalbarrels.item.BarrelUpgradeItem;
 import tfar.metalbarrels.item.BarrelUpgradeItemForge;
 import tfar.metalbarrels.platform.services.IPlatformHelper;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLLoader;
 import tfar.metalbarrels.util.BarrelHandler;
 import tfar.metalbarrels.util.BarrelHandlerForge;
 import tfar.metalbarrels.util.UpgradeInfo;
@@ -49,6 +50,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public <F> void registerAll(Class<?> clazz, Registry<? super F> registry, Class<? super F> filter) {
+        ((MappedRegistry<BlockEntityType<?>>) BuiltInRegistries.BLOCK_ENTITY_TYPE).unfreeze();//circular dependencies are fun
         List<Pair<ResourceLocation, Supplier<?>>> list = MetalBarrelsForge.registerLater.computeIfAbsent(registry, k -> new ArrayList<>());
         for (Field field : clazz.getFields()) {
             MappedRegistry<?> mappedRegistry = (MappedRegistry<?>) registry;
@@ -66,9 +68,10 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public <F> F register(Registry<F> registry, F f, ResourceLocation name) {
-        List<Pair<ResourceLocation, Supplier<?>>> list = MetalBarrelsForge.registerLater.computeIfAbsent(registry, k -> new ArrayList<>());
+
         MappedRegistry<?> mappedRegistry = (MappedRegistry<?>) registry;
         mappedRegistry.unfreeze();
+        List<Pair<ResourceLocation, Supplier<?>>> list = MetalBarrelsForge.registerLater.computeIfAbsent(registry, k -> new ArrayList<>());
         list.add(Pair.of(name,() -> f));
         return f;
     }

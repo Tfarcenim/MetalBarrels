@@ -5,11 +5,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import tfar.metalbarrels.blockentity.MetalBarrelBlockEntityForge;
 import tfar.metalbarrels.util.UpgradeInfo;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class BarrelUpgradeItemForge extends BarrelUpgradeItem{
     public BarrelUpgradeItemForge(Properties properties, UpgradeInfo info) {
@@ -18,14 +19,20 @@ public class BarrelUpgradeItemForge extends BarrelUpgradeItem{
 
     @Override
     protected void copyOldItems(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity, List<ItemStack> list) {
-        blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER)
-                .ifPresent((itemHandler) -> IntStream.range(0, itemHandler.getSlots())
-                        .mapToObj(itemHandler::getStackInSlot).forEach(list::add));
+
+        IItemHandler capability = Capabilities.ItemHandler.BLOCK.getCapability(level, pos, state, blockEntity, null);
+
+        for (int i = 0; i < capability.getSlots();i++) {
+            list.add(capability.getStackInSlot(i));
+        }
     }
 
     @Override
     protected void setNewItems(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity, List<ItemStack> list) {
-        blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent((itemHandler) -> IntStream.range(0, list.size()).forEach(i -> itemHandler.insertItem(i, list.get(i), false)));
-
+        if (blockEntity instanceof MetalBarrelBlockEntityForge metalBarrelBlockEntityForge) {
+            for (int i = 0; i < list.size();i++) {
+                metalBarrelBlockEntityForge.barrelHandler.setStackInSlot(i,list.get(i));
+            }
+        }
     }
 }

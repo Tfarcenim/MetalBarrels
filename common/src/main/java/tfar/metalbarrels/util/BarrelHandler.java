@@ -2,7 +2,6 @@ package tfar.metalbarrels.util;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 
 public interface BarrelHandler extends CommonHandler {
