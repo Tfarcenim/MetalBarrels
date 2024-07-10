@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "tag": "c:barrels/iron"
+    },
+    {
+      "item": "metalbarrels:iron_to_gold"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "metalbarrels:gold_barrel"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "tag": "c:barrels/silver"
+    },
+    {
+      "item": "metalbarrels:silver_to_obsidian"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "metalbarrels:obsidian_barrel"
+  }
+}
