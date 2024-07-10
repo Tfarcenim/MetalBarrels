@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "metalbarrels:gold_barrel"
+    },
+    {
+      "tag": "c:gems/diamond"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "metalbarrels:diamond_barrel"
+  }
+}

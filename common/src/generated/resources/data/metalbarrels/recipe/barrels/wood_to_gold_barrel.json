@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "b": {
+      "item": "minecraft:barrel"
+    },
+    "g": {
+      "tag": "c:ingots/gold"
+    },
+    "i": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "gig",
+    "ibi",
+    "gig"
+  ],
+  "result": {
+    "count": 1,
+    "id": "metalbarrels:gold_barrel"
+  }
+}

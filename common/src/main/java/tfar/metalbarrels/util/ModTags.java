@@ -19,6 +19,9 @@ public class ModTags {
     public static final TagKey<Item> CRYSTAL_BARRELS = tag("barrels/crystal");
     public static final TagKey<Item> OBSIDIAN_BARRELS = tag("barrels/obsidian");
     public static final TagKey<Item> NETHERITE_BARRELS = tag("barrels/netherite");
+
+    public static final TagKey<Item> INGOTS_SILVER = tag("ingots/silver");
+
     public static TagKey<Item> tag(String name) {
       return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c",name));
     }

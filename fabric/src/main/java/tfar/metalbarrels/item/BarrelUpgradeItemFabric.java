@@ -23,7 +23,6 @@ public class BarrelUpgradeItemFabric extends BarrelUpgradeItem{
     protected void copyOldItems(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity, List<ItemStack> list) {
         Storage<ItemVariant> storageViews = ItemStorage.SIDED.find(level, pos, state, blockEntity, null);
         if (storageViews != null) {
-            int slot = 0;
             for (StorageView<ItemVariant> storageView : storageViews) {
                 ItemVariant itemVariant = storageView.getResource();
                 if (itemVariant.isBlank()) {
@@ -33,7 +32,6 @@ public class BarrelUpgradeItemFabric extends BarrelUpgradeItem{
                     stack.setCount((int)storageView.getAmount());
                     list.add(stack);
                 }
-            slot++;
             }
         }
     }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "b": {
+      "item": "metalbarrels:diamond_barrel"
+    },
+    "g": {
+      "tag": "c:obsidians"
+    }
+  },
+  "pattern": [
+    " g ",
+    "gbg",
+    " g "
+  ],
+  "result": {
+    "count": 1,
+    "id": "metalbarrels:obsidian_barrel"
+  }
+}
