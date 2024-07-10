@@ -42,27 +42,27 @@ public class ModRecipeProvider extends RecipeProvider {
         cheapNetheriteSmithing(consumer, ModBlocks.OBSIDIAN_BARREL.asItem(),RecipeCategory.DECORATIONS,ModBlocks.NETHERITE_BARREL.asItem());
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.COPPER_BARREL)
-                .define('b',Blocks.BARREL).define('g',Tags.Items.INGOTS_COPPER)
+                .define('b',Tags.Items.BARRELS_WOODEN).define('g',Tags.Items.INGOTS_COPPER)
                 .pattern("gbg")
-                .unlockedBy(getHasName(Blocks.BARREL),has(Blocks.BARREL))
+                .unlockedBy("has_barrel",has(Tags.Items.BARRELS_WOODEN))
                 .save(consumer, MetalBarrels.id("barrels/wood_to_copper_barrel"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.IRON_BARREL)
-                .define('b', Blocks.BARREL).define('g',Tags.Items.INGOTS_IRON)
+                .define('b', Tags.Items.BARRELS_WOODEN).define('g',Tags.Items.INGOTS_IRON)
                 .pattern(" g ")
                 .pattern("gbg")
                 .pattern(" g ")
-                .unlockedBy(getHasName(Blocks.BARREL),has(Blocks.BARREL))
+                .unlockedBy("has_barrel",has(Tags.Items.BARRELS_WOODEN))
                 .save(consumer, MetalBarrels.id("barrels/wood_to_iron_barrel"));
 
 
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.GOLD_BARREL)
-                .define('b', Blocks.BARREL).define('i',Tags.Items.INGOTS_IRON).define('g',Tags.Items.INGOTS_GOLD)
+                .define('b', Tags.Items.BARRELS_WOODEN).define('i',Tags.Items.INGOTS_IRON).define('g',Tags.Items.INGOTS_GOLD)
                 .pattern("gig")
                 .pattern("ibi")
                 .pattern("gig")
-                .unlockedBy(getHasName(Blocks.BARREL),has(Blocks.BARREL))
+                .unlockedBy("has_barrel",has(Tags.Items.BARRELS_WOODEN))
                 .save(consumer, MetalBarrels.id("barrels/wood_to_gold_barrel"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.IRON_BARREL)

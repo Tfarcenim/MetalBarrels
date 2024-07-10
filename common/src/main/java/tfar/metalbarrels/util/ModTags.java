@@ -28,7 +28,10 @@ public class ModTags {
   }
 
   public static class Blocks {
-    public static final TagKey<Block> WOOD_BARRELS = tag("barrels/wood");
+    /**
+     * Equivalent to net.neoforged.neoforge.common.Tags.Blocks.BARRELS_WOODEN, put here so common can use it
+     */
+    public static final TagKey<Block> WOOD_BARRELS = tag("barrels/wooden");
     public static final TagKey<Block> COPPER_BARRELS = tag("barrels/copper");
     public static final TagKey<Block> IRON_BARRELS = tag("barrels/iron");
     public static final TagKey<Block> SILVER_BARRELS = tag("barrels/silver");
@@ -37,6 +40,7 @@ public class ModTags {
     public static final TagKey<Block> CRYSTAL_BARRELS = tag("barrels/crystal");
     public static final TagKey<Block> OBSIDIAN_BARRELS = tag("barrels/obsidian");
     public static final TagKey<Block> NETHERITE_BARRELS = tag("barrels/netherite");
+
 
     private static TagKey<Block> tag(String name) {
       return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c",name));

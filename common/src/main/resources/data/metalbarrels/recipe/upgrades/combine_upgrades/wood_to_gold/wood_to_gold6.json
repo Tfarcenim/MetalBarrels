@@ -11,5 +11,5 @@
             "item": "metalbarrels:iron_to_gold"
         }
     ],
-    "result":{"item":"metalbarrels:wood_to_gold"}
+    "result":{"id":"metalbarrels:wood_to_gold"}
 }

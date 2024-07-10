@@ -6,6 +6,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -25,7 +26,6 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        copy(ModTags.Blocks.WOOD_BARRELS,ModTags.Items.WOOD_BARRELS);
         copy(ModTags.Blocks.COPPER_BARRELS,ModTags.Items.COPPER_BARRELS);
         copy(ModTags.Blocks.IRON_BARRELS,ModTags.Items.IRON_BARRELS);
         copy(ModTags.Blocks.SILVER_BARRELS,ModTags.Items.SILVER_BARRELS);
@@ -34,6 +34,10 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         copy(ModTags.Blocks.CRYSTAL_BARRELS,ModTags.Items.CRYSTAL_BARRELS);
         copy(ModTags.Blocks.OBSIDIAN_BARRELS,ModTags.Items.OBSIDIAN_BARRELS);
         copy(ModTags.Blocks.NETHERITE_BARRELS,ModTags.Items.NETHERITE_BARRELS);
+
+        tag(Tags.Items.BARRELS).addTags(ModTags.Items.COPPER_BARRELS,ModTags.Items.IRON_BARRELS,
+                ModTags.Items.SILVER_BARRELS,ModTags.Items.GOLD_BARRELS,ModTags.Items.DIAMOND_BARRELS,ModTags.Items.CRYSTAL_BARRELS,ModTags.Items.OBSIDIAN_BARRELS
+                ,ModTags.Items.NETHERITE_BARRELS);
 
         Item[] gold = ModDatagen.getKnownItems().filter(item -> BuiltInRegistries.ITEM.getKey(item).getPath().contains("gold")).toArray(Item[]::new);
         tag(ItemTags.PIGLIN_LOVED).add(gold);

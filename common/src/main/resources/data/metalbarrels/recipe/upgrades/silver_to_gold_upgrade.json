@@ -7,5 +7,5 @@
         "g":{"tag":"forge:ingots/gold"},
         "s":{"tag":"forge:ingots/silver"}
     },
-    "result":{"item":"metalbarrels:silver_to_gold"}
+    "result":{"id":"metalbarrels:silver_to_gold"}
 }

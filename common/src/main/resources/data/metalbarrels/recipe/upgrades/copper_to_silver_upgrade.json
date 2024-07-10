@@ -10,5 +10,5 @@
         "s":{"tag":"forge:ingots/silver"},
         "c":{"tag":"forge:ingots/copper"}
     },
-    "result":{"item":"metalbarrels:copper_to_silver"}
+    "result":{"id":"metalbarrels:copper_to_silver"}
 }

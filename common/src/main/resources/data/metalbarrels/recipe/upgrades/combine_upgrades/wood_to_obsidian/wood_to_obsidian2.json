@@ -17,5 +17,5 @@
             "item": "metalbarrels:gold_to_obsidian"
         }
     ],
-    "result":{"item":"metalbarrels:wood_to_obsidian"}
+    "result":{"id":"metalbarrels:wood_to_obsidian"}
 }

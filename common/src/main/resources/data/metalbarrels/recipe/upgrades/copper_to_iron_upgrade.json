@@ -7,5 +7,5 @@
         "i":{"tag":"forge:ingots/iron"},
         "c":{"tag":"forge:ingots/copper"}
     },
-    "result":{"item":"metalbarrels:copper_to_iron"}
+    "result":{"id":"metalbarrels:copper_to_iron"}
 }

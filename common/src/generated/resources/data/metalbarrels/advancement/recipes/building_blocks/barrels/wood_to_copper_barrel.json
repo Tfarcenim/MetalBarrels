@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:barrel"
+            "items": "#c:barrels/wooden"
           }
         ]
       },

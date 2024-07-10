@@ -9,5 +9,5 @@
         "g":{"tag":"forge:ingots/gold"},
         "i":{"tag":"forge:ingots/iron"}
     },
-    "result":{"item":"metalbarrels:iron_to_gold"}
+    "result":{"id":"metalbarrels:iron_to_gold"}
 }

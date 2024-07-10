@@ -9,5 +9,5 @@
         "i":{"tag":"forge:ingots/iron"},
         "b":{"tag":"minecraft:planks"}
     },
-    "result":{"item":"metalbarrels:wood_to_iron"}
+    "result":{"id":"metalbarrels:wood_to_iron"}
 }

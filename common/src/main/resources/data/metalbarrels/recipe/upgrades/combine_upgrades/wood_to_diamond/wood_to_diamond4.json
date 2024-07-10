@@ -11,5 +11,5 @@
             "item": "metalbarrels:silver_to_diamond"
         }
     ],
-    "result":{"item":"metalbarrels:wood_to_diamond"}
+    "result":{"id":"metalbarrels:wood_to_diamond"}
 }

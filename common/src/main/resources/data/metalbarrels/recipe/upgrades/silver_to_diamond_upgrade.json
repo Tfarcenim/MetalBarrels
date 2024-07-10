@@ -7,5 +7,5 @@
         "d":{"tag":"forge:gems/diamond"},
         "s":{"tag":"forge:ingots/silver"}
     },
-    "result":{"item":"metalbarrels:silver_to_diamond"}
+    "result":{"id":"metalbarrels:silver_to_diamond"}
 }

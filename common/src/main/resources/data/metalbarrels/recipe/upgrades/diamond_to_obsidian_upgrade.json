@@ -10,5 +10,5 @@
         "g":{"item": "minecraft:glass_pane"}
     },
 
-    "result":{"item":"metalbarrels:diamond_to_obsidian"}
+    "result":{"id":"metalbarrels:diamond_to_obsidian"}
 }
