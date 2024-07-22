@@ -1,0 +1,9 @@
+// 1.21	2024-07-21T23:42:36.4652616	Loot Tables
+6afd6e5abe83c478404b6b120557d395307c3813 data/metalbarrels/loot_table/blocks/copper_barrel.json
+5777b8dffe47f007c558e5474ada458076fb57e8 data/metalbarrels/loot_table/blocks/crystal_barrel.json
+c725a5d8cf6882d12eb694bc98a85a428cb7b0ad data/metalbarrels/loot_table/blocks/diamond_barrel.json
+448cbd7e57ed2c8d838bc1d6ebbefce1487f0991 data/metalbarrels/loot_table/blocks/gold_barrel.json
+6d1cea9a9b7d19fa73d89069982ca95f5a91d222 data/metalbarrels/loot_table/blocks/iron_barrel.json
+87afe80f6892aa3b636d77961b7bc90c97106b2b data/metalbarrels/loot_table/blocks/netherite_barrel.json
+8e44eaae3c4990019db943c54cf669f596eb1ae9 data/metalbarrels/loot_table/blocks/obsidian_barrel.json
+0adf33fb72bfaad7fb348be5e751b47845b89727 data/metalbarrels/loot_table/blocks/silver_barrel.json

@@ -5,18 +5,20 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.loot.packs.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.datagen.assets.ModItemModelProvider;
 import tfar.metalbarrels.datagen.assets.ModLangProvider;
-import tfar.metalbarrels.datagen.data.ModBlockTagsProvider;
-import tfar.metalbarrels.datagen.data.ModItemTagsProvider;
-import tfar.metalbarrels.datagen.data.ModRecipeProvider;
+import tfar.metalbarrels.datagen.data.*;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -39,6 +41,9 @@ public class ModDatagen {
         BlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(output,provider, helper);
         generator.addProvider(server, blockTagsProvider);
         generator.addProvider(server, new ModItemTagsProvider(output,provider, blockTagsProvider,helper));
+        generator.addProvider(server,new ModLootTableProvider(output, List.of(
+                new LootTableProvider.SubProviderEntry(ModBlockLoot::new, LootContextParamSets.BLOCK)
+        ),provider));
     }
 
     public static Stream<Block> getKnownBlocks() {
