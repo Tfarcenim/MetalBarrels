@@ -4,8 +4,8 @@
         "dsd"
     ],
     "key":{
-        "d":{"tag":"forge:gems/diamond"},
-        "s":{"tag":"forge:ingots/silver"}
+        "d":{"tag":"c:gems/diamond"},
+        "s":{"tag":"c:ingots/silver"}
     },
     "result":{"id":"metalbarrels:silver_to_diamond"}
 }

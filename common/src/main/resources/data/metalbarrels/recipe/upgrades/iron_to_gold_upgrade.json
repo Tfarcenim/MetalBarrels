@@ -6,8 +6,8 @@
         " g "
     ],
     "key":{
-        "g":{"tag":"forge:ingots/gold"},
-        "i":{"tag":"forge:ingots/iron"}
+        "g":{"tag":"c:ingots/gold"},
+        "i":{"tag":"c:ingots/iron"}
     },
     "result":{"id":"metalbarrels:iron_to_gold"}
 }

@@ -7,8 +7,8 @@
 
     ],
     "key":{
-        "s":{"tag":"forge:ingots/silver"},
-        "c":{"tag":"forge:ingots/copper"}
+        "s":{"tag":"c:ingots/silver"},
+        "c":{"tag":"c:ingots/copper"}
     },
     "result":{"id":"metalbarrels:copper_to_silver"}
 }

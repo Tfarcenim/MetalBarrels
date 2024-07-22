@@ -6,7 +6,7 @@
         " i "
     ],
     "key":{
-        "i":{"tag":"forge:ingots/iron"},
+        "i":{"tag":"c:ingots/iron"},
         "b":{"tag":"minecraft:planks"}
     },
     "result":{"id":"metalbarrels:wood_to_iron"}

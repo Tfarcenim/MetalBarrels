@@ -4,7 +4,7 @@
         "ibi"
     ],
     "key":{
-        "i":{"tag":"forge:ingots/copper"},
+        "i":{"tag":"c:ingots/copper"},
         "b":{"tag":"minecraft:planks"}
     },
     "result":{"id":"metalbarrels:wood_to_copper"}

@@ -4,8 +4,8 @@
         "ici"
     ],
     "key":{
-        "i":{"tag":"forge:ingots/iron"},
-        "c":{"tag":"forge:ingots/copper"}
+        "i":{"tag":"c:ingots/iron"},
+        "c":{"tag":"c:ingots/copper"}
     },
     "result":{"id":"metalbarrels:copper_to_iron"}
 }
