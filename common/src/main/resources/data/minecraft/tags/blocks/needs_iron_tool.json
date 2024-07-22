@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "metalbarrels:diamond_barrel",
-    "metalbarrels:obsidian_barrel",
-    "metalbarrels:crystal_barrel",
-    "metalbarrels:netherite_barrel"
-  ]
-}
