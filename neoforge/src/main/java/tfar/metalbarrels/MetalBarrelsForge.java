@@ -55,6 +55,7 @@ public class MetalBarrelsForge {
     event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntityTypes.SILVER, (container, side) -> (BarrelHandlerForge)container.barrelHandler);
     event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntityTypes.GOLD, (container, side) -> (BarrelHandlerForge)container.barrelHandler);
     event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntityTypes.DIAMOND, (container, side) -> (BarrelHandlerForge)container.barrelHandler);
+    event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntityTypes.CRYSTAL, (container, side) -> (BarrelHandlerForge)container.barrelHandler);
     event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntityTypes.NETHERITE, (container, side) -> (BarrelHandlerForge)container.barrelHandler);
 
   }

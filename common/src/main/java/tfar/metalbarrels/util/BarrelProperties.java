@@ -35,6 +35,10 @@ public record BarrelProperties(int width, int height, BarrelMenuFactory barrelMe
         return (pPos, pState) -> Services.PLATFORM.blockEntity(ModBlockEntityTypes.DIAMOND,pPos,pState);
     }
 
+    public static BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> crystal() {
+        return (pPos, pState) -> Services.PLATFORM.blockEntity(ModBlockEntityTypes.CRYSTAL,pPos,pState);
+    }
+
     public static BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> netherite() {
         return (pPos, pState) -> Services.PLATFORM.blockEntity(ModBlockEntityTypes.NETHERITE,pPos,pState);
     }
