@@ -10,11 +10,11 @@ public class ModClientForge {
 
     public static void init(IEventBus bus) {
         bus.addListener(ModClientForge::setup);
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRYSTAL_BARREL, RenderType.cutoutMipped());
     }
 
     static void setup(FMLClientSetupEvent event) {
         ModClient.setup();
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.CRYSTAL_BARREL, RenderType.cutoutMipped());
     }
 
 }
