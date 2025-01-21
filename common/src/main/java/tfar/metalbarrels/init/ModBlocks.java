@@ -18,5 +18,5 @@ public class ModBlocks {
     public static final Block NETHERITE_BARREL = new MetalBarrelBlock(obsidian, BarrelProperties.netherite(),BarrelProperties.netherite);
     public static final Block OBSIDIAN_BARREL = new MetalBarrelBlock(obsidian, BarrelProperties.diamond(),BarrelProperties.diamond);
     public static final Block SILVER_BARREL = new MetalBarrelBlock(metal, BarrelProperties.silver(),BarrelProperties.silver);
-    public static final Block CRYSTAL_BARREL = new CrystalBarrelBlock(metal.noOcclusion(), BarrelProperties.crystal(),BarrelProperties.diamond);
+    public static final Block CRYSTAL_BARREL = new CrystalBarrelBlock(metal.noOcclusion(), BarrelProperties.crystal(),BarrelProperties.crystal);
 }

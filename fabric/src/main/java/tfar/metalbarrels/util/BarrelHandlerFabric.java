@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -21,16 +22,39 @@ public class BarrelHandlerFabric extends SimpleContainer implements BarrelHandle
 
     @Override
     public CompoundTag $serialize(HolderLookup.Provider levelRegistry) {
-        ListTag listTag = createTag(levelRegistry);
-        CompoundTag tag = new CompoundTag();
-        tag.put("dummy",listTag);
-        return tag;
+       return serializeNBT(levelRegistry);
     }
+
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
+        ListTag nbtTagList = new ListTag();
+        for (int i = 0; i < items.size(); i++) {
+            if (!items.get(i).isEmpty()) {
+                CompoundTag itemTag = new CompoundTag();
+                itemTag.putInt("Slot", i);
+                nbtTagList.add(items.get(i).save(provider, itemTag));
+            }
+        }
+        CompoundTag nbt = new CompoundTag();
+        nbt.put("Items", nbtTagList);
+        nbt.putInt("Size", items.size());
+        return nbt;
+    }
+
 
     @Override
     public void $deserialize(CompoundTag invTag, HolderLookup.Provider levelRegistry) {
-        ListTag listTag = invTag.getList("dummy", Tag.TAG_COMPOUND);
-        fromTag(listTag,levelRegistry);
+        deserializeNBT(invTag, levelRegistry);
+    }
+
+    public void deserializeNBT(CompoundTag nbt, HolderLookup.Provider provider) {
+        ListTag tagList = nbt.getList("Items", Tag.TAG_COMPOUND);
+        for (int i = 0; i < tagList.size(); i++) {
+            CompoundTag itemTags = tagList.getCompound(i);
+            int slot = itemTags.getInt("Slot");
+            if (slot >= 0 && slot < items.size()) {
+                ItemStack.parse(provider, itemTags).ifPresent(stack -> items.set(slot, stack));
+            }
+        }
     }
 
     @Override

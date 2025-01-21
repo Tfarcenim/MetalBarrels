@@ -13,6 +13,7 @@ public record BarrelProperties(int width, int height, BarrelMenuFactory barrelMe
     public static BarrelProperties silver = new BarrelProperties(8,9, MetalBarrelMenu::silverS);
     public static BarrelProperties gold = new BarrelProperties(9,9, MetalBarrelMenu::goldS);
     public static BarrelProperties diamond = new BarrelProperties(9,12, MetalBarrelMenu::diamondS);
+    public static BarrelProperties crystal = new BarrelProperties(9,12, MetalBarrelMenu::diamondS);
     public static BarrelProperties netherite = new BarrelProperties(9,15, MetalBarrelMenu::netheriteS);
 
     public static BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> copper() {
