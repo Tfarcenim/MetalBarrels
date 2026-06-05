@@ -5,28 +5,18 @@ plugins {
 
 neoForge {
     neoFormVersion = neo_form_version
-    // Automatically enable AccessTransformers if the file exists
-    // While this location can be changed, it is recommended for
-    // common and neoforge to share an accesstransformer file
-    // and this location is hardcoded in FML
-    // https://github.com/neoforged/FancyModLoader/blob/a952595eaaddd571fbc53f43847680b00894e0c1/loader/src/main/java/net/neoforged/fml/loading/moddiscovery/ModFile.java#L118
-    def at = file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (at.exists()) {
-        accessTransformers.add(at.absolutePath)
-    }
     parchment {
         minecraftVersion = parchment_minecraft
         mappingsVersion = parchment_version
     }
 }
 
-//sourceSets.main.resources.srcDirs +=
-
 dependencies {
-    compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
+    compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.7'
     // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
-    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
-    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
+    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.4.1'
+    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.4.1'
+
 }
 
 configurations {
@@ -39,6 +29,7 @@ configurations {
         canBeConsumed = true
     }
 }
+
 sourceSets.main.resources.srcDir 'src/generated/resources'
 artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile
@@ -46,4 +37,3 @@ artifacts {
         commonResources it
     }
 }
-
