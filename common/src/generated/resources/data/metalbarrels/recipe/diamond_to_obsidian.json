@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "g": "minecraft:obsidian",
+    "o": "minecraft:glass_pane"
+  },
+  "pattern": [
+    " g ",
+    "gog",
+    " g "
+  ],
+  "result": {
+    "id": "metalbarrels:diamond_to_obsidian"
+  }
+}

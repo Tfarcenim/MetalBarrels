@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "c": "#c:ingots/copper",
+    "i": "#c:ingots/iron"
+  },
+  "pattern": [
+    "ici"
+  ],
+  "result": {
+    "id": "metalbarrels:copper_to_iron"
+  }
+}

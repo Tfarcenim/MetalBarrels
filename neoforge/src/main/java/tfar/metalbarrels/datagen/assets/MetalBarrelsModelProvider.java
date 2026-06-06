@@ -64,14 +64,15 @@ public class MetalBarrelsModelProvider extends ModelProvider {
         MultiVariant closedModel = BlockModelGenerators.plainVariant(TexturedModel.CUBE_TOP_BOTTOM.create(block, blockModels.modelOutput));
         MultiVariant openModel = BlockModelGenerators.plainVariant(
                 TexturedModel.CUBE_TOP_BOTTOM
-                        .get(Blocks.BARREL)
+                        .get(block)
                         .updateTextures(t -> t.put(TextureSlot.TOP, openTop))
                         .createWithSuffix(block, "_open", blockModels.modelOutput)
         );
         blockModels.blockStateOutput
                 .accept(
                         MultiVariantGenerator.dispatch(block)
-                                .with(PropertyDispatch.initial(BlockStateProperties.OPEN).select(false, closedModel).select(true, openModel))
+                                .with(PropertyDispatch.initial(BlockStateProperties.OPEN)
+                                        .select(false, closedModel).select(true, openModel))
                                 .with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING)
                 );
     }

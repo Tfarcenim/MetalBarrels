@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "b": "#c:ingots/iron",
+    "g": "#c:ingots/gold"
+  },
+  "pattern": [
+    " g ",
+    "gbg",
+    " g "
+  ],
+  "result": {
+    "id": "metalbarrels:iron_to_gold"
+  }
+}

@@ -4,8 +4,8 @@
         "gsg"
     ],
     "key":{
-        "g":{"tag":"c:ingots/gold"},
-        "s":{"tag":"c:ingots/silver"}
+        "g":"#c:ingots/gold",
+        "s":"#c:ingots/silver"
     },
     "result":{"id":"metalbarrels:silver_to_gold"}
 }

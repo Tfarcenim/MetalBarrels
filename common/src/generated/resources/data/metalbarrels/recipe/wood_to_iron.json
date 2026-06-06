@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "b": "#minecraft:planks",
+    "g": "#c:ingots/iron"
+  },
+  "pattern": [
+    " g ",
+    "gbg",
+    " g "
+  ],
+  "result": {
+    "id": "metalbarrels:wood_to_iron"
+  }
+}

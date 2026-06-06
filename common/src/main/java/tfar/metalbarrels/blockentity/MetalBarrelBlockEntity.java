@@ -31,7 +31,7 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
   public final BarrelProperties barrelProperties;
   protected Component customName;
 
-  public BarrelHandler barrelHandler;
+  public final BarrelHandler barrelHandler;
 
   public final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
     protected void onOpen(Level level, BlockPos pos, BlockState state) {
@@ -59,7 +59,8 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
 
   public MetalBarrelBlockEntity(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
     super(tileEntityType, pos, state);
-   barrelProperties = getPropertiesFromState(state);
+    barrelProperties = getPropertiesFromState(state);
+    barrelHandler = new BarrelHandler(this);
   }
 
   @Override

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "c": "#c:ingots/copper",
+    "i": "#c:ingots/silver"
+  },
+  "pattern": [
+    " i ",
+    "ici",
+    " i "
+  ],
+  "result": {
+    "id": "metalbarrels:copper_to_silver"
+  }
+}

@@ -1,4 +1,13 @@
-// 26.1.2	2026-06-06T01:10:38.6142155	Tags for minecraft:block mod id metalbarrels
+// 26.1.2	2026-06-06T01:27:00.6784662	Tags for minecraft:block mod id metalbarrels
+a6d6a9ce417fd34c8bf2e26ed436f848249601be data/c/tags/block/barrels.json
+beed1386a30c45521f2e9290e2df02ac5bbc57bc data/c/tags/block/barrels/copper.json
+de72d6bc902d729193891445364924957fd17c4e data/c/tags/block/barrels/crystal.json
+0919d40c41b0e40dad6d455fa6852f315d82f063 data/c/tags/block/barrels/diamond.json
+9178bc49a9e447f5d06f2bbf40a2a18969b8030c data/c/tags/block/barrels/gold.json
+4c13205be95c46b1845819f07fde264d02d4cef3 data/c/tags/block/barrels/iron.json
+8eb502280db3eb694686be6797b6b82b2d204b8a data/c/tags/block/barrels/netherite.json
+f88f05b8c38ac2cd82efd7d073af2149fa24d526 data/c/tags/block/barrels/obsidian.json
+3bbd5363d58e659c8fd6e3f5411c8291b7987512 data/c/tags/block/barrels/silver.json
 a6d6a9ce417fd34c8bf2e26ed436f848249601be data/minecraft/tags/block/guarded_by_piglins.json
 13892f36fbe339c76d39f1c9d693f4cba603dd89 data/minecraft/tags/block/mineable/pickaxe.json
 2e048892162e47487fc34724e8ee354138bda00f data/minecraft/tags/block/needs_iron_tool.json

@@ -6,10 +6,12 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.init.ModBlocks;
@@ -38,8 +40,11 @@ public class ModRecipeProvider extends RecipeProvider {
                     .unlockedBy("has_"+st, has(ModTags.Items.tag("barrels/"+st)))
                     .save(output,key("upgrades/combine/"+entry.getKey()));
         }
+        barrelRecipes();
+        moreUpgradeRecipes();
+    }
 
-
+    void barrelRecipes() {
         cheapNetheriteSmithing(ModBlocks.OBSIDIAN_BARREL.asItem(),RecipeCategory.DECORATIONS,ModBlocks.NETHERITE_BARREL.asItem());
 
         shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.COPPER_BARREL)
@@ -119,6 +124,77 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(ModBlocks.DIAMOND_BARREL),has(ModBlocks.DIAMOND_BARREL))
                 .save(output, key("barrels/diamond_to_obsidian_barrel"));
 
+    }
+
+    void moreUpgradeRecipes() {
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("copper_to_iron"))
+                .define('c',Tags.Items.INGOTS_COPPER).define('i',Tags.Items.INGOTS_IRON)
+                .pattern("ici")
+                .unlockedBy(getHasName(Items.IRON_INGOT),has(Tags.Items.INGOTS_IRON))
+                .save(output);
+
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("copper_to_silver"))
+                .define('c',Tags.Items.INGOTS_COPPER).define('i',ModTags.Items.INGOTS_SILVER)
+                .pattern(" i ")
+                .pattern("ici")
+                .pattern(" i ")
+                .unlockedBy("has_silver_ingots",has(ModTags.Items.INGOTS_SILVER))
+                .save(output);
+
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.diamond_to_crystal)
+                .define('o',Blocks.GLASS_PANE).define('g', Blocks.GLASS)
+                .pattern(" g ")
+                .pattern("gog")
+                .pattern(" g ")
+                .unlockedBy(getHasName(Blocks.GLASS),has(Blocks.GLASS))
+                .save(output);
+
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("diamond_to_obsidian"))
+                .define('o',Blocks.GLASS_PANE).define('g', Blocks.OBSIDIAN)
+                .pattern(" g ")
+                .pattern("gog")
+                .pattern(" g ")
+                .unlockedBy(getHasName(Blocks.OBSIDIAN),has(Blocks.OBSIDIAN))
+                .save(output);
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("gold_to_diamond"))
+                .requires(Tags.Items.INGOTS_GOLD).requires(Tags.Items.GEMS_DIAMOND)
+                .unlockedBy(getHasName(Items.DIAMOND),has(Tags.Items.GEMS_DIAMOND))
+                .save(output);
+
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("iron_to_gold"))
+                .define('b',Tags.Items.INGOTS_IRON).define('g',Tags.Items.INGOTS_GOLD)
+                .pattern(" g ")
+                .pattern("gbg")
+                .pattern(" g ")
+                .unlockedBy(getHasName(Items.IRON_INGOT),has(Tags.Items.INGOTS_IRON))
+                .save(output);
+
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("iron_to_silver"))
+                .define('b',Tags.Items.INGOTS_IRON).define('g',ModTags.Items.INGOTS_SILVER)
+                .pattern("gbg")
+                .unlockedBy(getHasName(Items.IRON_INGOT),has(Tags.Items.INGOTS_IRON))
+                .save(output);
+
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("silver_to_diamond"))
+                .define('b',ModTags.Items.INGOTS_SILVER).define('g',Tags.Items.GEMS_DIAMOND)
+                .pattern("gbg")
+                .unlockedBy("has_silver_ingot",has(ModTags.Items.INGOTS_SILVER))
+                .save(output);
+
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("wood_to_copper"))
+                .define('b', ItemTags.PLANKS).define('g',Tags.Items.INGOTS_COPPER)
+                .pattern("gbg")
+                .unlockedBy("has_barrel",has(ItemTags.PLANKS))
+                .save(output);
+
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("wood_to_iron"))
+                .define('b', ItemTags.PLANKS).define('g',Tags.Items.INGOTS_IRON)
+                .pattern(" g ")
+                .pattern("gbg")
+                .pattern(" g ")
+                .unlockedBy("has_planks",has(ItemTags.PLANKS))
+                .save(output);
     }
 
     protected void cheapNetheriteSmithing(Item pIngredientItem, RecipeCategory pCategory, Item pResultItem) {
