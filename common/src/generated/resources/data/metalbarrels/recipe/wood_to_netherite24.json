@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "metalbarrels:wood_to_copper",
+    "metalbarrels:copper_to_iron",
+    "metalbarrels:iron_to_silver",
+    "metalbarrels:silver_to_gold",
+    "metalbarrels:gold_to_diamond",
+    "metalbarrels:diamond_to_obsidian",
+    "metalbarrels:obsidian_to_netherite"
+  ],
+  "result": {
+    "id": "metalbarrels:wood_to_netherite"
+  }
+}

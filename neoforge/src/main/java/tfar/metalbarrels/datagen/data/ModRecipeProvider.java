@@ -4,7 +4,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
@@ -41,7 +40,8 @@ public class ModRecipeProvider extends RecipeProvider {
                     .save(output,key("upgrades/combine/"+entry.getKey()));
         }
         barrelRecipes();
-        moreUpgradeRecipes();
+        upgradeRecipes();
+        combineRecipes();
     }
 
     void barrelRecipes() {
@@ -126,7 +126,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
     }
 
-    void moreUpgradeRecipes() {
+    void upgradeRecipes() {
         shaped(RecipeCategory.BUILDING_BLOCKS,ModItems.upgrade_items.get("copper_to_iron"))
                 .define('c',Tags.Items.INGOTS_COPPER).define('i',Tags.Items.INGOTS_IRON)
                 .pattern("ici")
@@ -195,6 +195,241 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern(" g ")
                 .unlockedBy("has_planks",has(ItemTags.PLANKS))
                 .save(output);
+    }
+
+    void combineRecipes() {
+        Item copper_to_diamond  = ModItems.upgrade_items.get("copper_to_diamond");
+        Item copper_to_gold = ModItems.upgrade_items.get("copper_to_gold");
+        Item copper_to_iron = ModItems.upgrade_items.get("copper_to_iron");
+        Item copper_to_obsidian = ModItems.upgrade_items.get("copper_to_obsidian");
+        Item copper_to_silver  = ModItems.upgrade_items.get("copper_to_silver");
+
+        Item diamond_to_obsidian = ModItems.upgrade_items.get("diamond_to_obsidian");
+
+        Item gold_to_diamond =  ModItems.upgrade_items.get("gold_to_diamond");
+        Item gold_to_obsidian =  ModItems.upgrade_items.get("gold_to_obsidian");
+
+        Item iron_to_diamond = ModItems.upgrade_items.get("iron_to_diamond");
+        Item iron_to_gold = ModItems.upgrade_items.get("iron_to_gold");
+        Item iron_to_obsidian = ModItems.upgrade_items.get("iron_to_obsidian");
+        Item iron_to_silver = ModItems.upgrade_items.get("iron_to_silver");
+
+        Item obsidian_to_netherite = ModItems.upgrade_items.get("obsidian_to_netherite");
+
+        Item silver_to_diamond = ModItems.upgrade_items.get("silver_to_diamond");
+        Item silver_to_gold = ModItems.upgrade_items.get("silver_to_gold");
+        Item silver_to_obsidian = ModItems.upgrade_items.get("silver_to_obsidian");
+        Item silver_to_netherite = ModItems.upgrade_items.get("silver_to_netherite");
+
+        Item wood_to_copper = ModItems.upgrade_items.get("wood_to_copper");
+        Item wood_to_diamond = ModItems.upgrade_items.get("wood_to_diamond");
+        Item wood_to_gold = ModItems.upgrade_items.get("wood_to_gold");
+        Item wood_to_iron = ModItems.upgrade_items.get("wood_to_iron");
+        Item wood_to_netherite = ModItems.upgrade_items.get("wood_to_netherite");
+        Item wood_to_obsidian =  ModItems.upgrade_items.get("wood_to_obsidian");
+        Item wood_to_silver = ModItems.upgrade_items.get("wood_to_silver");
+
+        //wood to silver
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_silver)
+                .requires(wood_to_iron).requires(iron_to_silver)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_silver1"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_silver)
+                .requires(wood_to_copper).requires(copper_to_silver)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_silver2"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_silver)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_silver)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_silver3"));
+
+        //wood to gold
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_gold)
+                .requires(wood_to_copper).requires(copper_to_gold)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_gold1"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_gold)
+                .requires(wood_to_iron).requires(iron_to_gold)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_gold2"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_gold)
+                .requires(wood_to_silver).requires(silver_to_gold)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_gold3"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_gold)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_gold)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_gold4"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_gold)
+                .requires(wood_to_copper).requires(copper_to_silver).requires(silver_to_gold)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_gold5"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_gold)
+                .requires(wood_to_iron).requires(iron_to_silver).requires(silver_to_gold)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_gold6"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_gold)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_silver).requires(silver_to_gold)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_gold7"));
+
+        //wood to diamond
+        //2s
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_copper).requires(copper_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond1"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_iron).requires(iron_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond2"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_silver).requires(silver_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond3"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_gold).requires(gold_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond4"));
+        //3s
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond5"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_copper).requires(copper_to_silver).requires(silver_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond6"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_copper).requires(copper_to_gold).requires(gold_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond7"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_iron).requires(iron_to_silver).requires(silver_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond8"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_iron).requires(iron_to_gold).requires(gold_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond9"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_silver).requires(silver_to_gold).requires(gold_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond10"));
+
+        //4s
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_silver).requires(silver_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond11"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_gold).requires(gold_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond12"));
+
+        //5s
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_diamond)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_silver)
+                .requires(silver_to_gold).requires(gold_to_diamond)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_diamond13"));
+
+        //wood_to_obsidian
+        //2s
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_copper).requires(copper_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian1"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_iron).requires(iron_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian2"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_silver).requires(silver_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian3"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_gold).requires(gold_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian4"));
+        //3s
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian5"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_copper).requires(copper_to_silver).requires(silver_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian6"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_copper).requires(copper_to_gold).requires(gold_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian7"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_iron).requires(iron_to_silver).requires(silver_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian8"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_iron).requires(iron_to_gold).requires(gold_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian9"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_silver).requires(silver_to_gold).requires(gold_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian10"));
+
+        //4s
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_silver).requires(silver_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian11"));
+
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_gold).requires(gold_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian12"));
+
+        //5s
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_obsidian)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_silver)
+                .requires(silver_to_gold).requires(gold_to_obsidian)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_obsidian13"));
+
+        //////////////////
+        shapeless(RecipeCategory.BUILDING_BLOCKS,wood_to_netherite)
+                .requires(wood_to_copper).requires(copper_to_iron).requires(iron_to_silver)
+                .requires(silver_to_gold).requires(gold_to_diamond).requires(diamond_to_obsidian)
+                .requires(obsidian_to_netherite)
+                .unlockedBy(getHasName(Items.COPPER_INGOT),has(Tags.Items.INGOTS_COPPER))
+                .save(output,key("wood_to_netherite24"));
+
+
     }
 
     protected void cheapNetheriteSmithing(Item pIngredientItem, RecipeCategory pCategory, Item pResultItem) {
