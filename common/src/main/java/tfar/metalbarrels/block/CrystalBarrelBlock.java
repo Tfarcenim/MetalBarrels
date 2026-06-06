@@ -8,11 +8,12 @@ import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 import tfar.metalbarrels.util.BarrelProperties;
 
 public class CrystalBarrelBlock extends MetalBarrelBlock {
-	public CrystalBarrelBlock(Properties properties, BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> tileEntitySupplier, BarrelProperties barrelProperties) {
+	public CrystalBarrelBlock(Properties properties, BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity> tileEntitySupplier, BarrelProperties barrelProperties) {
 		super(properties, tileEntitySupplier,barrelProperties);
 	}
 
-	public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
+	@Override
+    public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
 		return 1.0F;
 	}
 

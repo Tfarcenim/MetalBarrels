@@ -10,20 +10,20 @@ import net.minecraft.world.item.ItemStack;
 import tfar.metalbarrels.platform.Services;
 import tfar.metalbarrels.util.BarrelHandler;
 
-public class MetalBarrelMenu<H extends BarrelHandler> extends AbstractContainerMenu {
+public class MetalBarrelMenu extends AbstractContainerMenu {
 
     public int width;
     public int height;
-    public final H handler;
+    public final BarrelHandler handler;
 
     public MetalBarrelMenu(MenuType<?> containerType, int id, Inventory playerInventory,
-                           int width, int height, int containerX, int containerY, int playerX, int playerY, H handler) {
+                           int width, int height, int containerX, int containerY, int playerX, int playerY, BarrelHandler handler) {
         super(containerType, id);
         this.width = width;
         this.height = height;
 
         if (handler == null) {
-            handler = Services.PLATFORM.makeDummy(width * height);
+            handler = new BarrelHandler(width * height,null);
         }
 
         this.handler = handler;
@@ -32,7 +32,7 @@ public class MetalBarrelMenu<H extends BarrelHandler> extends AbstractContainerM
 
         for (int i = 0; i < height; i++)
             for (int j = 0; j < width; j++)
-                addSlot(handler.addInvSlot(j + width * i, containerX + j * 18, containerY + i * 18));
+                addSlot(handler.addSlot(j + width * i, containerX + j * 18, containerY + i * 18));
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {

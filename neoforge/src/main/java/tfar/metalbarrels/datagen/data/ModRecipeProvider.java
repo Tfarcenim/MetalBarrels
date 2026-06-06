@@ -1,14 +1,15 @@
 package tfar.metalbarrels.datagen.data;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.crafting.Recipe;
 import net.neoforged.neoforge.common.Tags;
 import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.init.ModBlocks;
@@ -21,107 +22,131 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends RecipeProvider {
-    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
+    public ModRecipeProvider(HolderLookup.Provider output, RecipeOutput provider) {
         super(output,provider);
     }
 
     @Override
-    public void buildRecipes(RecipeOutput consumer) {
+    public void buildRecipes() {
         for (Map.Entry<String,BarrelUpgradeItem> entry : ModItems.upgrade_items.entrySet()) {
             BarrelUpgradeItem item = entry.getValue();
             UpgradeInfo info = item.getUpgradeInfo();
             String st = entry.getKey().split("_")[0];
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS,info.end_block())
+            shapeless(RecipeCategory.BUILDING_BLOCKS,info.end_block())
                     .requires(ModTags.Items.tag("barrels/"+st))
                     .requires(item)
                     .unlockedBy("has_"+st, has(ModTags.Items.tag("barrels/"+st)))
-                    .save(consumer,MetalBarrels.id("upgrades/combine/"+entry.getKey()));
+                    .save(output,key("upgrades/combine/"+entry.getKey()));
         }
 
 
-        cheapNetheriteSmithing(consumer, ModBlocks.OBSIDIAN_BARREL.asItem(),RecipeCategory.DECORATIONS,ModBlocks.NETHERITE_BARREL.asItem());
+        cheapNetheriteSmithing(ModBlocks.OBSIDIAN_BARREL.asItem(),RecipeCategory.DECORATIONS,ModBlocks.NETHERITE_BARREL.asItem());
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.COPPER_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.COPPER_BARREL)
                 .define('b',Tags.Items.BARRELS_WOODEN).define('g',Tags.Items.INGOTS_COPPER)
                 .pattern("gbg")
                 .unlockedBy("has_barrel",has(Tags.Items.BARRELS_WOODEN))
-                .save(consumer, MetalBarrels.id("barrels/wood_to_copper_barrel"));
+                .save(output, key("barrels/wood_to_copper_barrel"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.IRON_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.IRON_BARREL)
                 .define('b', Tags.Items.BARRELS_WOODEN).define('g',Tags.Items.INGOTS_IRON)
                 .pattern(" g ")
                 .pattern("gbg")
                 .pattern(" g ")
                 .unlockedBy("has_barrel",has(Tags.Items.BARRELS_WOODEN))
-                .save(consumer, MetalBarrels.id("barrels/wood_to_iron_barrel"));
+                .save(output, key("barrels/wood_to_iron_barrel"));
 
 
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.GOLD_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.GOLD_BARREL)
                 .define('b', Tags.Items.BARRELS_WOODEN).define('i',Tags.Items.INGOTS_IRON).define('g',Tags.Items.INGOTS_GOLD)
                 .pattern("gig")
                 .pattern("ibi")
                 .pattern("gig")
                 .unlockedBy("has_barrel",has(Tags.Items.BARRELS_WOODEN))
-                .save(consumer, MetalBarrels.id("barrels/wood_to_gold_barrel"));
+                .save(output, key("barrels/wood_to_gold_barrel"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.IRON_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.IRON_BARREL)
                 .define('b',ModBlocks.COPPER_BARREL).define('g',Tags.Items.INGOTS_IRON)
                 .pattern("gbg")
                 .unlockedBy(getHasName(ModBlocks.COPPER_BARREL),has(ModBlocks.COPPER_BARREL))
-                .save(consumer, MetalBarrels.id("barrels/copper_to_iron_barrel"));
+                .save(output, key("barrels/copper_to_iron_barrel"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.SILVER_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.SILVER_BARREL)
                 .define('b',ModBlocks.IRON_BARREL).define('g',ModTags.Items.INGOTS_SILVER)
                 .pattern("gbg")
                 .unlockedBy(getHasName(ModBlocks.IRON_BARREL),has(ModBlocks.IRON_BARREL))
-                .save(consumer, MetalBarrels.id("barrels/iron_to_silver_barrel"));
+                .save(output, key("barrels/iron_to_silver_barrel"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.GOLD_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.GOLD_BARREL)
                 .define('b',ModBlocks.SILVER_BARREL).define('g',Tags.Items.INGOTS_GOLD)
                 .pattern("gbg")
                 .unlockedBy(getHasName(ModBlocks.SILVER_BARREL),has(ModBlocks.SILVER_BARREL))
-                .save(consumer, MetalBarrels.id("barrels/silver_to_gold_barrel"));
+                .save(output, key("barrels/silver_to_gold_barrel"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.GOLD_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.GOLD_BARREL)
                 .define('b',ModBlocks.IRON_BARREL).define('g',Tags.Items.INGOTS_GOLD)
                 .pattern(" g ")
                 .pattern("gbg")
                 .pattern(" g ")
                 .unlockedBy(getHasName(ModBlocks.IRON_BARREL),has(ModBlocks.IRON_BARREL))
-                .save(consumer, MetalBarrels.id("barrels/iron_to_gold_barrel"));
+                .save(output, key("barrels/iron_to_gold_barrel"));
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS,ModBlocks.DIAMOND_BARREL)
+        shapeless(RecipeCategory.BUILDING_BLOCKS,ModBlocks.DIAMOND_BARREL)
                 .requires(ModBlocks.GOLD_BARREL).requires(Tags.Items.GEMS_DIAMOND)
                 .unlockedBy(getHasName(ModBlocks.GOLD_BARREL),has(ModBlocks.GOLD_BARREL))
-                .save(consumer, MetalBarrels.id("barrels/gold_to_diamond_barrel"));
+                .save(output, key("barrels/gold_to_diamond_barrel"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.DIAMOND_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.DIAMOND_BARREL)
                 .define('b',ModBlocks.SILVER_BARREL).define('g',Tags.Items.GEMS_DIAMOND)
                 .pattern("gbg")
                 .unlockedBy(getHasName(ModBlocks.SILVER_BARREL),has(ModBlocks.SILVER_BARREL))
-                .save(consumer, MetalBarrels.id("barrels/silver_to_diamond_barrel"));
+                .save(output, key("barrels/silver_to_diamond_barrel"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.CRYSTAL_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.CRYSTAL_BARREL)
                 .define('b',ModBlocks.DIAMOND_BARREL).define('g',Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .pattern(" g ")
                 .pattern("gbg")
                 .pattern(" g ")
                 .unlockedBy(getHasName(ModBlocks.DIAMOND_BARREL),has(ModBlocks.DIAMOND_BARREL))
-                .save(consumer, MetalBarrels.id("barrels/diamond_to_crystal_barrel"));
+                .save(output, key("barrels/diamond_to_crystal_barrel"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.OBSIDIAN_BARREL)
+        shaped(RecipeCategory.BUILDING_BLOCKS,ModBlocks.OBSIDIAN_BARREL)
                 .define('b',ModBlocks.DIAMOND_BARREL).define('g',Tags.Items.OBSIDIANS)
                 .pattern(" g ")
                 .pattern("gbg")
                 .pattern(" g ")
                 .unlockedBy(getHasName(ModBlocks.DIAMOND_BARREL),has(ModBlocks.DIAMOND_BARREL))
-                .save(consumer, MetalBarrels.id("barrels/diamond_to_obsidian_barrel"));
+                .save(output, key("barrels/diamond_to_obsidian_barrel"));
 
     }
 
-    protected static void cheapNetheriteSmithing(RecipeOutput pFinishedRecipeConsumer, Item pIngredientItem, RecipeCategory pCategory, Item pResultItem) {
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Tags.Items.GEMS_DIAMOND), Ingredient.of(pIngredientItem), Ingredient.of(Items.NETHERITE_INGOT), pCategory, pResultItem).unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT)).save(pFinishedRecipeConsumer, MetalBarrels.id(getItemName(pResultItem) + "_smithing"));
+    protected void cheapNetheriteSmithing(Item pIngredientItem, RecipeCategory pCategory, Item pResultItem) {
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(items.getOrThrow(Tags.Items.GEMS_DIAMOND)),
+                Ingredient.of(pIngredientItem), Ingredient.of(Items.NETHERITE_INGOT), pCategory, pResultItem)
+                .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
+                .save(output, key(getItemName(pResultItem) + "_smithing"));
     }
+
+    static ResourceKey<Recipe<?>> key(String name) {
+        return  ResourceKey.create(Registries.RECIPE, MetalBarrels.id(name));
+    }
+
+    public static class Runner extends RecipeProvider.Runner {
+        public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
+            super(packOutput, registries);
+        }
+
+        @Override
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
+            return new ModRecipeProvider(registries, output);
+        }
+
+        @Override
+        public String getName() {
+            return "Vanilla Recipes";
+        }
+    }
+
 
 }

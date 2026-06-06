@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import org.codehaus.plexus.util.StringUtils;
 import tfar.metalbarrels.MetalBarrels;
-import tfar.metalbarrels.MetalBarrelsForge;
 import tfar.metalbarrels.datagen.ModDatagen;
 import tfar.metalbarrels.init.ModCreativeTabs;
 

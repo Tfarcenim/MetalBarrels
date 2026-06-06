@@ -19,31 +19,9 @@ public class ModItems {   //wood to x
     public static final Map<String,BarrelUpgradeItem> upgrade_items;
 
     public static Map<String, Pair<TagKey<Block>,Block>> map = new HashMap<>();
+    private static final List<Item> ITEMS = new ArrayList<>();
 
-    static {
 
-        map.put("wood",Pair.of(ModTags.Blocks.WOOD_BARRELS,null));
-        map.put("copper",Pair.of(ModTags.Blocks.COPPER_BARRELS,ModBlocks.COPPER_BARREL));
-        map.put("iron",Pair.of(ModTags.Blocks.IRON_BARRELS,ModBlocks.IRON_BARREL));
-        map.put("silver",Pair.of(ModTags.Blocks.SILVER_BARRELS,ModBlocks.SILVER_BARREL));
-        map.put("gold",Pair.of(ModTags.Blocks.GOLD_BARRELS,ModBlocks.GOLD_BARREL));
-        map.put("diamond",Pair.of(ModTags.Blocks.DIAMOND_BARRELS,ModBlocks.DIAMOND_BARREL));
-        map.put("obsidian",Pair.of(ModTags.Blocks.OBSIDIAN_BARRELS,ModBlocks.OBSIDIAN_BARREL));
-        map.put("netherite",Pair.of(null,ModBlocks.NETHERITE_BARREL));
-
-        upgrade_items = new HashMap<>();
-        for (int i = 0; i < MetalBarrels.tiers.length; i++) {
-            for (int j = i +1; j < MetalBarrels.tiers.length; j++) {
-                
-                String s1 = MetalBarrels.tiers[i];
-                String s2 = MetalBarrels.tiers[j];
-
-                String s = s1 +"_to_"+ s2;
-                BarrelUpgradeItem item = Services.PLATFORM.createUpgrade(properties,new UpgradeInfo(map.get(s1).getFirst(),map.get(s2).getSecond()));
-                upgrade_items.put(s,item);
-            }
-        }
-    }
     //crystal
     public static final Item wood_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.WOOD_BARRELS,
             ModBlocks.CRYSTAL_BARREL));
@@ -72,7 +50,31 @@ public class ModItems {   //wood to x
     public static final Item CRYSTAL_BARREL = new BlockItem(ModBlocks.CRYSTAL_BARREL, properties);
     public static final Item NETHERITE_BARREL = new BlockItem(ModBlocks.NETHERITE_BARREL, properties.fireResistant());
 
-    private static final List<Item> ITEMS = new ArrayList<>();
+    static {
+
+        map.put("wood",Pair.of(ModTags.Blocks.WOOD_BARRELS,null));
+        map.put("copper",Pair.of(ModTags.Blocks.COPPER_BARRELS,ModBlocks.COPPER_BARREL));
+        map.put("iron",Pair.of(ModTags.Blocks.IRON_BARRELS,ModBlocks.IRON_BARREL));
+        map.put("silver",Pair.of(ModTags.Blocks.SILVER_BARRELS,ModBlocks.SILVER_BARREL));
+        map.put("gold",Pair.of(ModTags.Blocks.GOLD_BARRELS,ModBlocks.GOLD_BARREL));
+        map.put("diamond",Pair.of(ModTags.Blocks.DIAMOND_BARRELS,ModBlocks.DIAMOND_BARREL));
+        map.put("obsidian",Pair.of(ModTags.Blocks.OBSIDIAN_BARRELS,ModBlocks.OBSIDIAN_BARREL));
+        map.put("netherite",Pair.of(null,ModBlocks.NETHERITE_BARREL));
+
+        upgrade_items = new HashMap<>();
+        for (int i = 0; i < MetalBarrels.tiers.length; i++) {
+            for (int j = i +1; j < MetalBarrels.tiers.length; j++) {
+
+                String s1 = MetalBarrels.tiers[i];
+                String s2 = MetalBarrels.tiers[j];
+
+                String s = s1 +"_to_"+ s2;
+                BarrelUpgradeItem item = Services.PLATFORM.createUpgrade(properties,new UpgradeInfo(map.get(s1).getFirst(),map.get(s2).getSecond()));
+                upgrade_items.put(s,item);
+            }
+        }
+    }
+
     public static List<Item> getItems() {
         if (ITEMS.isEmpty()) {
             for (Field field : ModItems.class.getFields()) {

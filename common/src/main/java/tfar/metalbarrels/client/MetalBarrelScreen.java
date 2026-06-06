@@ -1,27 +1,25 @@
 package tfar.metalbarrels.client;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import tfar.metalbarrels.MetalBarrels;
 import tfar.metalbarrels.menu.MetalBarrelMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.network.chat.Component;
 
 public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelMenu> {
 
-  private final ResourceLocation texture;
+  private final Identifier texture;
 
   private final boolean isTall;
 
   private final boolean isWide;
 
   public MetalBarrelScreen(MetalBarrelMenu barrelMenu, Inventory playerInventory, Component component,
-                           ResourceLocation texture, int xSize, int ySize) {
-    super(barrelMenu, playerInventory, component);
-    this.imageWidth = xSize;
-    this.imageHeight = ySize;
+                           Identifier texture, int xSize, int ySize) {
+    super(barrelMenu, playerInventory, component,xSize,ySize);
     this.texture = texture;
     this.inventoryLabelY = this.imageHeight - 94;
     isTall = barrelMenu.height > 6;
@@ -29,39 +27,26 @@ public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelMenu> 
   }
 
   @Override
-  public void render(GuiGraphics stack,int x, int y, float p_render_3_) {
-    this.renderTransparentBackground(stack);
-    super.render(stack,x, y, p_render_3_);
-    this.renderTooltip(stack,x,y);
-  }
+  public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+    super.extractBackground(graphics, mouseX, mouseY, a);
 
-  /**
-   * Draws the background layer of this container (behind the items).
-   *
-   * @param partialTicks
-   * @param mouseX
-   * @param mouseY
-   */
-  @Override
-  protected void renderBg(GuiGraphics stack, float partialTicks, int mouseX, int mouseY) {
-    RenderSystem.setShaderTexture(0,texture);
     int i = (this.width - this.imageWidth) / 2;
     int j = (this.height - this.imageHeight) / 2;
     if (!isTall) {
-      stack.blit(texture,i, j, 0, 0, this.imageWidth, this.imageHeight);
+      graphics.blit(RenderPipelines.GUI_TEXTURED,texture,i, j, 0, 0, this.imageWidth, this.imageHeight,256,256);
     } else if (!isWide) {
-      stack.blit(texture,i, j, 0,0, 0, this.imageWidth, this.imageHeight,256,512);
+      graphics.blit(RenderPipelines.GUI_TEXTURED,texture,i, j, 0,0, 0, this.imageWidth, this.imageHeight,256,512);
     } else {
-      stack.blit(texture,i, j,0, 0, 0, this.imageWidth, this.imageHeight,512,512);
+      graphics.blit(RenderPipelines.GUI_TEXTURED,texture,i, j,0, 0, 0, this.imageWidth, this.imageHeight,512,512);
     }
   }
 
-  private static final ResourceLocation COPPER = MetalBarrels.id("textures/gui/container/copper.png");
-  private static final ResourceLocation IRON = MetalBarrels.id("textures/gui/container/iron.png");
-  private static final ResourceLocation SILVER = MetalBarrels.id("textures/gui/container/silver.png");
-  private static final ResourceLocation GOLD = MetalBarrels.id("textures/gui/container/gold.png");
-  private static final ResourceLocation DIAMOND = MetalBarrels.id("textures/gui/container/diamond.png");
-  private static final ResourceLocation NETHERITE = MetalBarrels.id("textures/gui/container/netherite.png");
+  private static final Identifier COPPER = MetalBarrels.id("textures/gui/container/copper.png");
+  private static final Identifier IRON = MetalBarrels.id("textures/gui/container/iron.png");
+  private static final Identifier SILVER = MetalBarrels.id("textures/gui/container/silver.png");
+  private static final Identifier GOLD = MetalBarrels.id("textures/gui/container/gold.png");
+  private static final Identifier DIAMOND = MetalBarrels.id("textures/gui/container/diamond.png");
+  private static final Identifier NETHERITE = MetalBarrels.id("textures/gui/container/netherite.png");
 
 
   public static MetalBarrelScreen copper(MetalBarrelMenu barrelContainer, Inventory playerInventory, Component component) {

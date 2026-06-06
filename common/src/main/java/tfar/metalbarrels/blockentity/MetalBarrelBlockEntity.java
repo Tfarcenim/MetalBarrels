@@ -1,16 +1,17 @@
 package tfar.metalbarrels.blockentity;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import tfar.metalbarrels.block.MetalBarrelBlock;
 import tfar.metalbarrels.menu.MetalBarrelMenu;
 import tfar.metalbarrels.util.BarrelHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -25,12 +26,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import tfar.metalbarrels.util.BarrelProperties;
 
 
-public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends BlockEntity implements MenuProvider, Nameable {
+public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider, Nameable {
 
-  protected final BarrelProperties barrelProperties;
+  public final BarrelProperties barrelProperties;
   protected Component customName;
 
-  public H barrelHandler;
+  public BarrelHandler barrelHandler;
 
   public final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
     protected void onOpen(Level level, BlockPos pos, BlockState state) {
@@ -46,10 +47,9 @@ public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends Bl
     protected void openerCountChanged(Level level, BlockPos pos, BlockState state, int previousCount, int newCount) {
     }
 
-    protected boolean isOwnContainer(Player player) {
-      if (player.containerMenu instanceof MetalBarrelMenu<?> metalBarrelMenu) {
-          BarrelHandler handler1 = metalBarrelMenu.handler;
-        return handler1 == MetalBarrelBlockEntity.this.barrelHandler;
+    public boolean isOwnContainer(Player player) {
+      if (player.containerMenu instanceof MetalBarrelMenu metalBarrelMenu) {
+        return metalBarrelMenu.handler == MetalBarrelBlockEntity.this.barrelHandler;
       } else {
         return false;
       }
@@ -62,27 +62,17 @@ public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends Bl
    barrelProperties = getPropertiesFromState(state);
   }
 
+  @Override
+  protected void saveAdditional(ValueOutput output) {
+    super.saveAdditional(output);
+    barrelHandler.serializeNBT(output);
+  }
 
   @Override
-  public void saveAdditional(CompoundTag tag, HolderLookup.Provider levelRegistry) {
-    CompoundTag compound = this.barrelHandler.$serialize(levelRegistry);
-    tag.put("inv", compound);
-    if (this.customName != null) {
-      tag.putString("CustomName", Component.Serializer.toJson(this.customName,levelRegistry));
-    }
-    super.saveAdditional(tag,levelRegistry);
+  protected void loadAdditional(ValueInput input) {
+    super.loadAdditional(input);
+    barrelHandler.deserializeNBT(input);
   }
-
-  @Override//read
-  public void loadAdditional(CompoundTag tag, HolderLookup.Provider levelRegistry) {
-    CompoundTag invTag = tag.getCompound("inv");
-    barrelHandler.$deserialize(invTag,levelRegistry);
-    if (tag.contains("CustomName", 8)) {
-      this.customName = Component.Serializer.fromJson(tag.getString("CustomName"),levelRegistry);
-    }
-    super.loadAdditional(tag,levelRegistry);
-  }
-
 
   public void setCustomName(Component name) {
     this.customName = name;
@@ -105,25 +95,26 @@ public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends Bl
     this.level.setBlock(this.getBlockPos(), pState.setValue(BarrelBlock.OPEN, Boolean.valueOf(pOpen)), 3);
   }
 
-  void playSound(BlockState pState, SoundEvent pSound) {
-    Vec3i vec3i = pState.getValue(BarrelBlock.FACING).getNormal();
-    double d0 = this.worldPosition.getX() + 0.5D + vec3i.getX() / 2.0D;
-    double d1 = this.worldPosition.getY() + 0.5D + vec3i.getY() / 2.0D;
-    double d2 = this.worldPosition.getZ() + 0.5D + vec3i.getZ() / 2.0D;
-    this.level.playSound(null, d0, d1, d2, pSound, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
+  void playSound(BlockState state, SoundEvent pSound) {
+    Vec3i direction = state.getValue(BarrelBlock.FACING).getUnitVec3i();
+    double d0 = this.worldPosition.getX() + 0.5D + direction.getX() / 2.0D;
+    double d1 = this.worldPosition.getY() + 0.5D + direction.getY() / 2.0D;
+    double d2 = this.worldPosition.getZ() + 0.5D + direction.getZ() / 2.0D;
+    this.level.playSound(null, d0, d1, d2, pSound, SoundSource.BLOCKS, 0.5F, this.level.getRandom().nextFloat() * 0.1F + 0.9F);
   }
 
-
-  public void startOpen(Player pPlayer) {
-    if (!isRemoved() && !pPlayer.isSpectator()) {
-      openersCounter.incrementOpeners(pPlayer, this.getLevel(), this.getBlockPos(), this.getBlockState());
+  public void startOpen(ContainerUser containerUser) {
+    if (!this.remove && !containerUser.getLivingEntity().isSpectator()) {
+      this.openersCounter
+              .incrementOpeners(
+                      containerUser.getLivingEntity(), this.getLevel(), this.getBlockPos(), this.getBlockState(), containerUser.getContainerInteractionRange()
+              );
     }
-
   }
 
-  public void stopOpen(Player pPlayer) {
-    if (!isRemoved() && !pPlayer.isSpectator()) {
-      openersCounter.decrementOpeners(pPlayer, this.getLevel(), this.getBlockPos(), this.getBlockState());
+  public void stopOpen(ContainerUser containerUser) {
+    if (!this.remove && !containerUser.getLivingEntity().isSpectator()) {
+      this.openersCounter.decrementOpeners(containerUser.getLivingEntity(), this.getLevel(), this.getBlockPos(), this.getBlockState());
     }
   }
 
@@ -133,7 +124,9 @@ public abstract class MetalBarrelBlockEntity<H extends BarrelHandler> extends Bl
     }
   }
 
-  public abstract int calculateRedstone();
+  public int calculateRedstone() {
+    return barrelHandler.getRedstoneSignal();
+  }
 
   protected Component getDefaultName() {
     return Component.translatable(getBlockState().getBlock().getDescriptionId());

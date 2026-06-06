@@ -42,13 +42,13 @@ public abstract class BarrelUpgradeItem extends Item {
         if (player == null || !upgradeInfo.canUpgrade(world.getBlockState(pos))) {
             return InteractionResult.FAIL;
         }
-        if (world.isClientSide || player.getPose() != Pose.CROUCHING)
+        if (world.isClientSide() || player.getPose() != Pose.CROUCHING)
             return InteractionResult.PASS;
 
         if (state.getBlock() instanceof BarrelBlock)
             if (state.getValue(BlockStateProperties.OPEN)) {
-                player.displayClientMessage(Component.translatable("metalbarrels.in_use")
-                        .withStyle(Style.EMPTY.applyFormat(ChatFormatting.RED)), true);
+                player.sendOverlayMessage(Component.translatable("metalbarrels.in_use")
+                        .withStyle(Style.EMPTY.applyFormat(ChatFormatting.RED)));
                 return InteractionResult.PASS;
             }
 
@@ -85,8 +85,8 @@ public abstract class BarrelUpgradeItem extends Item {
         if (!player.getAbilities().instabuild)
             heldStack.shrink(1);
 
-        player.displayClientMessage(Component.translatable("metalbarrels.upgrade_successful")
-                .withStyle(Style.EMPTY.applyFormat(ChatFormatting.GREEN)), true);
+        player.sendOverlayMessage(Component.translatable("metalbarrels.upgrade_successful")
+                .withStyle(Style.EMPTY.applyFormat(ChatFormatting.GREEN)));
         return InteractionResult.SUCCESS;
     }
 

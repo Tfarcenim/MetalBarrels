@@ -6,6 +6,6 @@ import tfar.metalbarrels.menu.MetalBarrelMenu;
 @FunctionalInterface
 public interface BarrelMenuFactory {
 
-    MetalBarrelMenu<?> create(int id, Inventory inventory,BarrelHandler barrelHandler);
+    MetalBarrelMenu create(int id, Inventory inventory,BarrelHandler barrelHandler);
 
 }

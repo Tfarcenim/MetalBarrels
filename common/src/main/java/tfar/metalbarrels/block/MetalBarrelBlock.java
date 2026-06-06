@@ -1,5 +1,6 @@
 package tfar.metalbarrels.block;
 
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
@@ -20,43 +21,30 @@ import tfar.metalbarrels.util.BarrelProperties;
 
 import java.util.stream.IntStream;
 
-@SuppressWarnings("deprecation")
 public class MetalBarrelBlock extends BarrelBlock {
 
-  protected final BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> tileEntitySupplier;
+  protected final BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity> tileEntitySupplier;
   private final BarrelProperties barrelProperties;
 
-  public MetalBarrelBlock(Properties properties, BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity<?>> tileEntitySupplier, BarrelProperties barrelProperties) {
+  public MetalBarrelBlock(Properties properties, BlockEntityType.BlockEntitySupplier<MetalBarrelBlockEntity> tileEntitySupplier, BarrelProperties barrelProperties) {
     super(properties);
     this.tileEntitySupplier = tileEntitySupplier;
     this.barrelProperties = barrelProperties;
   }
 
-  @Override
-  public void onRemove(BlockState state,Level worldIn, BlockPos pos,BlockState newState, boolean isMoving) {
-    if (state.getBlock() != newState.getBlock()) {
-      BlockEntity tileentity = worldIn.getBlockEntity(pos);
-      if (tileentity instanceof MetalBarrelBlockEntity) {
-        dropItems((MetalBarrelBlockEntity<?>)tileentity,worldIn, pos);
-        worldIn.updateNeighbourForOutputSignal(pos, this);
-      }
-      super.onRemove(state, worldIn, pos, newState, isMoving);
-    }
-  }
-
-  public static void dropItems(MetalBarrelBlockEntity<?> barrel, Level world, BlockPos pos) {
-    IntStream.range(0, barrel.barrelHandler.$getSlotCount()).mapToObj(barrel.barrelHandler::$getStack)
-            .filter(stack -> !stack.isEmpty()).forEach(stack -> Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+  public static void dropItems(MetalBarrelBlockEntity barrel, Level world, BlockPos pos) {
+   // IntStream.range(0, barrel.barrelHandler.$getSlotCount()).mapToObj(barrel.barrelHandler::$getStack)
+    //        .filter(stack -> !stack.isEmpty()).forEach(stack -> Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack));
   }
 
   @Override
   protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-    if (!level.isClientSide) {
-      MenuProvider tileEntity = getMenuProvider(state,level,pos);
-      if (tileEntity != null) {
-        player.openMenu(tileEntity);
+    if (level instanceof ServerLevel serverLevel) {
+      MenuProvider menuProvider = getMenuProvider(state,level,pos);
+      if (menuProvider != null) {
+        player.openMenu(menuProvider);
         player.awardStat(Stats.OPEN_BARREL);
-        PiglinAi.angerNearbyPiglins(player, true);
+        PiglinAi.angerNearbyPiglins(serverLevel,player, true);
       }
       return InteractionResult.CONSUME;
     } else {
@@ -73,21 +61,8 @@ public class MetalBarrelBlock extends BarrelBlock {
     return tileEntitySupplier.create(pos, state);
   }
 
-  /**
-   * @deprecated call via {@link BlockState#hasAnalogOutputSignal()} ()} whenever possible. Implementing/overriding
-   * is fine.
-   */
   @Override
-  public boolean hasAnalogOutputSignal(BlockState state) {
-    return true;
-  }
-
-  /**
-   * @deprecated call via {@link BlockState#getAnalogOutputSignal(Level, BlockPos)} (World,BlockPos)} whenever possible.
-   * Implementing/overriding is fine.
-   */
-  @Override
-  public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+  protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
     BlockEntity barrel = level.getBlockEntity(pos);
     return barrel instanceof MetalBarrelBlockEntity metalBarrelBlockEntity? metalBarrelBlockEntity.calculateRedstone() : 0;
   }

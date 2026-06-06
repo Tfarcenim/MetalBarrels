@@ -1,7 +1,8 @@
 package tfar.metalbarrels;
 
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -11,8 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tfar.metalbarrels.init.*;
 import tfar.metalbarrels.item.BarrelUpgradeItem;
-import tfar.metalbarrels.platform.Services;
 
+import java.lang.reflect.Field;
+import java.util.Locale;
 import java.util.Map;
 
 // This class is part of the common project meaning it is shared between all supported loaders. Code written here can only
@@ -30,21 +32,43 @@ public class MetalBarrels {
     // write the majority of your code here and load it from your loader specific projects. This example has some
     // code that gets invoked by the entry point of the loader specific projects.
     public static void init() {
-        Services.PLATFORM.registerAll(ModBlocks.class, BuiltInRegistries.BLOCK, Block.class);
-        Services.PLATFORM.registerAll(ModBlockEntityTypes.class, BuiltInRegistries.BLOCK_ENTITY_TYPE, BlockEntityType.class);
-        Services.PLATFORM.registerAll(ModMenuTypes.class,BuiltInRegistries.MENU, MenuType.class);
-        Services.PLATFORM.registerAll(ModCreativeTabs.class,BuiltInRegistries.CREATIVE_MODE_TAB, CreativeModeTab.class);
-        Services.PLATFORM.registerAll(ModItems.class,BuiltInRegistries.ITEM, Item.class);
 
-
-        for (Map.Entry<String, BarrelUpgradeItem> entry : ModItems.upgrade_items.entrySet()) {
-            Services.PLATFORM.register(BuiltInRegistries.ITEM,entry.getValue(), id(entry.getKey()));
-        }
 
     }
 
-    public static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID,path);
+    public static void register() {
+        registerAll(ModBlocks.class, BuiltInRegistries.BLOCK, Block.class);
+        registerAll(ModBlockEntityTypes.class, BuiltInRegistries.BLOCK_ENTITY_TYPE, BlockEntityType.class);
+        registerAll(ModMenuTypes.class,BuiltInRegistries.MENU, MenuType.class);
+        registerAll(ModCreativeTabs.class,BuiltInRegistries.CREATIVE_MODE_TAB, CreativeModeTab.class);
+        registerAll(ModItems.class,BuiltInRegistries.ITEM, Item.class);
+
+
+        for (Map.Entry<String, BarrelUpgradeItem> entry : ModItems.upgrade_items.entrySet()) {
+            register(BuiltInRegistries.ITEM,entry.getValue(), id(entry.getKey()));
+        }
+    }
+
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID,path);
+    }
+
+    public static <F> void registerAll(Class<?> clazz, Registry<? super F> registry, Class<? super F> filter) {
+        for (Field field : clazz.getFields()) {
+            try {
+                Object o = field.get(null);
+                if (filter.isInstance(o)) {
+                    Registry.register((Registry<? super F>) registry, MetalBarrels.id(field.getName().toLowerCase(Locale.ROOT)),(F)o);
+                }
+            } catch (IllegalAccessException illegalAccessException) {
+                illegalAccessException.printStackTrace();
+            }
+        }
+    }
+
+    public static <F> F register(Registry<F> registry, F f, Identifier name) {
+        Registry.register(registry, name,f);
+        return f;
     }
 
 }
