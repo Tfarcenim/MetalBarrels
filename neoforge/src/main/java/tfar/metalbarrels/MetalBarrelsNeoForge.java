@@ -1,5 +1,6 @@
 package tfar.metalbarrels;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -8,6 +9,8 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
 import tfar.metalbarrels.client.ModClientNeoForge;
 import tfar.metalbarrels.datagen.ModDatagen;
 import tfar.metalbarrels.init.ModBlockEntityTypes;
@@ -36,14 +39,18 @@ public class MetalBarrelsNeoForge {
   }
 
   private void capabilities(RegisterCapabilitiesEvent event) {
-    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.COPPER, (container, side) -> new BarrelResourceHandler(container));
-    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.IRON, (container, side) -> new BarrelResourceHandler(container));
-    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.SILVER, (container, side) -> new BarrelResourceHandler(container));
-    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.GOLD, (container, side) -> new BarrelResourceHandler(container));
-    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.DIAMOND, (container, side) ->new BarrelResourceHandler(container));
-    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.CRYSTAL, (container, side) -> new BarrelResourceHandler(container));
-    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.NETHERITE, (container, side) -> new BarrelResourceHandler(container));
+    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.COPPER, MetalBarrelsNeoForge::getStorage);
+    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.IRON, MetalBarrelsNeoForge::getStorage);
+    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.SILVER, MetalBarrelsNeoForge::getStorage);
+    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.GOLD, MetalBarrelsNeoForge::getStorage);
+    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.DIAMOND, MetalBarrelsNeoForge::getStorage);
+    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.CRYSTAL,MetalBarrelsNeoForge::getStorage);
+    event.registerBlockEntity(Capabilities.Item.BLOCK, ModBlockEntityTypes.NETHERITE,MetalBarrelsNeoForge::getStorage);
 
+  }
+
+  public static ItemStacksResourceHandler getStorage(MetalBarrelBlockEntity blockEntity, Direction direction) {
+    return (ItemStacksResourceHandler) blockEntity.resourceHandler;
   }
 
   private void commonSetup(final FMLCommonSetupEvent event) {

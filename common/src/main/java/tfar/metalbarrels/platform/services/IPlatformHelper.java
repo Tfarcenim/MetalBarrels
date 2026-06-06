@@ -1,5 +1,15 @@
 package tfar.metalbarrels.platform.services;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import tfar.metalbarrels.InventoryHandler;
+import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
+
+import java.util.List;
+
 public interface IPlatformHelper {
 
     /**
@@ -34,4 +44,7 @@ public interface IPlatformHelper {
         return isDevelopmentEnvironment() ? "development" : "production";
     }
 
+    InventoryHandler createResourceHandler(MetalBarrelBlockEntity metalBarrelBlockEntity);
+
+    void copyOldItems(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity, List<ItemStack> list);
 }

@@ -35,9 +35,9 @@ public class MetalBarrelScreen extends AbstractContainerScreen<MetalBarrelMenu> 
     if (!isTall) {
       graphics.blit(RenderPipelines.GUI_TEXTURED,texture,i, j, 0, 0, this.imageWidth, this.imageHeight,256,256);
     } else if (!isWide) {
-      graphics.blit(RenderPipelines.GUI_TEXTURED,texture,i, j, 0,0, 0, this.imageWidth, this.imageHeight,256,512);
+      graphics.blit(RenderPipelines.GUI_TEXTURED,texture,i, j, 0,0,  this.imageWidth, this.imageHeight,256,512);
     } else {
-      graphics.blit(RenderPipelines.GUI_TEXTURED,texture,i, j,0, 0, 0, this.imageWidth, this.imageHeight,512,512);
+      graphics.blit(RenderPipelines.GUI_TEXTURED,texture,i, j,0, 0,  this.imageWidth, this.imageHeight,512,512);
     }
   }
 

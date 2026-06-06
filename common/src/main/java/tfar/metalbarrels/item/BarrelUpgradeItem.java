@@ -17,6 +17,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
+import tfar.metalbarrels.blockentity.MetalBarrelBlockEntity;
+import tfar.metalbarrels.platform.Services;
 import tfar.metalbarrels.util.UpgradeInfo;
 
 import java.util.ArrayList;
@@ -93,6 +95,7 @@ public class BarrelUpgradeItem extends Item {
 
 
     protected void copyOldItems(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity, List<ItemStack> list) {
+        Services.PLATFORM.copyOldItems(level,pos,state, blockEntity,list);
         /*Storage<ItemVariant> storageViews = ItemStorage.SIDED.find(level, pos, state, blockEntity, null);
         if (storageViews != null) {
             for (StorageView<ItemVariant> storageView : storageViews) {
@@ -109,12 +112,9 @@ public class BarrelUpgradeItem extends Item {
     }
 
     protected void setNewItems(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity, List<ItemStack> list) {
-       /* if (blockEntity instanceof MetalBarrelBlockEntityFabric metalBarrelBlockEntityFabric) {
-            for (int i = 0; i < list.size(); i++) {
-                ItemStack stack = list.get(i);
-                metalBarrelBlockEntityFabric.barrelHandler.setItem(i, stack);
-            }
-        }*/
+        if (blockEntity instanceof MetalBarrelBlockEntity metalBarrelBlockEntity) {
+            metalBarrelBlockEntity.resourceHandler.setItems(list);
+        }
     }
 
     public UpgradeInfo getUpgradeInfo() {

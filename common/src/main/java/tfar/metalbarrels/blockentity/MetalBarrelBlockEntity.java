@@ -7,9 +7,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import tfar.metalbarrels.InventoryHandler;
 import tfar.metalbarrels.block.MetalBarrelBlock;
 import tfar.metalbarrels.menu.MetalBarrelMenu;
-import tfar.metalbarrels.util.BarrelHandler;
+import tfar.metalbarrels.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
@@ -31,7 +32,7 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
   public final BarrelProperties barrelProperties;
   protected Component customName;
 
-  public final BarrelHandler barrelHandler;
+  public final InventoryHandler resourceHandler;
 
   public final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
     protected void onOpen(Level level, BlockPos pos, BlockState state) {
@@ -49,7 +50,7 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
 
     public boolean isOwnContainer(Player player) {
       if (player.containerMenu instanceof MetalBarrelMenu metalBarrelMenu) {
-        return metalBarrelMenu.handler == MetalBarrelBlockEntity.this.barrelHandler;
+        return metalBarrelMenu.handler == MetalBarrelBlockEntity.this.resourceHandler;
       } else {
         return false;
       }
@@ -60,19 +61,19 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
   public MetalBarrelBlockEntity(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
     super(tileEntityType, pos, state);
     barrelProperties = getPropertiesFromState(state);
-    barrelHandler = new BarrelHandler(this);
+    resourceHandler = Services.PLATFORM.createResourceHandler(this);
   }
 
   @Override
   protected void saveAdditional(ValueOutput output) {
     super.saveAdditional(output);
-    barrelHandler.serializeNBT(output);
+    resourceHandler.save(output);
   }
 
   @Override
   protected void loadAdditional(ValueInput input) {
     super.loadAdditional(input);
-    barrelHandler.deserializeNBT(input);
+    resourceHandler.load(input);
   }
 
   public void setCustomName(Component name) {
@@ -126,7 +127,12 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
   }
 
   public int calculateRedstone() {
-    return barrelHandler.getRedstoneSignal();
+    return resourceHandler.getRedstoneSignal();
+  }
+
+  @Override
+  public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+    resourceHandler.dropItems(level,pos);
   }
 
   protected Component getDefaultName() {
@@ -135,7 +141,7 @@ public class MetalBarrelBlockEntity extends BlockEntity implements MenuProvider,
 
   @Override
   public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
-    return barrelProperties.barrelMenuFactory().create(id,inv,barrelHandler);
+    return barrelProperties.barrelMenuFactory().create(id,inv,resourceHandler);
   }
 
   public BarrelProperties getPropertiesFromState(BlockState state) {
