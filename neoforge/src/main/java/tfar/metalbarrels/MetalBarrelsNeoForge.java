@@ -1,5 +1,6 @@
 package tfar.metalbarrels;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -29,7 +30,9 @@ public class MetalBarrelsNeoForge {
   }
 
   private void register(RegisterEvent e) {
-    MetalBarrels.register();
+    if (e.getRegistry() == BuiltInRegistries.BLOCK) {
+      MetalBarrels.register();
+    }
   }
 
   private void capabilities(RegisterCapabilitiesEvent event) {

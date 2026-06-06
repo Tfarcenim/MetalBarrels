@@ -1,12 +1,8 @@
 package tfar.metalbarrels.platform;
 
-import net.minecraft.world.item.Item;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
-import tfar.metalbarrels.item.BarrelUpgradeItem;
-import tfar.metalbarrels.item.BarrelUpgradeItemForge;
 import tfar.metalbarrels.platform.services.IPlatformHelper;
-import tfar.metalbarrels.util.UpgradeInfo;
 
 public class NeoForgePlatformHelper implements IPlatformHelper {
 
@@ -28,8 +24,4 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
         return !FMLLoader.getCurrent().isProduction();
     }
 
-    @Override
-    public BarrelUpgradeItem createUpgrade(Item.Properties properties, UpgradeInfo info) {
-        return new BarrelUpgradeItemForge(properties, info);
-    }
 }

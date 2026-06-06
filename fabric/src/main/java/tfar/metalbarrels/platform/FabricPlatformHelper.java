@@ -1,12 +1,8 @@
 package tfar.metalbarrels.platform;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import tfar.metalbarrels.item.BarrelUpgradeItem;
-import tfar.metalbarrels.item.BarrelUpgradeItemFabric;
 import tfar.metalbarrels.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
-import tfar.metalbarrels.util.UpgradeInfo;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 
@@ -27,8 +23,4 @@ public class FabricPlatformHelper implements IPlatformHelper {
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
 
-    @Override
-    public BarrelUpgradeItem createUpgrade(Item.Properties properties, UpgradeInfo info) {
-        return new BarrelUpgradeItemFabric(properties, info);
-    }
 }

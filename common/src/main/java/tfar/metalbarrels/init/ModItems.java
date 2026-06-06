@@ -1,6 +1,10 @@
 package tfar.metalbarrels.init;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -13,9 +17,11 @@ import tfar.metalbarrels.util.ModTags;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public class ModItems {   //wood to x
-    private static final Item.Properties properties = new Item.Properties();
     public static final Map<String,BarrelUpgradeItem> upgrade_items;
 
     public static Map<String, Pair<TagKey<Block>,Block>> map = new HashMap<>();
@@ -23,32 +29,32 @@ public class ModItems {   //wood to x
 
 
     //crystal
-    public static final Item wood_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.WOOD_BARRELS,
-            ModBlocks.CRYSTAL_BARREL));
+    public static final Item wood_to_crystal = registerBarrelUpgrade(
+            "wood_to_crystal",new UpgradeInfo(ModTags.Blocks.WOOD_BARRELS, ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item copper_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.COPPER_BARRELS,
-            ModBlocks.CRYSTAL_BARREL));
+    public static final Item copper_to_crystal =registerBarrelUpgrade(
+            "copper_to_crystal", new UpgradeInfo(ModTags.Blocks.COPPER_BARRELS, ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item iron_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.IRON_BARRELS,
-            ModBlocks.CRYSTAL_BARREL));
+    public static final Item iron_to_crystal = registerBarrelUpgrade(
+            "iron_to_crystal", new UpgradeInfo(ModTags.Blocks.IRON_BARRELS, ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item silver_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.SILVER_BARRELS,
-            ModBlocks.CRYSTAL_BARREL));
+    public static final Item silver_to_crystal =registerBarrelUpgrade("silver_to_crystal",
+            new UpgradeInfo(ModTags.Blocks.SILVER_BARRELS, ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item gold_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.GOLD_BARRELS,
-            ModBlocks.CRYSTAL_BARREL));
+    public static final Item gold_to_crystal =registerBarrelUpgrade("gold_to_crystal",
+            new UpgradeInfo(ModTags.Blocks.GOLD_BARRELS, ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item diamond_to_crystal = Services.PLATFORM.createUpgrade(properties, new UpgradeInfo(ModTags.Blocks.DIAMOND_BARRELS,
-            ModBlocks.CRYSTAL_BARREL));
+    public static final Item diamond_to_crystal = registerBarrelUpgrade("diamond_to_crystal",
+            new UpgradeInfo(ModTags.Blocks.DIAMOND_BARRELS, ModBlocks.CRYSTAL_BARREL));
 
-    public static final Item COPPER_BARREL = new BlockItem(ModBlocks.COPPER_BARREL, properties);
-    public static final Item IRON_BARREL = new BlockItem(ModBlocks.IRON_BARREL, properties);
-    public static final Item GOLD_BARREL = new BlockItem(ModBlocks.GOLD_BARREL, properties);
-    public static final Item DIAMOND_BARREL = new BlockItem(ModBlocks.DIAMOND_BARREL, properties);
-    public static final Item OBSIDIAN_BARREL = new BlockItem(ModBlocks.OBSIDIAN_BARREL, properties);
-    public static final Item SILVER_BARREL = new BlockItem(ModBlocks.SILVER_BARREL, properties);
-    public static final Item CRYSTAL_BARREL = new BlockItem(ModBlocks.CRYSTAL_BARREL, properties);
-    public static final Item NETHERITE_BARREL = new BlockItem(ModBlocks.NETHERITE_BARREL, properties.fireResistant());
+    public static final Item COPPER_BARREL = registerBlock(ModBlocks.COPPER_BARREL);
+    public static final Item IRON_BARREL = registerBlock(ModBlocks.IRON_BARREL);
+    public static final Item GOLD_BARREL = registerBlock(ModBlocks.GOLD_BARREL);
+    public static final Item DIAMOND_BARREL = registerBlock(ModBlocks.DIAMOND_BARREL);
+    public static final Item OBSIDIAN_BARREL = registerBlock(ModBlocks.OBSIDIAN_BARREL);
+    public static final Item SILVER_BARREL = registerBlock(ModBlocks.SILVER_BARREL);
+    public static final Item CRYSTAL_BARREL = registerBlock(ModBlocks.CRYSTAL_BARREL);
+    public static final Item NETHERITE_BARREL = registerBlock(ModBlocks.NETHERITE_BARREL, new Item.Properties().fireResistant());
 
     static {
 
@@ -69,10 +75,14 @@ public class ModItems {   //wood to x
                 String s2 = MetalBarrels.tiers[j];
 
                 String s = s1 +"_to_"+ s2;
-                BarrelUpgradeItem item = Services.PLATFORM.createUpgrade(properties,new UpgradeInfo(map.get(s1).getFirst(),map.get(s2).getSecond()));
+                BarrelUpgradeItem item =registerBarrelUpgrade(s,new UpgradeInfo(map.get(s1).getFirst(),map.get(s2).getSecond()));
                 upgrade_items.put(s,item);
             }
         }
+    }
+
+    public static BarrelUpgradeItem registerBarrelUpgrade(String key,UpgradeInfo info) {
+        return registerItem(key,p -> new BarrelUpgradeItem(p, info));
     }
 
     public static List<Item> getItems() {
@@ -90,5 +100,73 @@ public class ModItems {   //wood to x
             ITEMS.addAll(upgrade_items.values());
         }
         return ITEMS;
+    }
+
+    private static Item registerBlock(Block block) {
+        return registerBlock(block, BlockItem::new);
+    }
+
+    private static Item registerBlock(Block block, Item.Properties properties) {
+        return registerBlock(block, BlockItem::new, properties);
+    }
+
+    private static Item registerBlock(Block block, UnaryOperator<Item.Properties> propertiesFunction) {
+        return registerBlock(block, (b, p) -> new BlockItem(b, propertiesFunction.apply(p)));
+    }
+
+
+    private static Item registerBlock(Block block, BiFunction<Block, Item.Properties, Item> itemFactory) {
+        return registerBlock(block, itemFactory, new Item.Properties());
+    }
+
+    private static Item registerBlock(Block block, BiFunction<Block, Item.Properties, Item> itemFactory, Item.Properties properties) {
+        return registerItem(
+                blockIdToItemId(block.builtInRegistryHolder().key()),
+                p -> itemFactory.apply(block, p),
+                properties.useBlockDescriptionPrefix().requiredFeatures(block.requiredFeatures())
+        );
+    }
+
+    private static ResourceKey<Item> blockIdToItemId(ResourceKey<Block> blockName) {
+        return ResourceKey.create(Registries.ITEM, blockName.identifier());
+    }
+
+    private static <I extends Item> I registerItem(String name, Function<Item.Properties, I> itemFactory) {
+        return registerItem(modItemId(name), itemFactory, new Item.Properties());
+    }
+
+    private static <I extends Item> I registerItem(String name, Function<Item.Properties, I> itemFactory, Item.Properties properties) {
+        return registerItem(modItemId(name), itemFactory, properties);
+    }
+
+    private static Item registerItem(String name, Item.Properties properties) {
+        return registerItem(modItemId(name), Item::new, properties);
+    }
+
+    private static Item registerItem(String name) {
+        return registerItem(modItemId(name), Item::new, new Item.Properties());
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <I extends Item> ResourceKey<I> modItemId(String name) {
+        return (ResourceKey<I>) ResourceKey.create(Registries.ITEM, MetalBarrels.id(name));
+    }
+
+
+    private static <I extends Item> I registerItem(ResourceKey<I> key, Function<Item.Properties, I> itemFactory) {
+        return registerItem(key, itemFactory, new Item.Properties());
+    }
+
+    private static <I extends Item> I registerItem(ResourceKey<I> key, Function<Item.Properties, I> itemFactory, Item.Properties properties) {
+        I item = itemFactory.apply(properties.setId((ResourceKey<Item>) key));
+        if (item instanceof BlockItem blockItem) {
+            blockItem.registerBlocks(Item.BY_BLOCK, item);
+        }
+
+        return Registry.register(BuiltInRegistries.ITEM,(ResourceKey<Item>) key, item);
+    }
+
+    public static void init() {
+
     }
 }

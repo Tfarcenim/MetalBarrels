@@ -22,7 +22,7 @@ import tfar.metalbarrels.util.UpgradeInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BarrelUpgradeItem extends Item {
+public class BarrelUpgradeItem extends Item {
 
     protected final UpgradeInfo upgradeInfo;
 
@@ -90,8 +90,32 @@ public abstract class BarrelUpgradeItem extends Item {
         return InteractionResult.SUCCESS;
     }
 
-    protected abstract void copyOldItems(Level level,BlockPos pos,BlockState state,BlockEntity blockEntity,List<ItemStack> list);
-    protected abstract void setNewItems(Level level,BlockPos pos,BlockState state,BlockEntity blockEntity,List<ItemStack> list);
+
+
+    protected void copyOldItems(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity, List<ItemStack> list) {
+        /*Storage<ItemVariant> storageViews = ItemStorage.SIDED.find(level, pos, state, blockEntity, null);
+        if (storageViews != null) {
+            for (StorageView<ItemVariant> storageView : storageViews) {
+                ItemVariant itemVariant = storageView.getResource();
+                if (itemVariant.isBlank()) {
+                    list.add(ItemStack.EMPTY);
+                } else {
+                    ItemStack stack = itemVariant.toStack();
+                    stack.setCount((int)storageView.getAmount());
+                    list.add(stack);
+                }
+            }
+        }*/
+    }
+
+    protected void setNewItems(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity, List<ItemStack> list) {
+       /* if (blockEntity instanceof MetalBarrelBlockEntityFabric metalBarrelBlockEntityFabric) {
+            for (int i = 0; i < list.size(); i++) {
+                ItemStack stack = list.get(i);
+                metalBarrelBlockEntityFabric.barrelHandler.setItem(i, stack);
+            }
+        }*/
+    }
 
     public UpgradeInfo getUpgradeInfo() {
         return upgradeInfo;

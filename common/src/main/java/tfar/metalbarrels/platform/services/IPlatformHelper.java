@@ -1,9 +1,5 @@
 package tfar.metalbarrels.platform.services;
 
-import net.minecraft.world.item.Item;
-import tfar.metalbarrels.item.BarrelUpgradeItem;
-import tfar.metalbarrels.util.UpgradeInfo;
-
 public interface IPlatformHelper {
 
     /**
@@ -37,7 +33,5 @@ public interface IPlatformHelper {
 
         return isDevelopmentEnvironment() ? "development" : "production";
     }
-
-    BarrelUpgradeItem createUpgrade(Item.Properties properties, UpgradeInfo info);
 
 }

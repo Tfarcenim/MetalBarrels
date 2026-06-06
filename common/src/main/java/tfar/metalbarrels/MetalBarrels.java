@@ -37,16 +37,11 @@ public class MetalBarrels {
     }
 
     public static void register() {
-        registerAll(ModBlocks.class, BuiltInRegistries.BLOCK, Block.class);
+        ModBlocks.init();
         registerAll(ModBlockEntityTypes.class, BuiltInRegistries.BLOCK_ENTITY_TYPE, BlockEntityType.class);
         registerAll(ModMenuTypes.class,BuiltInRegistries.MENU, MenuType.class);
         registerAll(ModCreativeTabs.class,BuiltInRegistries.CREATIVE_MODE_TAB, CreativeModeTab.class);
-        registerAll(ModItems.class,BuiltInRegistries.ITEM, Item.class);
-
-
-        for (Map.Entry<String, BarrelUpgradeItem> entry : ModItems.upgrade_items.entrySet()) {
-            register(BuiltInRegistries.ITEM,entry.getValue(), id(entry.getKey()));
-        }
+        ModItems.init();
     }
 
     public static Identifier id(String path) {
