@@ -2,15 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "c:barrels/gold"
-    },
-    {
-      "item": "metalbarrels:gold_to_obsidian"
-    }
+    "#c:barrels/gold",
+    "metalbarrels:gold_to_obsidian"
   ],
   "result": {
-    "count": 1,
     "id": "metalbarrels:obsidian_barrel"
   }
 }

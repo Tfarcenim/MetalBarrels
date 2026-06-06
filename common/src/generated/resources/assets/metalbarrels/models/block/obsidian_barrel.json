@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "metalbarrels:block/obsidian_barrel_bottom",
+    "side": "metalbarrels:block/obsidian_barrel_side",
+    "top": "metalbarrels:block/obsidian_barrel_top"
+  }
+}

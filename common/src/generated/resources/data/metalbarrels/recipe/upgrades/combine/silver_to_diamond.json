@@ -2,15 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "c:barrels/silver"
-    },
-    {
-      "item": "metalbarrels:silver_to_diamond"
-    }
+    "#c:barrels/silver",
+    "metalbarrels:silver_to_diamond"
   ],
   "result": {
-    "count": 1,
     "id": "metalbarrels:diamond_barrel"
   }
 }

@@ -1,16 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "metalbarrels:obsidian_barrel"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "metalbarrels:obsidian_barrel",
   "result": {
-    "count": 1,
     "id": "metalbarrels:netherite_barrel"
   },
-  "template": {
-    "tag": "c:gems/diamond"
-  }
+  "template": "#c:gems/diamond"
 }

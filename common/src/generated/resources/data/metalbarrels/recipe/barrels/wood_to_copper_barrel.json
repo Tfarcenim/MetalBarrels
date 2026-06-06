@@ -2,18 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "b": {
-      "tag": "c:barrels/wooden"
-    },
-    "g": {
-      "tag": "c:ingots/copper"
-    }
+    "b": "#c:barrels/wooden",
+    "g": "#c:ingots/copper"
   },
   "pattern": [
     "gbg"
   ],
   "result": {
-    "count": 1,
     "id": "metalbarrels:copper_barrel"
   }
 }

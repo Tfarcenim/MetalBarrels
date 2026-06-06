@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "metalbarrels:block/gold_barrel_bottom",
+    "side": "metalbarrels:block/gold_barrel_side",
+    "top": "metalbarrels:block/gold_barrel_top"
+  }
+}

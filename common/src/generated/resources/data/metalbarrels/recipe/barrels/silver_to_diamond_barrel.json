@@ -2,18 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "b": {
-      "item": "metalbarrels:silver_barrel"
-    },
-    "g": {
-      "tag": "c:gems/diamond"
-    }
+    "b": "metalbarrels:silver_barrel",
+    "g": "#c:gems/diamond"
   },
   "pattern": [
     "gbg"
   ],
   "result": {
-    "count": 1,
     "id": "metalbarrels:diamond_barrel"
   }
 }

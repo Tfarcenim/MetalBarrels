@@ -25,21 +25,21 @@ public class ModBlocks {
         return Block.Properties.of().strength(2.5f, 6000).requiresCorrectToolForDrops();
     }
 
-    public static final Block COPPER_BARREL = register("copper_barrel",p ->
+    public static final MetalBarrelBlock COPPER_BARREL = register("copper_barrel",p ->
             new MetalBarrelBlock(p, BarrelProperties.copper(), BarrelProperties.copper),metal());
-    public static final Block IRON_BARREL =register("iron_barrel",p ->
+    public static final MetalBarrelBlock IRON_BARREL =register("iron_barrel",p ->
             new MetalBarrelBlock(p, BarrelProperties.iron(),BarrelProperties.iron),metal());
-    public static final Block GOLD_BARREL = register("gold_barrel",p ->
+    public static final MetalBarrelBlock GOLD_BARREL = register("gold_barrel",p ->
             new MetalBarrelBlock(p, BarrelProperties.gold(),BarrelProperties.gold),metal());
-    public static final Block DIAMOND_BARREL = register("diamond_barrel",p ->
+    public static final MetalBarrelBlock DIAMOND_BARREL = register("diamond_barrel",p ->
             new MetalBarrelBlock(p, BarrelProperties.diamond(),BarrelProperties.diamond),metal());
-    public static final Block NETHERITE_BARREL = register("netherite_barrel",p ->
+    public static final MetalBarrelBlock NETHERITE_BARREL = register("netherite_barrel",p ->
             new MetalBarrelBlock(p, BarrelProperties.netherite(),BarrelProperties.netherite),obsidian());
-    public static final Block OBSIDIAN_BARREL = register("obsidian_barrel",p ->
+    public static final MetalBarrelBlock OBSIDIAN_BARREL = register("obsidian_barrel",p ->
             new MetalBarrelBlock(p, BarrelProperties.diamond(),BarrelProperties.diamond),obsidian());
-    public static final Block SILVER_BARREL =register("silver_barrel",p ->
+    public static final MetalBarrelBlock SILVER_BARREL =register("silver_barrel",p ->
             new MetalBarrelBlock(p, BarrelProperties.silver(),BarrelProperties.silver),metal());
-    public static final Block CRYSTAL_BARREL = register("crystal_barrel",p ->
+    public static final MetalBarrelBlock CRYSTAL_BARREL = register("crystal_barrel",p ->
             new CrystalBarrelBlock(p, BarrelProperties.crystal(),BarrelProperties.crystal),metal().noOcclusion());
 
     public static void init(){

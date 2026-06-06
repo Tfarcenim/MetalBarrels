@@ -2,15 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "c:barrels/copper"
-    },
-    {
-      "item": "metalbarrels:copper_to_gold"
-    }
+    "#c:barrels/copper",
+    "metalbarrels:copper_to_gold"
   ],
   "result": {
-    "count": 1,
     "id": "metalbarrels:gold_barrel"
   }
 }
