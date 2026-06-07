@@ -7,6 +7,7 @@
     "authors": [
         "${mod_author}"
     ],
+    "accessWidener": "metalbarrels.accesswidener",
     "contact": {
         "homepage": "https://fabricmc.net/",
         "sources": "https://github.com/FabricMC/fabric-example-mod"

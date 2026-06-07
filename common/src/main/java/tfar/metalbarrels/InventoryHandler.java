@@ -54,5 +54,5 @@ public interface InventoryHandler {
 
     void dropItems(@Nullable Level level, BlockPos pos);
 
-    void setItems(List<ItemStack> items);
+    void setNewItems(List<ItemStack> items);
 }

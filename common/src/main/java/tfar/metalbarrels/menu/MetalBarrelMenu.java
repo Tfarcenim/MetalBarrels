@@ -165,7 +165,7 @@ public class MetalBarrelMenu extends AbstractContainerMenu {
         }
 
         @Override
-        public void setItems(List<ItemStack> items) {
+        public void setNewItems(List<ItemStack> items) {
 
         }
     }

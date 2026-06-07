@@ -113,7 +113,7 @@ public class BarrelUpgradeItem extends Item {
 
     protected void setNewItems(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity, List<ItemStack> list) {
         if (blockEntity instanceof MetalBarrelBlockEntity metalBarrelBlockEntity) {
-            metalBarrelBlockEntity.resourceHandler.setItems(list);
+            metalBarrelBlockEntity.resourceHandler.setNewItems(list);
         }
     }
 

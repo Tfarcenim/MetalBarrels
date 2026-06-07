@@ -52,7 +52,7 @@ public class ItemStackHandler extends ItemStacksResourceHandler implements Inven
     }
 
     @Override
-    public void setItems(@UnknownNullability List<ItemStack> items) {
+    public void setNewItems(@UnknownNullability List<ItemStack> items) {
         for (int i = 0; i < items.size(); i++) {
             ItemStack stack = items.get(i);
             stacks.set(i, stack);
