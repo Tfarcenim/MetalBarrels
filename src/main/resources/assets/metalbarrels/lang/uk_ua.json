@@ -1,0 +1,53 @@
+{
+  "block.metalbarrels.copper_barrel": "Мідна діжка",
+  "block.metalbarrels.iron_barrel": "Залізна діжка",
+  "block.metalbarrels.gold_barrel": "Золота діжка",
+  "block.metalbarrels.diamond_barrel": "Діамантова діжка",
+  "block.metalbarrels.obsidian_barrel": "Обсидіанова діжка",
+  "block.metalbarrels.silver_barrel": "Срібна діжка",
+  "block.metalbarrels.crystal_barrel": "Кришталева діжка",
+  "block.metalbarrels.netherite_barrel": "Незеритова діжка",
+
+  "item.metalbarrels.wood_to_copper": "Покращення діжки до мідної",
+  "item.metalbarrels.wood_to_iron": "Покращення діжки до залізної",
+  "item.metalbarrels.wood_to_silver": "Покращення діжки до срібної",
+  "item.metalbarrels.wood_to_gold": "Покращення діжки до золотої",
+  "item.metalbarrels.wood_to_diamond": "Покращення діжки до діамантової",
+  "item.metalbarrels.wood_to_obsidian": "Покращення діжки до обсидіанової",
+  "item.metalbarrels.wood_to_crystal": "Покращення діжки до кришталевої",
+  "item.metalbarrels.wood_to_netherite": "Покращення діжки до незеритової",
+
+  "item.metalbarrels.copper_to_iron": "Покращення мідної діжки до залізної",
+  "item.metalbarrels.copper_to_silver": "Покращення мідної діжки до срібної",
+  "item.metalbarrels.copper_to_gold": "Покращення мідної діжки до золотої",
+  "item.metalbarrels.copper_to_diamond": "Покращення мідної діжки до діамантової",
+  "item.metalbarrels.copper_to_obsidian": "Покращення мідної діжки до обсидіанової",
+  "item.metalbarrels.copper_to_crystal": "Покращення мідної діжки до кришталевої",
+
+  "item.metalbarrels.iron_to_silver": "Покращення залізної діжки до срібної",
+  "item.metalbarrels.iron_to_gold": "Покращення залізної діжки до золотої",
+  "item.metalbarrels.iron_to_diamond": "Покращення залізної діжки до діамантової",
+  "item.metalbarrels.iron_to_obsidian": "Покращення залізної діжки до обсидіанової",
+  "item.metalbarrels.iron_to_crystal": "Покращення залізної діжки до кришталевої",
+
+  "item.metalbarrels.silver_to_gold": "Покращення срібної діжки до золотої",
+  "item.metalbarrels.silver_to_diamond": "Покращення срібної діжки до діамантової",
+  "item.metalbarrels.silver_to_obsidian": "Покращення срібної діжки до обсидіанової",
+  "item.metalbarrels.silver_to_crystal": "Покращення срібної діжки до кришталевої",
+
+  "item.metalbarrels.gold_to_diamond": "Покращення золотої діжки до діамантової",
+  "item.metalbarrels.gold_to_obsidian": "Покращення золотої діжки до обсидіанової",
+  "item.metalbarrels.gold_to_crystal": "Покращення золотої діжки до кришталевої",
+
+  "item.metalbarrels.diamond_to_obsidian": "Покращення діамантової діжки до обсидіанової",
+  "item.metalbarrels.diamond_to_crystal": "Покращення діамантової діжки до кришталевої",
+
+  "item.metalbarrels.obsidian_to_netherite": "Покращення обсидіанової діжки до незеритової",
+
+  "itemGroup.metalbarrels": "Metal Barrels",
+
+  "tooltip.metalbarrels.ironchest": "Може також покращувати блоки з Iron Chests!",
+
+  "metalbarrels.upgrade_successful": "Сховище покращено",
+  "metalbarrels.in_use": "Діжку використано"
+}
